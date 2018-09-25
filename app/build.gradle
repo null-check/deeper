@@ -45,6 +45,15 @@ try {
 android {
     compileSdkVersion project.ANDROID_BUILD_SDK_VERSION.toInteger()
 
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId  = defaultApplicationId
         manifestPlaceholders = [ appName: "${defaultAppName}"]
@@ -86,6 +95,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:${project.ANDROID_SUPPORT_LIB_VERSION}"
     implementation "com.android.support:support-v4:${project.ANDROID_SUPPORT_LIB_VERSION}"
+    implementation "com.android.support:design:${project.ANDROID_SUPPORT_LIB_VERSION}"
+    implementation "com.android.support:gridlayout-v7:${project.ANDROID_SUPPORT_LIB_VERSION}"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -100,4 +111,7 @@ dependencies {
     // Lombok
     compileOnly 'org.projectlombok:lombok:1.18.2'
     annotationProcessor 'org.projectlombok:lombok:1.18.2'
+
+    // Carbon
+    implementation 'tk.zielony:carbon:0.15.0.1'
 }
