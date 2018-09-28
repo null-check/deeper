@@ -1,59 +1,62 @@
 package com.arjun.deeper;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
 
 import com.arjun.deeper.utils.CommonLib;
 
-import butterknife.ButterKnife;
 import carbon.widget.LinearLayout;
 
-public class Box extends LinearLayout {
+public class SquareBox extends LinearLayout {
 
-    public Box(Context context) {
+    private boolean fitsScreen = false;
+
+    public SquareBox(Context context) {
         super(context);
-        init(context);
     }
 
-    public Box(Context context, AttributeSet attrs) {
+    public SquareBox(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        init(attrs);
     }
 
-    public Box(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SquareBox(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+        init(attrs);
     }
 
-    public Box(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public SquareBox(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(context);
+        init(attrs);
     }
 
-    private void init(Context context) {
-        inflateView(context);
+    private void init(AttributeSet attrs) {
+        fetchAttributes(attrs);
     }
 
-    private void inflateView(Context context) {
-//        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View rootView = inflater.inflate(R.layout.view_box, this, true);
-//        ButterKnife.bind(this, rootView);
+    private void fetchAttributes(AttributeSet attrs) {
+        final TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.SquareBox);
+
+        if (attributes != null) {
+            fitsScreen = attributes.getBoolean(R.styleable.SquareBox_fits_screen, false);
+            attributes.recycle();
+        }
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int width = getMeasuredWidth();
-//        getLayoutParams().height = width;
-//        setMeasuredDimension(width, width);
+        if (!fitsScreen) {
+            getLayoutParams().height = getMeasuredWidth();
+        }
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-//        setHeight(CommonLib.getScreenWidth());
-        getLayoutParams().height = CommonLib.getScreenWidth();
+        if (fitsScreen) {
+            getLayoutParams().height = CommonLib.getScreenWidth();
+        }
     }
 }
