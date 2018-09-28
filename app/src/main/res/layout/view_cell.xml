@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carbon.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/carbon_marginHalf"
+    android:paddingRight="@dimen/carbon_marginHalf"
+    android:background="#33b5e5"
+    android:orientation="vertical"
+    app:carbon_cornerRadius="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/carbon_marginHalf"
+        android:layout_weight="1">
+
+        <carbon.widget.FrameLayout
+            android:id="@+id/child_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/carbon_marginHalf"
+            android:layout_weight="1"
+            android:background="#53d5ff"
+            app:carbon_cornerRadius="3dp" />
+
+        <carbon.widget.FrameLayout
+            android:id="@+id/child_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/carbon_marginHalf"
+            android:layout_weight="1"
+            android:background="#53d5ff"
+            app:carbon_cornerRadius="3dp" />
+
+        <carbon.widget.FrameLayout
+            android:id="@+id/child_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/carbon_marginHalf"
+            android:layout_weight="1"
+            android:background="#53d5ff"
+            app:carbon_cornerRadius="3dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/carbon_marginHalf"
+        android:layout_weight="1">
+
+        <carbon.widget.FrameLayout
+            android:id="@+id/child_4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/carbon_marginHalf"
+            android:layout_weight="1"
+            android:background="#53d5ff"
+            app:carbon_cornerRadius="3dp" />
+
+        <carbon.widget.FrameLayout
+            android:id="@+id/child_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/carbon_marginHalf"
+            android:layout_weight="1"
+            android:background="#53d5ff"
+            app:carbon_cornerRadius="3dp" />
+
+        <carbon.widget.FrameLayout
+            android:id="@+id/child_6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/carbon_marginHalf"
+            android:layout_weight="1"
+            android:background="#53d5ff"
+            app:carbon_cornerRadius="3dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/carbon_marginHalf"
+        android:layout_weight="1">
+
+        <carbon.widget.FrameLayout
+            android:id="@+id/child_7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/carbon_marginHalf"
+            android:layout_weight="1"
+            android:background="#53d5ff"
+            app:carbon_cornerRadius="3dp" />
+
+        <carbon.widget.FrameLayout
+            android:id="@+id/child_8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/carbon_marginHalf"
+            android:layout_weight="1"
+            android:background="#53d5ff"
+            app:carbon_cornerRadius="3dp" />
+
+        <carbon.widget.FrameLayout
+            android:id="@+id/child_9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/carbon_marginHalf"
+            android:layout_weight="1"
+            android:background="#53d5ff"
+            app:carbon_cornerRadius="3dp" />
+    </LinearLayout>
+</carbon.widget.LinearLayout>
