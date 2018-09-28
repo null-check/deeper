@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 
 import com.arjun.deeper.R;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class Cell extends LinearLayout {
     }
 
     private void setupView() {
-        children.addAll(Arrays.asList(child1, child2, child3, child4, child5, child6, child7, child8, child9));
+        children = new ArrayList<>(Arrays.asList(child1, child2, child3, child4, child5, child6, child7, child8, child9));
         hideAllChildren();
     }
 
