@@ -7,23 +7,75 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.arjun.deeper.R;
+import com.arjun.deeper.views.Cell;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import carbon.widget.LinearLayout;
 
 public class ActivityHome extends AppCompatActivity implements InterfaceHome.IActivity {
 
     @BindView(R.id.root_view)
     protected ViewGroup rootView;
 
+    @BindView(R.id.grid_root)
+    protected LinearLayout gridRoot;
+
+    @BindView(R.id.button)
+    protected ViewGroup button;
+
+    @BindView(R.id.cell_1) protected Cell cell1;
+    @BindView(R.id.cell_2) protected Cell cell2;
+    @BindView(R.id.cell_3) protected Cell cell3;
+    @BindView(R.id.cell_4) protected Cell cell4;
+    @BindView(R.id.cell_5) protected Cell cell5;
+    @BindView(R.id.cell_6) protected Cell cell6;
+    @BindView(R.id.cell_7) protected Cell cell7;
+    @BindView(R.id.cell_8) protected Cell cell8;
+    @BindView(R.id.cell_9) protected Cell cell9;
+
+    private List<Cell> children;
+
     private PresenterHome presenterHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        inflateView();
+        setupView();
+        presenterHome = new PresenterHome(this);
+    }
+
+    private void inflateView() {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        presenterHome = new PresenterHome(this);
+    }
+
+    private void setupView() {
+        children = new ArrayList<>(Arrays.asList(cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9));
+        setClickListeners();
+    }
+
+    private void setClickListeners() {
+        for (Cell child : children) {
+            child.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    presenterHome.cellClicked(child);
+                }
+            });
+        }
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenterHome.buttonClicked();
+            }
+        });
     }
 
     @Override

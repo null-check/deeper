@@ -2,6 +2,7 @@ package com.arjun.deeper.views.home;
 
 import com.arjun.deeper.baseclasses.IBasePresenter;
 import com.arjun.deeper.baseclasses.IBaseView;
+import com.arjun.deeper.views.Cell;
 
 public interface InterfaceHome {
 
@@ -12,5 +13,8 @@ public interface InterfaceHome {
 
     interface IPresenter extends IBasePresenter<IActivity> {
 
+        void cellClicked(Cell child);
+
+        void buttonClicked();
     }
 }
