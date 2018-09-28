@@ -1,9 +1,10 @@
-package com.arjun.deeper;
+package com.arjun.deeper.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
+import com.arjun.deeper.R;
 import com.arjun.deeper.utils.CommonLib;
 
 import carbon.widget.LinearLayout;
