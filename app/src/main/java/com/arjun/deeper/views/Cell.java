@@ -5,6 +5,9 @@ import android.util.AttributeSet;
 
 import com.arjun.deeper.R;
 
+import java.util.Arrays;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import carbon.widget.FrameLayout;
@@ -21,6 +24,8 @@ public class Cell extends LinearLayout {
     @BindView(R.id.child_7) protected FrameLayout child7;
     @BindView(R.id.child_8) protected FrameLayout child8;
     @BindView(R.id.child_9) protected FrameLayout child9;
+
+    private List<FrameLayout> children;
 
     public Cell(Context context) {
         super(context);
@@ -44,10 +49,58 @@ public class Cell extends LinearLayout {
 
     private void init() {
         inflateView();
+        setupView();
     }
 
     private void inflateView() {
         inflate(getContext(), R.layout.view_cell, this);
         ButterKnife.bind(this);
+    }
+
+    private void setupView() {
+        children.addAll(Arrays.asList(child1, child2, child3, child4, child5, child6, child7, child8, child9));
+        hideAllChildren();
+    }
+
+    public void showChildren(int count) {
+
+        if (count >= 9) {
+            showAllChildren();
+            return;
+        } else if (count <=0) {
+            hideAllChildren();
+            return;
+        }
+
+        for (FrameLayout child : children) {
+            if (count > 0) {
+                child.setVisibility(VISIBLE);
+                count--;
+            } else {
+                child.setVisibility(GONE);
+            }
+        }
+    }
+
+    public void showAllChildren() {
+        for (FrameLayout child : children) {
+            child.setVisibility(VISIBLE);
+        }
+    }
+
+    public void hideAllChildren() {
+        for (FrameLayout child : children) {
+            child.setVisibility(GONE);
+        }
+    }
+
+    public int getVisibleChildCount() {
+        int count = 0;
+        for (FrameLayout child : children) {
+            if (child.getVisibility() == VISIBLE) {
+                count++;
+            }
+        }
+        return count;
     }
 }
