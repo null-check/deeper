@@ -3,16 +3,24 @@ package com.arjun.deeper.views.home;
 import android.os.Handler;
 
 import com.arjun.deeper.baseclasses.BasePresenter;
+import com.arjun.deeper.utils.CommonLib;
 import com.arjun.deeper.utils.Timer;
+import com.arjun.deeper.utils.UiUtils;
 import com.arjun.deeper.views.Cell;
+
+import java.util.List;
 
 public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implements InterfaceHome.IPresenter {
 
     private final long GAME_START_TIME_MS = 10000;
 
     private int maxCount = 0;
+    private boolean isRunning = false;
+    private int score = 0;
 
     private Timer timer;
+
+    private List<Cell> children;
 
     private final Handler hideHandler = new Handler();
     private final Runnable hideRunnable = () -> {
@@ -39,7 +47,7 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
 
             @Override
             public void onFinish() {
-
+                endGame();
             }
         });
     }
@@ -64,8 +72,29 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
     }
 
     private void startGame() {
+        isRunning = true;
         reset();
+        randomizeViews();
         timer.start(GAME_START_TIME_MS);
+    }
+
+    private void endGame() {
+        isRunning = false;
+        updateTimeLeft();
+        UiUtils.showToast("Game over!");
+    }
+
+    public void randomizeViews() {
+        maxCount = 0;
+
+        for (Cell child : children) {
+//            int childCount = CommonLib.getRandomIntBetween(Math.min(difficulty / 2, 5), Math.max(7, (9 - difficulty / 2)));
+            int childCount = CommonLib.getRandomIntBetween(1, 10);
+            if (childCount > maxCount) {
+                maxCount = childCount;
+            }
+            child.showChildren(childCount);
+        }
     }
 
     private void reset() {
@@ -87,16 +116,36 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
     }
 
     @Override
+    public void setChildren(List<Cell> children) {
+        this.children = children;
+    }
+
+    @Override
     public void cellClicked(Cell child) {
         if (child.getVisibleChildCount() >= maxCount) {
-            // win
+            view.updateScore(++score);
+            randomizeViews();
+            addBonusTime();
         } else {
-            // lose
+            deductPenaltyTime();
         }
+    }
+
+    private void addBonusTime() {
+        timer.start(timer.getTimeLeft() + 1000);
+    }
+
+    private void deductPenaltyTime() {
+        timer.start(timer.getTimeLeft() - 500);
     }
 
     @Override
     public void buttonClicked() {
-        startGame();
+        if (!isRunning) startGame();
+    }
+
+    @Override
+    public boolean isRunning() {
+        return isRunning;
     }
 }

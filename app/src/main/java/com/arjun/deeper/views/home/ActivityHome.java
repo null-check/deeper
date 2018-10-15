@@ -26,6 +26,9 @@ public class ActivityHome extends AppCompatActivity implements InterfaceHome.IAc
     @BindView(R.id.time_left)
     protected TextView timeLeft;
 
+    @BindView(R.id.score_value)
+    protected TextView scoreTextView;
+
     @BindView(R.id.grid_root)
     protected LinearLayout gridRoot;
 
@@ -42,16 +45,14 @@ public class ActivityHome extends AppCompatActivity implements InterfaceHome.IAc
     @BindView(R.id.cell_8) protected Cell cell8;
     @BindView(R.id.cell_9) protected Cell cell9;
 
-    private List<Cell> children;
-
     private PresenterHome presenterHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         inflateView();
-        setupView();
         presenterHome = new PresenterHome(this);
+        setupView();
     }
 
     private void inflateView() {
@@ -60,26 +61,19 @@ public class ActivityHome extends AppCompatActivity implements InterfaceHome.IAc
     }
 
     private void setupView() {
-        children = new ArrayList<>(Arrays.asList(cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9));
-        setClickListeners();
+        List<Cell> children = new ArrayList(Arrays.asList(cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9));
+        presenterHome.setChildren(children);
+        setClickListeners(children);
     }
 
-    private void setClickListeners() {
+    private void setClickListeners(List<Cell> children) {
         for (Cell child : children) {
-            child.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    presenterHome.cellClicked(child);
-                }
+            child.setOnClickListener(view -> {
+                if (presenterHome.isRunning()) presenterHome.cellClicked(child);
             });
         }
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenterHome.buttonClicked();
-            }
-        });
+        button.setOnClickListener(view -> presenterHome.buttonClicked());
     }
 
     @Override
@@ -106,5 +100,10 @@ public class ActivityHome extends AppCompatActivity implements InterfaceHome.IAc
     @Override
     public void setTimeLeft(String timeLeftString) {
         timeLeft.setText(timeLeftString);
+    }
+
+    @Override
+    public void updateScore(int score) {
+        scoreTextView.setText(String.valueOf(score));
     }
 }

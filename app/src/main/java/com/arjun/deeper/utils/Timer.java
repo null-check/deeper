@@ -41,6 +41,7 @@ public class Timer {
                 }
             }.start();
         } else {
+            currentTimeLeft = 0;
             timerCallback.onFinish();
         }
     }

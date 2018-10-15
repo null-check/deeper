@@ -5,7 +5,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
 import com.arjun.deeper.R;
-import com.arjun.deeper.utils.CommonLib;
+import com.arjun.deeper.utils.UiUtils;
 
 import carbon.widget.LinearLayout;
 
@@ -57,7 +57,7 @@ public class SquareBox extends LinearLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         if (fitsScreen) {
-            getLayoutParams().height = CommonLib.getScreenWidth();
+            getLayoutParams().height = UiUtils.getScreenWidth();
         }
     }
 }

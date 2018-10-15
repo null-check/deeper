@@ -1,19 +1,12 @@
 package com.arjun.deeper.utils;
 
-import android.util.DisplayMetrics;
-
-import com.arjun.deeper.DeeperApplication;
+import java.util.Random;
 
 public class CommonLib {
 
-    // Move to UiUtils
-    private static final DisplayMetrics metrics = DeeperApplication.getContext().getResources().getDisplayMetrics();
+    private static Random random = new Random();
 
-    public static int getScreenWidth() {
-        return metrics.widthPixels;
-    }
-
-    public static int getScreenHeight() {
-        return metrics.heightPixels;
+    public static int getRandomIntBetween(int start, int end) {
+        return random.nextInt(end - start) + start;
     }
 }
