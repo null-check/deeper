@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.arjun.deeper.R;
 import com.arjun.deeper.views.Cell;
@@ -21,6 +22,9 @@ public class ActivityHome extends AppCompatActivity implements InterfaceHome.IAc
 
     @BindView(R.id.root_view)
     protected ViewGroup rootView;
+
+    @BindView(R.id.time_left)
+    protected TextView timeLeft;
 
     @BindView(R.id.grid_root)
     protected LinearLayout gridRoot;
@@ -97,5 +101,10 @@ public class ActivityHome extends AppCompatActivity implements InterfaceHome.IAc
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+    }
+
+    @Override
+    public void setTimeLeft(String timeLeftString) {
+        timeLeft.setText(timeLeftString);
     }
 }

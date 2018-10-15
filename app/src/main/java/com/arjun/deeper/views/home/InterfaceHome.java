@@ -9,6 +9,8 @@ public interface InterfaceHome {
     interface IActivity extends IBaseView {
 
         void hideStatusBar();
+
+        void setTimeLeft(String timeLeftString);
     }
 
     interface IPresenter extends IBasePresenter<IActivity> {

@@ -3,11 +3,16 @@ package com.arjun.deeper.views.home;
 import android.os.Handler;
 
 import com.arjun.deeper.baseclasses.BasePresenter;
+import com.arjun.deeper.utils.Timer;
 import com.arjun.deeper.views.Cell;
 
 public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implements InterfaceHome.IPresenter {
 
+    private final long GAME_START_TIME_MS = 10000;
+
     private int maxCount = 0;
+
+    private Timer timer;
 
     private final Handler hideHandler = new Handler();
     private final Runnable hideRunnable = () -> {
@@ -17,6 +22,26 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
 
     public PresenterHome(InterfaceHome.IActivity view) {
         super(view);
+    }
+
+    @Override
+    public void init() {
+        super.init();
+        setupTimer();
+    }
+
+    private void setupTimer() {
+        timer = new Timer(new Timer.TimerCallback() {
+            @Override
+            public void onTick(long timeLeft) {
+                updateTimeLeft();
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
     }
 
     @Override
@@ -38,6 +63,29 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
         hideHandler.postDelayed(hideRunnable, UI_ANIMATION_DELAY);
     }
 
+    private void startGame() {
+        reset();
+        timer.start(GAME_START_TIME_MS);
+    }
+
+    private void reset() {
+        timer.stop();
+        timer.setTimeLeft(GAME_START_TIME_MS);
+        updateTimeLeft();
+    }
+
+    private void updateTimeLeft() {
+        float timeLeftDecimal = (timer.getTimeLeft() / 100) / 10F;
+        String timeLeftString = String.valueOf(timeLeftDecimal);
+        int length = timeLeftString.length();
+        switch (length) {
+            case 1:
+                timeLeftString += ".0";
+                break;
+        }
+        view.setTimeLeft(timeLeftString);
+    }
+
     @Override
     public void cellClicked(Cell child) {
         if (child.getVisibleChildCount() >= maxCount) {
@@ -49,6 +97,6 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
 
     @Override
     public void buttonClicked() {
-
+        startGame();
     }
 }
