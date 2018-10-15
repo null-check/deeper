@@ -9,4 +9,9 @@ public class CommonLib {
     public static int getRandomIntBetween(int start, int end) {
         return random.nextInt(end - start) + start;
     }
+
+    public class Keys {
+
+        public final static String HIGH_SCORE = "high_score";
+    }
 }

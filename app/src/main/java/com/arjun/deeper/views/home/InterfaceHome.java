@@ -15,6 +15,8 @@ public interface InterfaceHome {
         void setTimeLeft(String timeLeftString);
 
         void updateScore(int score);
+
+        void updateHighScore(int score);
     }
 
     interface IPresenter extends IBasePresenter<IActivity> {

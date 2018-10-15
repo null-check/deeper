@@ -4,6 +4,7 @@ import android.os.Handler;
 
 import com.arjun.deeper.baseclasses.BasePresenter;
 import com.arjun.deeper.utils.CommonLib;
+import com.arjun.deeper.utils.DbWrapper;
 import com.arjun.deeper.utils.Timer;
 import com.arjun.deeper.utils.UiUtils;
 import com.arjun.deeper.views.Cell;
@@ -17,6 +18,7 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
     private int maxCount = 0;
     private boolean isRunning = false;
     private int score = 0;
+    private int highScore;
 
     private Timer timer;
 
@@ -36,6 +38,8 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
     public void init() {
         super.init();
         setupTimer();
+        highScore = DbWrapper.getInt(CommonLib.Keys.HIGH_SCORE, 0);
+        view.updateHighScore(highScore);
     }
 
     private void setupTimer() {
@@ -81,7 +85,18 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
     private void endGame() {
         isRunning = false;
         updateTimeLeft();
-        UiUtils.showToast("Game over!");
+        checkHighScore();
+    }
+
+    private void checkHighScore() {
+        if (score > highScore) {
+            highScore = score;
+            view.updateHighScore(highScore);
+            DbWrapper.getInstance().save(CommonLib.Keys.HIGH_SCORE, highScore).close();
+            UiUtils.showToast("New high score!");
+        } else {
+            UiUtils.showToast("Game over!");
+        }
     }
 
     public void randomizeViews() {
@@ -101,6 +116,8 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
         timer.stop();
         timer.setTimeLeft(GAME_START_TIME_MS);
         updateTimeLeft();
+        view.updateScore(score = 0);
+        view.updateHighScore(highScore);
     }
 
     private void updateTimeLeft() {

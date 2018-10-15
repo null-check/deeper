@@ -29,6 +29,9 @@ public class ActivityHome extends AppCompatActivity implements InterfaceHome.IAc
     @BindView(R.id.score_value)
     protected TextView scoreTextView;
 
+    @BindView(R.id.high_score_value)
+    protected TextView highScoreTextView;
+
     @BindView(R.id.grid_root)
     protected LinearLayout gridRoot;
 
@@ -105,5 +108,10 @@ public class ActivityHome extends AppCompatActivity implements InterfaceHome.IAc
     @Override
     public void updateScore(int score) {
         scoreTextView.setText(String.valueOf(score));
+    }
+
+    @Override
+    public void updateHighScore(int score) {
+        highScoreTextView.setText(String.valueOf(score));
     }
 }
