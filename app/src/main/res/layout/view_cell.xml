@@ -8,6 +8,7 @@
     android:paddingRight="@dimen/carbon_marginHalf"
     android:background="#33b5e5"
     android:orientation="vertical"
+    app:carbon_rippleColor="@color/carbon_white"
     app:carbon_cornerRadius="3dp">
 
     <LinearLayout
@@ -23,6 +24,7 @@
             android:layout_marginLeft="@dimen/carbon_marginHalf"
             android:layout_weight="1"
             android:background="#53d5ff"
+            app:carbon_rippleColor="@color/colorAccent"
             app:carbon_cornerRadius="3dp" />
 
         <carbon.widget.FrameLayout
@@ -32,6 +34,7 @@
             android:layout_marginLeft="@dimen/carbon_marginHalf"
             android:layout_weight="1"
             android:background="#53d5ff"
+            app:carbon_rippleColor="@color/colorAccent"
             app:carbon_cornerRadius="3dp" />
 
         <carbon.widget.FrameLayout
@@ -41,6 +44,7 @@
             android:layout_marginLeft="@dimen/carbon_marginHalf"
             android:layout_weight="1"
             android:background="#53d5ff"
+            app:carbon_rippleColor="@color/colorAccent"
             app:carbon_cornerRadius="3dp" />
     </LinearLayout>
 
@@ -57,6 +61,7 @@
             android:layout_marginLeft="@dimen/carbon_marginHalf"
             android:layout_weight="1"
             android:background="#53d5ff"
+            app:carbon_rippleColor="@color/colorAccent"
             app:carbon_cornerRadius="3dp" />
 
         <carbon.widget.FrameLayout
@@ -66,6 +71,7 @@
             android:layout_marginLeft="@dimen/carbon_marginHalf"
             android:layout_weight="1"
             android:background="#53d5ff"
+            app:carbon_rippleColor="@color/colorAccent"
             app:carbon_cornerRadius="3dp" />
 
         <carbon.widget.FrameLayout
@@ -75,6 +81,7 @@
             android:layout_marginLeft="@dimen/carbon_marginHalf"
             android:layout_weight="1"
             android:background="#53d5ff"
+            app:carbon_rippleColor="@color/colorAccent"
             app:carbon_cornerRadius="3dp" />
     </LinearLayout>
 
@@ -91,6 +98,7 @@
             android:layout_marginLeft="@dimen/carbon_marginHalf"
             android:layout_weight="1"
             android:background="#53d5ff"
+            app:carbon_rippleColor="@color/colorAccent"
             app:carbon_cornerRadius="3dp" />
 
         <carbon.widget.FrameLayout
@@ -100,6 +108,7 @@
             android:layout_marginLeft="@dimen/carbon_marginHalf"
             android:layout_weight="1"
             android:background="#53d5ff"
+            app:carbon_rippleColor="@color/colorAccent"
             app:carbon_cornerRadius="3dp" />
 
         <carbon.widget.FrameLayout
@@ -109,6 +118,7 @@
             android:layout_marginLeft="@dimen/carbon_marginHalf"
             android:layout_weight="1"
             android:background="#53d5ff"
+            app:carbon_rippleColor="@color/colorAccent"
             app:carbon_cornerRadius="3dp" />
     </LinearLayout>
 </carbon.widget.LinearLayout>

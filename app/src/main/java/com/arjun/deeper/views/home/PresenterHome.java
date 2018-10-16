@@ -11,6 +11,8 @@ import com.arjun.deeper.views.Cell;
 
 import java.util.List;
 
+import carbon.view.View;
+
 public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implements InterfaceHome.IPresenter {
 
     private final long GAME_START_TIME_MS = 10000;
@@ -77,6 +79,7 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
 
     private void startGame() {
         isRunning = true;
+        view.setButtonVisibility(View.GONE);
         reset();
         randomizeViews();
         timer.start(GAME_START_TIME_MS);
@@ -84,6 +87,7 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
 
     private void endGame() {
         isRunning = false;
+        view.setButtonVisibility(View.VISIBLE);
         updateTimeLeft();
         checkHighScore();
     }

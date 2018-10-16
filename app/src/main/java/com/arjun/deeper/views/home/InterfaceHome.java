@@ -17,6 +17,8 @@ public interface InterfaceHome {
         void updateScore(int score);
 
         void updateHighScore(int score);
+
+        void setButtonVisibility(int visibility);
     }
 
     interface IPresenter extends IBasePresenter<IActivity> {

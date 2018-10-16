@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
@@ -14,7 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:layout_margin="@dimen/carbon_margin"
+        android:layout_marginTop="@dimen/carbon_margin"
+        android:layout_marginLeft="@dimen/carbon_margin"
+        android:layout_marginRight="@dimen/carbon_margin"
         android:background="@color/carbon_white"
         android:paddingBottom="@dimen/carbon_margin"
         android:paddingTop="@dimen/carbon_margin"
@@ -90,137 +92,149 @@
         </LinearLayout>
     </carbon.widget.LinearLayout>
 
-    <com.arjun.deeper.views.SquareBox
-        android:id="@+id/grid_root"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:background="@color/carbon_white"
+        android:layout_height="0dp"
         android:layout_margin="@dimen/carbon_margin"
-        android:paddingRight="@dimen/carbon_margin"
-        android:paddingBottom="@dimen/carbon_margin"
-        app:layout_constraintTop_toBottomOf="@+id/info_bar"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:carbon_cornerRadius="3dp">
+        android:layout_weight="1">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="@dimen/carbon_margin"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
-            <com.arjun.deeper.views.Cell
-                android:id="@+id/cell_1"
-                android:layout_width="0dp"
+            <com.arjun.deeper.views.SquareBox
+                android:id="@+id/grid_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/carbon_white"
+                android:paddingRight="@dimen/carbon_margin"
+                android:paddingBottom="@dimen/carbon_margin"
+                app:layout_constraintTop_toBottomOf="@+id/info_bar"
+                app:layout_constraintBottom_toTopOf="@+id/button"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:carbon_cornerRadius="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/carbon_margin"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
+
+                    <com.arjun.deeper.views.Cell
+                        android:id="@+id/cell_1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/carbon_margin"
+                        android:layout_weight="1"/>
+
+                    <com.arjun.deeper.views.Cell
+                        android:id="@+id/cell_2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/carbon_margin"
+                        android:layout_weight="1"/>
+
+                    <com.arjun.deeper.views.Cell
+                        android:id="@+id/cell_3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/carbon_margin"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/carbon_margin"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
+
+                    <com.arjun.deeper.views.Cell
+                        android:id="@+id/cell_4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/carbon_margin"
+                        android:layout_weight="1"/>
+
+                    <com.arjun.deeper.views.Cell
+                        android:id="@+id/cell_5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/carbon_margin"
+                        android:layout_weight="1"/>
+
+                    <com.arjun.deeper.views.Cell
+                        android:id="@+id/cell_6"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/carbon_margin"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/carbon_margin"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
+
+                    <com.arjun.deeper.views.Cell
+                        android:id="@+id/cell_7"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/carbon_margin"
+                        android:layout_weight="1"/>
+
+                    <com.arjun.deeper.views.Cell
+                        android:id="@+id/cell_8"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/carbon_margin"
+                        android:layout_weight="1"/>
+
+                    <com.arjun.deeper.views.Cell
+                        android:id="@+id/cell_9"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/carbon_margin"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+            </com.arjun.deeper.views.SquareBox>
+
+            <TextView
+                android:id="@+id/button"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
-                android:layout_weight="1"/>
+                android:gravity="center"
+                android:text="Click to start"
+                android:background="#55000000"
+                android:textColor="#53d5ff"
+                android:textSize="50sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+    </FrameLayout>
 
-            <com.arjun.deeper.views.Cell
-                android:id="@+id/cell_2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
-                android:layout_weight="1"/>
-
-            <com.arjun.deeper.views.Cell
-                android:id="@+id/cell_3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
-                android:layout_weight="1"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="@dimen/carbon_margin"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
-
-            <com.arjun.deeper.views.Cell
-                android:id="@+id/cell_4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
-                android:layout_weight="1"/>
-
-            <com.arjun.deeper.views.Cell
-                android:id="@+id/cell_5"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
-                android:layout_weight="1"/>
-
-            <com.arjun.deeper.views.Cell
-                android:id="@+id/cell_6"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
-                android:layout_weight="1"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="@dimen/carbon_margin"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
-
-            <com.arjun.deeper.views.Cell
-                android:id="@+id/cell_7"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
-                android:layout_weight="1"/>
-
-            <com.arjun.deeper.views.Cell
-                android:id="@+id/cell_8"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
-                android:layout_weight="1"/>
-
-            <com.arjun.deeper.views.Cell
-                android:id="@+id/cell_9"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
-                android:layout_weight="1"/>
-        </LinearLayout>
-    </com.arjun.deeper.views.SquareBox>
-
-    <carbon.widget.FrameLayout
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="@dimen/carbon_margin"
-        android:background="#33b5e5"
-        android:paddingBottom="@dimen/carbon_paddingHalf"
-        android:paddingLeft="@dimen/carbon_padding"
-        android:paddingRight="@dimen/carbon_padding"
-        android:paddingTop="@dimen/carbon_paddingHalf"
-        app:carbon_cornerRadius="3dp"
-        app:carbon_rippleColor="@color/carbon_white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="START"
-            android:textColor="#53d5ff"
-            android:textSize="50sp"
-            android:textStyle="bold" />
-    </carbon.widget.FrameLayout>
-</FrameLayout>
+    <!--<carbon.widget.FrameLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom|center_horizontal"-->
+        <!--android:layout_marginBottom="@dimen/carbon_margin"-->
+        <!--android:background="#33b5e5"-->
+        <!--android:paddingBottom="@dimen/carbon_paddingHalf"-->
+        <!--android:paddingLeft="@dimen/carbon_padding"-->
+        <!--android:paddingRight="@dimen/carbon_padding"-->
+        <!--android:paddingTop="@dimen/carbon_paddingHalf"-->
+        <!--app:carbon_cornerRadius="3dp"-->
+        <!--app:carbon_rippleColor="@color/carbon_white"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent">-->
+    <!--</carbon.widget.FrameLayout>-->
+</LinearLayout>

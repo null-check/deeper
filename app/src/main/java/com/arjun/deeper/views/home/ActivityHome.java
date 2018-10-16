@@ -36,7 +36,7 @@ public class ActivityHome extends AppCompatActivity implements InterfaceHome.IAc
     protected LinearLayout gridRoot;
 
     @BindView(R.id.button)
-    protected ViewGroup button;
+    protected View button;
 
     @BindView(R.id.cell_1) protected Cell cell1;
     @BindView(R.id.cell_2) protected Cell cell2;
@@ -113,5 +113,10 @@ public class ActivityHome extends AppCompatActivity implements InterfaceHome.IAc
     @Override
     public void updateHighScore(int score) {
         highScoreTextView.setText(String.valueOf(score));
+    }
+
+    @Override
+    public void setButtonVisibility(int visibility) {
+        button.setVisibility(visibility);
     }
 }
