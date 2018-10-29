@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import com.arjun.deeper.R;
+import com.arjun.deeper.utils.CommonLib;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +29,8 @@ public class Cell extends LinearLayout {
 
     private List<FrameLayout> children;
 
-    private int subcellHideMode = INVISIBLE;
+    private int subcellHideMode;
+    private boolean chooseRandomSubcell;
 
     public Cell(Context context) {
         super(context);
@@ -51,6 +53,7 @@ public class Cell extends LinearLayout {
     }
 
     private void init() {
+        resetAttributes();
         inflateView();
         setupView();
     }
@@ -75,12 +78,31 @@ public class Cell extends LinearLayout {
             return;
         }
 
-        for (FrameLayout child : children) {
-            if (count > 0) {
-                child.setVisibility(VISIBLE);
-                count--;
+        if (chooseRandomSubcell) {
+            int visibility;
+            if (count < 4) {
+                hideAllChildren();
+                visibility = VISIBLE;
             } else {
-                child.setVisibility(subcellHideMode);
+                showAllChildren();
+                visibility = subcellHideMode;
+            }
+
+            while (count > 0) {
+                FrameLayout child = children.get(CommonLib.getRandomIntBetween(0, 8));
+                if (child.getVisibility() != visibility) {
+                    child.setVisibility(visibility);
+                    count--;
+                }
+            }
+        } else {
+            for (FrameLayout child : children) {
+                if (count > 0) {
+                    child.setVisibility(VISIBLE);
+                    count--;
+                } else {
+                    child.setVisibility(subcellHideMode);
+                }
             }
         }
     }
@@ -109,5 +131,14 @@ public class Cell extends LinearLayout {
 
     public void setSubcellHideMode(int subcellHideMode) {
         this.subcellHideMode = subcellHideMode;
+    }
+
+    public void setChooseRandomSubcell(boolean chooseRandomSubcell) {
+        this.chooseRandomSubcell = chooseRandomSubcell;
+    }
+
+    public void resetAttributes() {
+        subcellHideMode = INVISIBLE;
+        chooseRandomSubcell = false;
     }
 }

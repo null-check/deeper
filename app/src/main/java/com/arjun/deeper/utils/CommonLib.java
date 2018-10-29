@@ -7,7 +7,7 @@ public class CommonLib {
     private static Random random = new Random();
 
     public static int getRandomIntBetween(int start, int end) {
-        return random.nextInt(end - start) + start;
+        return random.nextInt(1 + end - start) + start;
     }
 
     public class Keys {

@@ -16,10 +16,17 @@ import carbon.view.View;
 public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implements InterfaceHome.IPresenter {
 
     private final long GAME_START_TIME_MS = 10000;
+    private final int LEVEL_STEPS_DEFAULT = 3;
+    private final int DIFFICULTY_STEPS_DEFAULT = 3;
 
-    private int maxCount = 0;
+    private int stage;
+    private int levelSteps;
+    private int levelStepsCount;
+    private int difficulty;
+
+    private int maxCount;
     private boolean isRunning = false;
-    private int score = 0;
+    private int score;
     private int highScore;
 
     private Timer timer;
@@ -103,12 +110,12 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
         }
     }
 
-    public void randomizeViews() {
+    private void randomizeViews() {
         maxCount = 0;
 
         for (Cell child : children) {
-//            int childCount = CommonLib.getRandomIntBetween(Math.min(difficulty / 2, 5), Math.max(7, (9 - difficulty / 2)));
-            int childCount = CommonLib.getRandomIntBetween(1, 10);
+            int childCount = CommonLib.getRandomIntBetween(Math.min(1 + difficulty/2, 5), Math.max(7, (9 - difficulty / 2)));
+//            int childCount = CommonLib.getRandomIntBetween(1, 10);
             if (childCount > maxCount) {
                 maxCount = childCount;
             }
@@ -122,6 +129,13 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
         updateTimeLeft();
         view.updateScore(score = 0);
         view.updateHighScore(highScore);
+        stage = 1;
+        difficulty = 1;
+        levelStepsCount = 0;
+        levelSteps = LEVEL_STEPS_DEFAULT;
+        for (Cell child : children) {
+            child.resetAttributes();
+        }
     }
 
     private void updateTimeLeft() {
@@ -143,13 +157,33 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
 
     @Override
     public void cellClicked(Cell child) {
-        if (child.getVisibleChildCount() >= maxCount) {
+        if (isCorrectCell(child)) {
             view.updateScore(++score);
             randomizeViews();
             addBonusTime();
+            increaseDifficulty();
         } else {
             deductPenaltyTime();
         }
+    }
+
+    private void increaseDifficulty() {
+        if (++levelStepsCount == levelSteps) {
+            levelStepsCount = 0;
+            if (++difficulty == DIFFICULTY_STEPS_DEFAULT) {
+                difficulty = 1;
+                switch (++stage) {
+                    case 2:
+                        for (Cell child : children) {
+                            child.setChooseRandomSubcell(true);
+                        }
+                }
+            }
+        }
+    }
+
+    private boolean isCorrectCell(Cell child) {
+        return child.getVisibleChildCount() >= maxCount;
     }
 
     private void addBonusTime() {
