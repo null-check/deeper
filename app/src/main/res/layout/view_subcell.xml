@@ -1,0 +1,10 @@
+<carbon.widget.FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/child_1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/carbon_marginHalf"
+    android:layout_weight="1"
+    android:background="#53d5ff"
+    app:carbon_cornerRadius="3dp" />

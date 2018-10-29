@@ -17,32 +17,17 @@
         android:paddingTop="@dimen/carbon_marginHalf"
         android:layout_weight="1">
 
-        <carbon.widget.FrameLayout
+        <include
             android:id="@+id/child_1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/carbon_marginHalf"
-            android:layout_weight="1"
-            android:background="#53d5ff"
-            app:carbon_cornerRadius="3dp" />
+            layout="@layout/view_subcell" />
 
-        <carbon.widget.FrameLayout
+        <include
             android:id="@+id/child_2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/carbon_marginHalf"
-            android:layout_weight="1"
-            android:background="#53d5ff"
-            app:carbon_cornerRadius="3dp" />
+            layout="@layout/view_subcell" />
 
-        <carbon.widget.FrameLayout
+        <include
             android:id="@+id/child_3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/carbon_marginHalf"
-            android:layout_weight="1"
-            android:background="#53d5ff"
-            app:carbon_cornerRadius="3dp" />
+            layout="@layout/view_subcell" />
     </LinearLayout>
 
     <LinearLayout
@@ -51,32 +36,17 @@
         android:paddingTop="@dimen/carbon_marginHalf"
         android:layout_weight="1">
 
-        <carbon.widget.FrameLayout
+        <include
             android:id="@+id/child_4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/carbon_marginHalf"
-            android:layout_weight="1"
-            android:background="#53d5ff"
-            app:carbon_cornerRadius="3dp" />
+            layout="@layout/view_subcell" />
 
-        <carbon.widget.FrameLayout
+        <include
             android:id="@+id/child_5"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/carbon_marginHalf"
-            android:layout_weight="1"
-            android:background="#53d5ff"
-            app:carbon_cornerRadius="3dp" />
+            layout="@layout/view_subcell" />
 
-        <carbon.widget.FrameLayout
+        <include
             android:id="@+id/child_6"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/carbon_marginHalf"
-            android:layout_weight="1"
-            android:background="#53d5ff"
-            app:carbon_cornerRadius="3dp" />
+            layout="@layout/view_subcell" />
     </LinearLayout>
 
     <LinearLayout
@@ -85,31 +55,16 @@
         android:paddingTop="@dimen/carbon_marginHalf"
         android:layout_weight="1">
 
-        <carbon.widget.FrameLayout
+        <include
             android:id="@+id/child_7"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/carbon_marginHalf"
-            android:layout_weight="1"
-            android:background="#53d5ff"
-            app:carbon_cornerRadius="3dp" />
+            layout="@layout/view_subcell" />
 
-        <carbon.widget.FrameLayout
+        <include
             android:id="@+id/child_8"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/carbon_marginHalf"
-            android:layout_weight="1"
-            android:background="#53d5ff"
-            app:carbon_cornerRadius="3dp" />
+            layout="@layout/view_subcell" />
 
-        <carbon.widget.FrameLayout
+        <include
             android:id="@+id/child_9"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/carbon_marginHalf"
-            android:layout_weight="1"
-            android:background="#53d5ff"
-            app:carbon_cornerRadius="3dp" />
+            layout="@layout/view_subcell" />
     </LinearLayout>
 </carbon.widget.LinearLayout>
