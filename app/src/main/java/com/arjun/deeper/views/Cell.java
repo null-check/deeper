@@ -28,6 +28,8 @@ public class Cell extends LinearLayout {
 
     private List<FrameLayout> children;
 
+    private int subcellHideMode = INVISIBLE;
+
     public Cell(Context context) {
         super(context);
         init();
@@ -78,7 +80,7 @@ public class Cell extends LinearLayout {
                 child.setVisibility(VISIBLE);
                 count--;
             } else {
-                child.setVisibility(GONE);
+                child.setVisibility(subcellHideMode);
             }
         }
     }
@@ -91,7 +93,7 @@ public class Cell extends LinearLayout {
 
     public void hideAllChildren() {
         for (FrameLayout child : children) {
-            child.setVisibility(GONE);
+            child.setVisibility(subcellHideMode);
         }
     }
 
@@ -103,5 +105,9 @@ public class Cell extends LinearLayout {
             }
         }
         return count;
+    }
+
+    public void setSubcellHideMode(int subcellHideMode) {
+        this.subcellHideMode = subcellHideMode;
     }
 }
