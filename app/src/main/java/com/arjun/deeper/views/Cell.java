@@ -2,6 +2,7 @@ package com.arjun.deeper.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 import com.arjun.deeper.R;
 import com.arjun.deeper.utils.CommonLib;
@@ -13,9 +14,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import carbon.widget.FrameLayout;
-import carbon.widget.LinearLayout;
 
-public class Cell extends LinearLayout {
+public class Cell extends FrameLayout {
+
+    private final boolean SHOW_COUNT = false;
 
     @BindView(R.id.child_1) protected FrameLayout child1;
     @BindView(R.id.child_2) protected FrameLayout child2;
@@ -26,6 +28,8 @@ public class Cell extends LinearLayout {
     @BindView(R.id.child_7) protected FrameLayout child7;
     @BindView(R.id.child_8) protected FrameLayout child8;
     @BindView(R.id.child_9) protected FrameLayout child9;
+
+    @BindView(R.id.child_count) protected TextView childCount;
 
     private List<FrameLayout> children;
 
@@ -66,10 +70,12 @@ public class Cell extends LinearLayout {
     private void setupView() {
         children = new ArrayList<>(Arrays.asList(child1, child2, child3, child4, child5, child6, child7, child8, child9));
         hideAllChildren();
+        if (SHOW_COUNT) childCount.setVisibility(VISIBLE);
     }
 
     public void showChildren(int count) {
 
+        if (SHOW_COUNT) childCount.setText(String.valueOf(count));
         if (count >= 9) {
             showAllChildren();
             return;
@@ -84,6 +90,7 @@ public class Cell extends LinearLayout {
                 hideAllChildren();
                 visibility = VISIBLE;
             } else {
+                count = 9 - count;
                 showAllChildren();
                 visibility = subcellHideMode;
             }
