@@ -16,13 +16,13 @@ import carbon.view.View;
 public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implements InterfaceHome.IPresenter {
 
     private final long GAME_START_TIME_MS = 10000;
-    private final int LEVEL_STEPS_DEFAULT = 3;
-    private final int DIFFICULTY_STEPS_DEFAULT = 3;
+    private final int LEVEL_STEPS = 3;
+    private final int DIFFICULTY_STEPS = 3;
 
     private int stage;
-    private int levelSteps;
     private int levelStepsCount;
     private int difficulty;
+    private boolean enableRotatedCells;
 
     private int maxCount;
     private boolean isRunning = false;
@@ -120,6 +120,7 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
                 maxCount = childCount;
             }
             child.showChildren(childCount);
+            if (enableRotatedCells) child.setRotation(CommonLib.getRandomBoolean() ? 0 : 90);
         }
     }
 
@@ -132,8 +133,9 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
         stage = 1;
         difficulty = 1;
         levelStepsCount = 0;
-        levelSteps = LEVEL_STEPS_DEFAULT;
+        enableRotatedCells = false;
         for (Cell child : children) {
+            child.setRotation(0);
             child.resetAttributes();
         }
     }
@@ -158,25 +160,38 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
     @Override
     public void cellClicked(Cell child) {
         if (isCorrectCell(child)) {
-            view.updateScore(++score);
-            randomizeViews();
             addBonusTime();
             increaseDifficulty();
+            view.updateScore(++score);
+            randomizeViews();
         } else {
             deductPenaltyTime();
         }
     }
 
     private void increaseDifficulty() {
-        if (++levelStepsCount == levelSteps) {
+        if (++levelStepsCount == LEVEL_STEPS) {
             levelStepsCount = 0;
-            if (++difficulty == DIFFICULTY_STEPS_DEFAULT) {
-                difficulty = 1;
+            if (++difficulty % DIFFICULTY_STEPS == 0) {
                 switch (++stage) {
                     case 2:
+                        enableRotatedCells = true;
+                        break;
+                    case 3:
                         for (Cell child : children) {
                             child.setChooseRandomSubcell(true);
                         }
+                        break;
+                    case 4:
+                        for (Cell child : children) {
+                            child.setSubcellShape(Cell.SubcellShape.RANDOM);
+                        }
+                        break;
+                    case 5:
+                        for (Cell child : children) {
+                            child.setSubcellHideMode(View.GONE);
+                        }
+                        break;
                 }
             }
         }

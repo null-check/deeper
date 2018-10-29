@@ -7,6 +7,8 @@ import com.arjun.deeper.DeeperApplication;
 
 public class UiUtils {
 
+    public static final float DEFAULT_CORNER_RADIUS = UiUtils.convertDpToPx(3);
+
     private static final DisplayMetrics metrics = DeeperApplication.getContext().getResources().getDisplayMetrics();
 
     public static int getScreenWidth() {
@@ -15,6 +17,10 @@ public class UiUtils {
 
     public static int getScreenHeight() {
         return metrics.heightPixels;
+    }
+
+    public static float convertDpToPx(float dp) {
+        return dp * DeeperApplication.getContext().getResources().getDisplayMetrics().density;
     }
 
     public static void showToast(String text) {

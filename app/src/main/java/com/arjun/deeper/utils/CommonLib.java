@@ -10,6 +10,10 @@ public class CommonLib {
         return random.nextInt(1 + end - start) + start;
     }
 
+    public static boolean getRandomBoolean() {
+        return random.nextBoolean();
+    }
+
     public class Keys {
 
         public final static String HIGH_SCORE = "high_score";
