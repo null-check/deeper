@@ -188,9 +188,10 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
                         }
                         break;
                     case 5:
-                        for (Cell child : children) {
-                            child.setSubcellHideMode(View.GONE);
-                        }
+//                        Disable this difficulty as setting to gone makes visible views abruptly expand after remaining views have finished animating (and are set to gone)
+//                        for (Cell child : children) {
+//                            child.setSubcellHideMode(View.GONE);
+//                        }
                         break;
                 }
             }

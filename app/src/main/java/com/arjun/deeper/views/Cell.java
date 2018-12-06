@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.arjun.deeper.R;
+import com.arjun.deeper.utils.AnimationUtils;
 import com.arjun.deeper.utils.CommonLib;
 import com.arjun.deeper.utils.UiUtils;
 
@@ -18,7 +19,7 @@ import carbon.widget.FrameLayout;
 
 public class Cell extends FrameLayout {
 
-    private final boolean SHOW_COUNT = false;
+    private final boolean SHOW_COUNT = true;
     private final float SQUARE_CORNER_RADIUS = UiUtils.DEFAULT_CORNER_RADIUS;
     private final float CIRCLE_CORNER_RADIUS = 1000;
 
@@ -108,7 +109,11 @@ public class Cell extends FrameLayout {
             while (count > 0) {
                 FrameLayout child = children.get(CommonLib.getRandomIntBetween(0, 8));
                 if (child.getVisibility() != visibility) {
-                    child.setVisibility(visibility);
+                    if (visibility == VISIBLE) {
+                        showSubcell(child);
+                    } else {
+                        hideSubcell(child);
+                    }
                     if (subcellShape == SubcellShape.RANDOM) child.setCornerRadius(CommonLib.getRandomBoolean() ? SQUARE_CORNER_RADIUS : CIRCLE_CORNER_RADIUS);
                     count--;
                 }
@@ -116,11 +121,11 @@ public class Cell extends FrameLayout {
         } else {
             for (FrameLayout child : children) {
                 if (count > 0) {
-                    child.setVisibility(VISIBLE);
+                    showSubcell(child);
                     if (subcellShape == SubcellShape.RANDOM) child.setCornerRadius(CommonLib.getRandomBoolean() ? SQUARE_CORNER_RADIUS : CIRCLE_CORNER_RADIUS);
                     count--;
                 } else {
-                    child.setVisibility(subcellHideMode);
+                    hideSubcell(child);
                 }
             }
         }
@@ -128,14 +133,14 @@ public class Cell extends FrameLayout {
 
     public void showAllChildren() {
         for (FrameLayout child : children) {
-            child.setVisibility(VISIBLE);
+            showSubcell(child);
             if (subcellShape == SubcellShape.RANDOM) child.setCornerRadius(CommonLib.getRandomBoolean() ? SQUARE_CORNER_RADIUS : CIRCLE_CORNER_RADIUS);
         }
     }
 
     public void hideAllChildren() {
         for (FrameLayout child : children) {
-            child.setVisibility(subcellHideMode);
+            hideSubcell(child);
         }
     }
 
@@ -186,5 +191,13 @@ public class Cell extends FrameLayout {
         chooseRandomSubcell = false;
         subcellShape = SubcellShape.SQUARE;
         if (children != null) updateSubcells();
+    }
+
+    private void showSubcell(FrameLayout subcell) {
+        AnimationUtils.popInView(subcell);
+    }
+
+    private void hideSubcell(FrameLayout subcell) {
+        if (subcell.getVisibility() == VISIBLE) AnimationUtils.popOutView(subcell, subcellHideMode);
     }
 }
