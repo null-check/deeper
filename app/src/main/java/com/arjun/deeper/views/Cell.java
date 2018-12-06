@@ -33,13 +33,14 @@ public class Cell extends FrameLayout {
     @BindView(R.id.child_8) protected FrameLayout child8;
     @BindView(R.id.child_9) protected FrameLayout child9;
 
-    @BindView(R.id.child_count) protected TextView childCount;
+    @BindView(R.id.child_count) protected TextView childCountTv;
 
     private List<FrameLayout> children;
 
     private int subcellHideMode;
     private boolean chooseRandomSubcell;
     private SubcellShape subcellShape;
+    private int childCount;
 
     public enum SubcellShape {
         SQUARE,
@@ -81,12 +82,13 @@ public class Cell extends FrameLayout {
     private void setupView() {
         children = new ArrayList<>(Arrays.asList(child1, child2, child3, child4, child5, child6, child7, child8, child9));
         hideAllChildren();
-        if (SHOW_COUNT) childCount.setVisibility(VISIBLE);
+        if (SHOW_COUNT) childCountTv.setVisibility(VISIBLE);
     }
 
     public void showChildren(int count) {
 
-        if (SHOW_COUNT) childCount.setText(String.valueOf(count));
+        if (SHOW_COUNT) childCountTv.setText(String.valueOf(count));
+        childCount = count;
         if (count >= 9) {
             showAllChildren();
             return;
@@ -199,5 +201,9 @@ public class Cell extends FrameLayout {
 
     private void hideSubcell(FrameLayout subcell) {
         if (subcell.getVisibility() == VISIBLE) AnimationUtils.popOutView(subcell, subcellHideMode);
+    }
+
+    public int getChildCellCount() {
+        return childCount;
     }
 }

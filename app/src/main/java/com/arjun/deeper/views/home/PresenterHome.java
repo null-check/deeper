@@ -199,7 +199,7 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
     }
 
     private boolean isCorrectCell(Cell child) {
-        return child.getVisibleChildCount() >= maxCount;
+        return child.getChildCellCount() >= maxCount;
     }
 
     private void addBonusTime() {
