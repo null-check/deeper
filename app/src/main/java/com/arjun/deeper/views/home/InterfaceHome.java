@@ -10,8 +10,6 @@ public interface InterfaceHome {
 
     interface IActivity extends IBaseView {
 
-        void hideStatusBar();
-
         void setTimeLeft(String timeLeftString);
 
         void updateScore(int score);
