@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.arjun.deeper.R;
 import com.arjun.deeper.views.Cell;
+import com.arjun.deeper.views.MenuButtonView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +41,18 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @BindView(R.id.button)
     protected View button;
 
+    @BindView(R.id.menu_container)
+    protected ViewGroup menuContainer;
+
+    @BindView(R.id.play_button)
+    protected MenuButtonView playButton;
+
+    @BindView(R.id.tutorial_button)
+    protected MenuButtonView tutorialButton;
+
+    @BindView(R.id.scoreboard_button)
+    protected MenuButtonView scoreboardButton;
+
     @BindView(R.id.cell_1) protected Cell cell1;
     @BindView(R.id.cell_2) protected Cell cell2;
     @BindView(R.id.cell_3) protected Cell cell3;
@@ -49,6 +62,13 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @BindView(R.id.cell_7) protected Cell cell7;
     @BindView(R.id.cell_8) protected Cell cell8;
     @BindView(R.id.cell_9) protected Cell cell9;
+
+    enum ButtonId {
+        PLAY,
+        TUTORIAL,
+        SCOREBOARD,
+        CELL
+    }
 
     private PresenterPlay presenterPlay;
 
@@ -82,7 +102,10 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
             });
         }
 
-        button.setOnClickListener(view -> presenterPlay.buttonClicked());
+        playButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.PLAY));
+        tutorialButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.TUTORIAL));
+        scoreboardButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.SCOREBOARD));
+        button.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.CELL));
     }
 
     @Override
@@ -103,5 +126,15 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @Override
     public void setButtonVisibility(int visibility) {
         button.setVisibility(visibility);
+    }
+
+    @Override
+    public void showMenu() {
+        menuContainer.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideMenu() {
+        menuContainer.setVisibility(View.GONE);
     }
 }

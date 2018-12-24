@@ -17,6 +17,10 @@ public interface InterfacePlay {
         void updateHighScore(int score);
 
         void setButtonVisibility(int visibility);
+
+        void showMenu();
+
+        void hideMenu();
     }
 
     interface IPresenter extends IBasePresenter<IView> {
@@ -25,7 +29,7 @@ public interface InterfacePlay {
 
         void cellClicked(Cell child);
 
-        void buttonClicked();
+        void buttonClicked(FragmentPlay.ButtonId buttonId);
 
         boolean isRunning();
     }

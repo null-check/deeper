@@ -196,8 +196,15 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     }
 
     @Override
-    public void buttonClicked() {
-        if (!isRunning) startGame();
+    public void buttonClicked(FragmentPlay.ButtonId buttonId) {
+        switch (buttonId) {
+            case PLAY:
+                view.hideMenu();
+                break;
+            case CELL:
+                if (!isRunning) startGame();
+                break;
+        }
     }
 
     @Override
