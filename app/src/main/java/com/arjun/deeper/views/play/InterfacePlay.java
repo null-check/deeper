@@ -1,4 +1,4 @@
-package com.arjun.deeper.views.home;
+package com.arjun.deeper.views.play;
 
 import com.arjun.deeper.baseclasses.IBasePresenter;
 import com.arjun.deeper.baseclasses.IBaseView;
@@ -6,9 +6,9 @@ import com.arjun.deeper.views.Cell;
 
 import java.util.List;
 
-public interface InterfaceHome {
+public interface InterfacePlay {
 
-    interface IActivity extends IBaseView {
+    interface IView extends IBaseView {
 
         void setTimeLeft(String timeLeftString);
 
@@ -19,7 +19,7 @@ public interface InterfaceHome {
         void setButtonVisibility(int visibility);
     }
 
-    interface IPresenter extends IBasePresenter<IActivity> {
+    interface IPresenter extends IBasePresenter<IView> {
 
         void setChildren(List<Cell>children);
 

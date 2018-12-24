@@ -1,4 +1,4 @@
-package com.arjun.deeper.views.home;
+package com.arjun.deeper.views.play;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import carbon.widget.LinearLayout;
 
-public class FragmentHome extends Fragment implements InterfaceHome.IActivity {
+public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
     @BindView(R.id.root_view)
     protected ViewGroup rootView;
@@ -50,38 +50,39 @@ public class FragmentHome extends Fragment implements InterfaceHome.IActivity {
     @BindView(R.id.cell_8) protected Cell cell8;
     @BindView(R.id.cell_9) protected Cell cell9;
 
-    private PresenterHome presenterHome;
+    private PresenterPlay presenterPlay;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        presenterPlay = new PresenterPlay(this);
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_play, container, false);
         ButterKnife.bind(this, rootView);
-        presenterHome = new PresenterHome(this);
+        presenterPlay.onCreateView(savedInstanceState, this, container);
         setupView();
 
         return rootView;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
     private void setupView() {
         List<Cell> children = new ArrayList(Arrays.asList(cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9));
-        presenterHome.setChildren(children);
+        presenterPlay.setChildren(children);
         setClickListeners(children);
     }
 
     private void setClickListeners(List<Cell> children) {
         for (Cell child : children) {
             child.setOnClickListener(view -> {
-                if (presenterHome.isRunning()) presenterHome.cellClicked(child);
+                if (presenterPlay.isRunning()) presenterPlay.cellClicked(child);
             });
         }
 
-        button.setOnClickListener(view -> presenterHome.buttonClicked());
+        button.setOnClickListener(view -> presenterPlay.buttonClicked());
     }
 
     @Override

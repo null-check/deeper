@@ -19,7 +19,7 @@ import carbon.widget.FrameLayout;
 
 public class Cell extends FrameLayout {
 
-    private final boolean SHOW_COUNT = true;
+    private final boolean SHOW_COUNT = false;
     private final float SQUARE_CORNER_RADIUS = UiUtils.DEFAULT_CORNER_RADIUS;
     private final float CIRCLE_CORNER_RADIUS = 1000;
 

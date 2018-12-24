@@ -1,4 +1,6 @@
-package com.arjun.deeper.views.home;
+package com.arjun.deeper.views.play;
+
+import android.os.Bundle;
 
 import com.arjun.deeper.baseclasses.BasePresenter;
 import com.arjun.deeper.utils.CommonLib;
@@ -11,7 +13,7 @@ import java.util.List;
 
 import carbon.view.View;
 
-public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implements InterfaceHome.IPresenter {
+public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements InterfacePlay.IPresenter {
 
     private final long GAME_START_TIME_MS = 10000;
     private final int LEVEL_STEPS = 3;
@@ -31,7 +33,7 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
 
     private List<Cell> children;
 
-    public PresenterHome(InterfaceHome.IActivity view) {
+    public PresenterPlay(InterfacePlay.IView view) {
         super(view);
     }
 
@@ -39,6 +41,11 @@ public class PresenterHome extends BasePresenter<InterfaceHome.IActivity> implem
     public void init() {
         super.init();
         setupTimer();
+    }
+
+    @Override
+    public void onCreateView(Bundle bundle, InterfacePlay.IView view, android.view.View fragmentContainer) {
+        super.onCreateView(bundle, view, fragmentContainer);
         highScore = DbWrapper.getInt(CommonLib.Keys.HIGH_SCORE, 0);
         view.updateHighScore(highScore);
     }

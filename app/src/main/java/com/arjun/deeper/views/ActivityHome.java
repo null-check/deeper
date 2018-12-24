@@ -1,4 +1,4 @@
-package com.arjun.deeper.views.home;
+package com.arjun.deeper.views;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.arjun.deeper.R;
+import com.arjun.deeper.interfaces.FragmentMenuCallback;
+import com.arjun.deeper.views.menu.FragmentMenu;
+import com.arjun.deeper.views.play.FragmentPlay;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,6 +19,11 @@ public class ActivityHome extends AppCompatActivity {
 
     @BindView(R.id.root_view)
     protected ViewGroup rootView;
+
+    enum FragmentId {
+        MENU,
+        PLAY
+    }
 
     private final Handler hideHandler = new Handler();
     private final Runnable hideRunnable = () -> {
@@ -27,7 +35,7 @@ public class ActivityHome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         inflateView();
-        loadFragment();
+        loadFragment(FragmentId.MENU);
     }
 
     private void inflateView() {
@@ -35,9 +43,27 @@ public class ActivityHome extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    private void loadFragment() {
-        FragmentHome fragmentHome = new FragmentHome();
-        getSupportFragmentManager().beginTransaction().replace(R.id.root_view, fragmentHome).addToBackStack(null).commit();
+    private void loadFragment(FragmentId fragmentId) {
+        switch (fragmentId) {
+            case MENU:
+                FragmentMenu fragmentMenu = new FragmentMenu();
+                fragmentMenu.setFragmentMenuCallback(getFragmentMenuCallback());
+                getSupportFragmentManager().beginTransaction().replace(R.id.root_view, fragmentMenu).commit();
+                break;
+            case PLAY:
+                FragmentPlay fragmentPlay = new FragmentPlay();
+                getSupportFragmentManager().beginTransaction().replace(R.id.root_view, fragmentPlay).addToBackStack(null).commit();
+                break;
+        }
+    }
+
+    private FragmentMenuCallback getFragmentMenuCallback() {
+        return new FragmentMenuCallback() {
+            @Override
+            public void playButtonClicked() {
+                loadFragment(FragmentId.PLAY);
+            }
+        };
     }
 
     @Override
