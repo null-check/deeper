@@ -16,7 +16,9 @@ public interface InterfacePlay {
 
         void updateHighScore(int score);
 
-        void setButtonVisibility(int visibility);
+        void setCellButtonVisibility(int visibility);
+
+        void setCellButtonText(String text);
 
         void showMenu();
 
@@ -30,7 +32,5 @@ public interface InterfacePlay {
         void cellClicked(Cell child);
 
         void buttonClicked(FragmentPlay.ButtonId buttonId);
-
-        boolean isRunning();
     }
 }

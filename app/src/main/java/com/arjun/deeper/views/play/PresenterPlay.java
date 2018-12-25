@@ -1,10 +1,14 @@
 package com.arjun.deeper.views.play;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 
+import com.arjun.deeper.R;
 import com.arjun.deeper.baseclasses.BasePresenter;
+import com.arjun.deeper.singletons.GameStateSingleton;
 import com.arjun.deeper.utils.CommonLib;
 import com.arjun.deeper.utils.DbWrapper;
+import com.arjun.deeper.utils.StringUtils;
 import com.arjun.deeper.utils.Timer;
 import com.arjun.deeper.utils.UiUtils;
 import com.arjun.deeper.views.Cell;
@@ -25,7 +29,6 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     private boolean enableRotatedCells;
 
     private int maxCount;
-    private boolean isRunning = false;
     private int score;
     private int highScore;
 
@@ -70,16 +73,17 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     }
 
     private void startGame() {
-        isRunning = true;
-        view.setButtonVisibility(View.GONE);
+        setGameState(GameStateSingleton.GameState.RUNNING);
+        view.setCellButtonVisibility(View.GONE);
         reset();
         randomizeViews();
         timer.start(GAME_START_TIME_MS);
     }
 
     private void endGame() {
-        isRunning = false;
-        view.setButtonVisibility(View.VISIBLE);
+        setGameState(GameStateSingleton.GameState.STOPPED);
+        view.setCellButtonVisibility(View.VISIBLE);
+        view.setCellButtonText(StringUtils.getString(R.string.retry));
         updateTimeLeft();
         checkHighScore();
     }
@@ -89,9 +93,9 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
             highScore = score;
             view.updateHighScore(highScore);
             DbWrapper.getInstance().save(CommonLib.Keys.HIGH_SCORE, highScore).close();
-            UiUtils.showToast("New high score!");
+            UiUtils.showToast(StringUtils.getString(R.string.new_high_score));
         } else {
-            UiUtils.showToast("Game over!");
+            UiUtils.showToast(StringUtils.getString(R.string.game_over));
         }
     }
 
@@ -199,16 +203,39 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     public void buttonClicked(FragmentPlay.ButtonId buttonId) {
         switch (buttonId) {
             case PLAY:
-                view.hideMenu();
+                if (getGameState() == GameStateSingleton.GameState.STOPPED) {
+                    startIntro();
+                    view.hideMenu();
+                } else if (getGameState() == GameStateSingleton.GameState.PAUSED) {
+                    view.hideMenu();}
                 break;
             case CELL:
-                if (!isRunning) startGame();
+                if (getGameState() == GameStateSingleton.GameState.STOPPED) startGame();
                 break;
         }
     }
 
-    @Override
-    public boolean isRunning() {
-        return isRunning;
+    private void startIntro() {
+        setGameState(GameStateSingleton.GameState.INTRO);
+        view.setCellButtonVisibility(View.VISIBLE);
+        CountDownTimer introTimer = new CountDownTimer(3000, 1000) {
+            @Override
+            public void onTick(long timeLeft) {
+                view.setCellButtonText(String.valueOf(1 + timeLeft / 1000));
+            }
+
+            @Override
+            public void onFinish() {
+                startGame();
+            }
+        }.start();
+    }
+
+    private GameStateSingleton.GameState getGameState() {
+        return GameStateSingleton.getInstance().getGameState();
+    }
+
+    private void setGameState(GameStateSingleton.GameState gameState) {
+        GameStateSingleton.getInstance().setGameState(gameState);
     }
 }

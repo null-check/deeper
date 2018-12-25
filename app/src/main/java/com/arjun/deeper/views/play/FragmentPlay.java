@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.arjun.deeper.R;
+import com.arjun.deeper.singletons.GameStateSingleton;
 import com.arjun.deeper.views.Cell;
 import com.arjun.deeper.views.MenuButtonView;
 
@@ -38,8 +39,8 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @BindView(R.id.grid_root)
     protected LinearLayout gridRoot;
 
-    @BindView(R.id.button)
-    protected View button;
+    @BindView(R.id.cell_button)
+    protected TextView cellButton;
 
     @BindView(R.id.menu_container)
     protected ViewGroup menuContainer;
@@ -98,14 +99,14 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     private void setClickListeners(List<Cell> children) {
         for (Cell child : children) {
             child.setOnClickListener(view -> {
-                if (presenterPlay.isRunning()) presenterPlay.cellClicked(child);
+                if (GameStateSingleton.getInstance().getGameState() == GameStateSingleton.GameState.RUNNING) presenterPlay.cellClicked(child);
             });
         }
 
         playButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.PLAY));
         tutorialButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.TUTORIAL));
         scoreboardButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.SCOREBOARD));
-        button.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.CELL));
+        cellButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.CELL));
     }
 
     @Override
@@ -124,8 +125,13 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     }
 
     @Override
-    public void setButtonVisibility(int visibility) {
-        button.setVisibility(visibility);
+    public void setCellButtonVisibility(int visibility) {
+        cellButton.setVisibility(visibility);
+    }
+
+    @Override
+    public void setCellButtonText(String text) {
+        cellButton.setText(text);
     }
 
     @Override

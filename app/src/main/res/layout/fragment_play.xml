@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#0099cc">
 
     <LinearLayout
@@ -207,11 +208,12 @@
                 </com.arjun.deeper.views.SquareBox>
 
                 <TextView
-                    android:id="@+id/button"
+                    android:id="@+id/cell_button"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Click to start"
+                    tools:text="Click to start"
                     android:background="#55000000"
                     android:textColor="#53d5ff"
                     android:textSize="50sp"
@@ -247,6 +249,7 @@
 
         <com.arjun.deeper.views.MenuButtonView
             android:id="@+id/scoreboard_button"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
