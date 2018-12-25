@@ -83,7 +83,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         setGameState(GameStateSingleton.GameState.OVER);
         view.setPlayButtonText(StringUtils.getString(R.string.play));
         view.setCellButtonVisibility(View.VISIBLE);
-        view.setCellButtonText(StringUtils.getString(R.string.retry));
+        view.setCellButtonText(StringUtils.getString(R.string.icon_retry));
         updateTimeLeft();
         checkHighScore();
     }

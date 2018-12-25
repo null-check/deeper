@@ -217,7 +217,7 @@
                     tools:text="Click to start"
                     android:background="#55000000"
                     android:textColor="#53d5ff"
-                    android:textSize="50sp"
+                    android:textSize="100sp"
                     android:textStyle="bold" />
             </FrameLayout>
         </FrameLayout>
