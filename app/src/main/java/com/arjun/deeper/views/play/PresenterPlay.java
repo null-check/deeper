@@ -5,6 +5,7 @@ import android.os.CountDownTimer;
 
 import com.arjun.deeper.R;
 import com.arjun.deeper.baseclasses.BasePresenter;
+import com.arjun.deeper.events.BackpressEvent;
 import com.arjun.deeper.singletons.GameStateSingleton;
 import com.arjun.deeper.utils.CommonLib;
 import com.arjun.deeper.utils.DbWrapper;
@@ -12,6 +13,9 @@ import com.arjun.deeper.utils.StringUtils;
 import com.arjun.deeper.utils.Timer;
 import com.arjun.deeper.utils.UiUtils;
 import com.arjun.deeper.views.Cell;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -67,11 +71,6 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
     private void startGame() {
         setGameState(GameStateSingleton.GameState.RUNNING);
         view.setCellButtonVisibility(View.GONE);
@@ -81,7 +80,8 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     }
 
     private void endGame() {
-        setGameState(GameStateSingleton.GameState.STOPPED);
+        setGameState(GameStateSingleton.GameState.OVER);
+        view.setPlayButtonText(StringUtils.getString(R.string.play));
         view.setCellButtonVisibility(View.VISIBLE);
         view.setCellButtonText(StringUtils.getString(R.string.retry));
         updateTimeLeft();
@@ -89,6 +89,9 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     }
 
     private void checkHighScore() {
+        if (getGameState() == GameStateSingleton.GameState.PAUSED)
+            return;
+
         if (score > highScore) {
             highScore = score;
             view.updateHighScore(highScore);
@@ -203,16 +206,29 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     public void buttonClicked(FragmentPlay.ButtonId buttonId) {
         switch (buttonId) {
             case PLAY:
-                if (getGameState() == GameStateSingleton.GameState.STOPPED) {
+                if (getGameState() == GameStateSingleton.GameState.MENU) {
+                    view.showGame();
                     startIntro();
                     view.hideMenu();
                 } else if (getGameState() == GameStateSingleton.GameState.PAUSED) {
-                    view.hideMenu();}
+                    resumeGame();
+                }
                 break;
             case CELL:
-                if (getGameState() == GameStateSingleton.GameState.STOPPED) startGame();
+                if (getGameState() == GameStateSingleton.GameState.OVER) startGame();
+                break;
+            case MENU_BG:
+                if (getGameState() == GameStateSingleton.GameState.PAUSED) {
+                    resumeGame();
+                }
                 break;
         }
+    }
+
+    private void resumeGame() {
+        setGameState(GameStateSingleton.GameState.RUNNING);
+        timer.resume();
+        view.hideMenu();
     }
 
     private void startIntro() {
@@ -237,5 +253,33 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
 
     private void setGameState(GameStateSingleton.GameState gameState) {
         GameStateSingleton.getInstance().setGameState(gameState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onEvent(BackpressEvent backpressEvent) {
+        switch (getGameState()) {
+            case RUNNING:
+                setGameState(GameStateSingleton.GameState.PAUSED);
+                timer.pause();
+                view.setPlayButtonText(StringUtils.getString(R.string.resume));
+                view.showMenu();
+                break;
+            case OVER:
+                setGameState(GameStateSingleton.GameState.MENU);
+                view.showMenu();
+                break;
+        }
     }
 }

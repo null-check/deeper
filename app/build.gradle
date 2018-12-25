@@ -117,6 +117,9 @@ dependencies {
     // Carbon
     implementation 'tk.zielony:carbon:0.15.0.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //EventBus
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }
 repositories {
     mavenCentral()

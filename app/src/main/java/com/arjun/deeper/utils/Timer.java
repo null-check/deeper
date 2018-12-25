@@ -47,10 +47,18 @@ public class Timer {
     }
 
     public void stop() {
+        pause();
+        currentTimeLeft = 0;
+    }
+
+    public void pause() {
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
-        currentTimeLeft = 0;
+    }
+
+    public void resume() {
+        start(getTimeLeft());
     }
 
     public void setTimeLeft(long timeLeft) {

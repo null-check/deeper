@@ -20,9 +20,13 @@ public interface InterfacePlay {
 
         void setCellButtonText(String text);
 
+        void showGame();
+
         void showMenu();
 
         void hideMenu();
+
+        void setPlayButtonText(String text);
     }
 
     interface IPresenter extends IBasePresenter<IView> {

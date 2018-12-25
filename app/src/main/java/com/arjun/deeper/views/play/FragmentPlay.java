@@ -27,6 +27,9 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @BindView(R.id.root_view)
     protected ViewGroup rootView;
 
+    @BindView(R.id.game_container)
+    protected ViewGroup gameContainer;
+
     @BindView(R.id.time_left)
     protected TextView timeLeft;
 
@@ -68,7 +71,8 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
         PLAY,
         TUTORIAL,
         SCOREBOARD,
-        CELL
+        CELL,
+        MENU_BG
     }
 
     private PresenterPlay presenterPlay;
@@ -107,6 +111,19 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
         tutorialButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.TUTORIAL));
         scoreboardButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.SCOREBOARD));
         cellButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.CELL));
+        menuContainer.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.MENU_BG));
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenterPlay.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        presenterPlay.onStop();
     }
 
     @Override
@@ -135,6 +152,11 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     }
 
     @Override
+    public void showGame() {
+        gameContainer.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void showMenu() {
         menuContainer.setVisibility(View.VISIBLE);
     }
@@ -142,5 +164,10 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @Override
     public void hideMenu() {
         menuContainer.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setPlayButtonText(String text) {
+        playButton.setText(text);
     }
 }

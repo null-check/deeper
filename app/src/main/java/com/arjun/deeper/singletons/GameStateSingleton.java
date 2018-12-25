@@ -5,16 +5,17 @@ public class GameStateSingleton {
     private static volatile GameStateSingleton singleton = new GameStateSingleton();
 
     public enum GameState {
-        STOPPED,
+        MENU,
         INTRO,
         RUNNING,
+        OVER,
         PAUSED
     }
 
     private GameState gameState;
 
     private GameStateSingleton() {
-        gameState = GameState.STOPPED;
+        gameState = GameState.MENU;
     }
 
     public static GameStateSingleton getInstance() {

@@ -8,7 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.arjun.deeper.R;
+import com.arjun.deeper.events.BackpressEvent;
+import com.arjun.deeper.singletons.GameStateSingleton;
 import com.arjun.deeper.views.play.FragmentPlay;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,6 +59,15 @@ public class ActivityHome extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (HIDE_NAV_BARS) delayedHide();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (GameStateSingleton.getInstance().getGameState() != GameStateSingleton.GameState.MENU) {
+            EventBus.getDefault().post(new BackpressEvent());
+        } else {
+            super.onBackPressed();
+        }
     }
 
     /**

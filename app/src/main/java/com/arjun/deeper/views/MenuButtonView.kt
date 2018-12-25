@@ -43,4 +43,8 @@ class MenuButtonView : FrameLayout {
         buttonTextView = button_text
         buttonText?.let { buttonTextView?.text = it }
     }
+
+    fun setText(text: String) {
+        buttonTextView?.text = text
+    }
 }
