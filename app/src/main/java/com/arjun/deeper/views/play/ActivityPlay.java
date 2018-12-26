@@ -1,4 +1,4 @@
-package com.arjun.deeper.views;
+package com.arjun.deeper.views.play;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -10,14 +10,13 @@ import android.view.ViewGroup;
 import com.arjun.deeper.R;
 import com.arjun.deeper.events.BackpressEvent;
 import com.arjun.deeper.singletons.GameStateSingleton;
-import com.arjun.deeper.views.play.FragmentPlay;
 
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ActivityHome extends AppCompatActivity {
+public class ActivityPlay extends AppCompatActivity {
 
     private final boolean HIDE_NAV_BARS = false;
 

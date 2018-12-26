@@ -111,10 +111,6 @@
                     android:background="@color/carbon_white"
                     android:paddingRight="@dimen/carbon_margin"
                     android:paddingBottom="@dimen/carbon_margin"
-                    app:layout_constraintTop_toBottomOf="@+id/info_bar"
-                    app:layout_constraintBottom_toTopOf="@+id/button"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
                     app:carbon_cornerRadius="3dp">
 
                     <LinearLayout
