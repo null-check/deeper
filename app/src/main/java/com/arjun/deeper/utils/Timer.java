@@ -21,14 +21,18 @@ public class Timer {
         void onFinish();
     }
 
-    public void start(long time) {
+    public void start(float timeSeconds) {
+        start((long) (timeSeconds * CommonLib.MS_IN_SEC));
+    }
+
+    public void start(long timeMilliseconds) {
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
 
-        if (time > 0) {
-            currentTimeLeft = time;
-            countDownTimer = new CountDownTimer(time, COUNT_DOWN_INTERVAL) {
+        if (timeMilliseconds > 0) {
+            currentTimeLeft = timeMilliseconds;
+            countDownTimer = new CountDownTimer(timeMilliseconds, COUNT_DOWN_INTERVAL) {
                 @Override
                 public void onTick(long timeLeft) {
                     currentTimeLeft = timeLeft;
@@ -61,8 +65,20 @@ public class Timer {
         start(getTimeLeft());
     }
 
-    public void setTimeLeft(long timeLeft) {
-        this.currentTimeLeft = timeLeft;
+    public void setTimeLeft(float timeLeftSeconds) {
+        setTimeLeft((long) (timeLeftSeconds * CommonLib.MS_IN_SEC));
+    }
+
+    public void setTimeLeft(long timeLeftMilliseconds) {
+        this.currentTimeLeft = timeLeftMilliseconds;
+    }
+
+    public void addTime(float amount) {
+        start(getTimeLeft() + (long) amount * CommonLib.MS_IN_SEC);
+    }
+
+    public void deductTime(float amount) {
+        start(getTimeLeft() - (long) amount * CommonLib.MS_IN_SEC);
     }
 
     public long getTimeLeft() {

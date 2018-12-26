@@ -23,9 +23,13 @@ import carbon.view.View;
 
 public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements InterfacePlay.IPresenter {
 
-    private final long GAME_START_TIME_MS = 10000;
+    private final float GAME_START_TIME = 10f;
     private final int LEVEL_STEPS = 3;
     private final int DIFFICULTY_STEPS = 3;
+    private final long INTRO_COUNTDOWN = 3;
+    private final float INTRO_SPEED = 2f;
+    private final float TIME_BONUS = 1f;
+    private final float TIME_PENALTY = 0.5f;
 
     private int stage;
     private int levelStepsCount;
@@ -76,7 +80,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         view.setCellButtonVisibility(View.GONE);
         reset();
         randomizeViews();
-        timer.start(GAME_START_TIME_MS);
+        timer.start(GAME_START_TIME);
     }
 
     private void endGame() {
@@ -118,7 +122,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
 
     private void reset() {
         timer.stop();
-        timer.setTimeLeft(GAME_START_TIME_MS);
+        timer.setTimeLeft(GAME_START_TIME);
         updateTimeLeft();
         view.updateScore(score = 0);
         view.updateHighScore(highScore);
@@ -195,11 +199,11 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     }
 
     private void addBonusTime() {
-        timer.start(timer.getTimeLeft() + 1000);
+        timer.addTime(TIME_BONUS);
     }
 
     private void deductPenaltyTime() {
-        timer.start(timer.getTimeLeft() - 500);
+        timer.deductTime(TIME_PENALTY);
     }
 
     @Override
@@ -234,10 +238,10 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     private void startIntro() {
         setGameState(GameStateSingleton.GameState.INTRO);
         view.setCellButtonVisibility(View.VISIBLE);
-        CountDownTimer introTimer = new CountDownTimer(3000, 1000) {
+        new CountDownTimer((long) (INTRO_COUNTDOWN * CommonLib.MS_IN_SEC / INTRO_SPEED), (long) (CommonLib.MS_IN_SEC / INTRO_SPEED)) {
             @Override
             public void onTick(long timeLeft) {
-                view.setCellButtonText(String.valueOf(1 + timeLeft / 1000));
+                view.setCellButtonText(String.valueOf(1 + (int) (timeLeft * INTRO_SPEED / CommonLib.MS_IN_SEC)));
             }
 
             @Override

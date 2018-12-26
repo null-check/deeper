@@ -4,6 +4,8 @@ import java.util.Random;
 
 public class CommonLib {
 
+    public static final long MS_IN_SEC = 1000;
+
     private static Random random = new Random();
 
     public static int getRandomIntBetween(int start, int end) {
