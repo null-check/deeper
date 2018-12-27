@@ -20,7 +20,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import carbon.widget.LinearLayout;
 
 public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
@@ -40,7 +39,7 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     protected TextView highScoreTextView;
 
     @BindView(R.id.grid_root)
-    protected LinearLayout gridRoot;
+    protected ViewGroup gridRoot;
 
     @BindView(R.id.cell_button)
     protected TextView cellButton;
@@ -50,6 +49,9 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
     @BindView(R.id.play_button)
     protected MenuButtonView playButton;
+
+    @BindView(R.id.restart_button)
+    protected MenuButtonView restartButton;
 
     @BindView(R.id.tutorial_button)
     protected MenuButtonView tutorialButton;
@@ -69,6 +71,7 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
     enum ButtonId {
         PLAY,
+        RESTART,
         TUTORIAL,
         SCOREBOARD,
         CELL,
@@ -108,6 +111,7 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
         }
 
         playButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.PLAY));
+        restartButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.RESTART));
         tutorialButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.TUTORIAL));
         scoreboardButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.SCOREBOARD));
         cellButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.CELL));
@@ -182,6 +186,16 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @Override
     public void hideMenu() {
         menuContainer.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showRestartButton() {
+        restartButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideRestartButton() {
+        restartButton.setVisibility(View.GONE);
     }
 
     @Override

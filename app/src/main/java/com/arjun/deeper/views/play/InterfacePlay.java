@@ -26,6 +26,10 @@ public interface InterfacePlay {
 
         void hideMenu();
 
+        void showRestartButton();
+
+        void hideRestartButton();
+
         void setPlayButtonText(String text);
     }
 

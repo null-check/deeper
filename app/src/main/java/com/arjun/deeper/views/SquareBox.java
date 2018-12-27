@@ -8,9 +8,9 @@ import android.util.AttributeSet;
 import com.arjun.deeper.R;
 import com.arjun.deeper.utils.UiUtils;
 
-import carbon.widget.LinearLayout;
+import carbon.widget.FrameLayout;
 
-public class SquareBox extends LinearLayout {
+public class SquareBox extends FrameLayout {
 
     private boolean fitsScreen = false;
 

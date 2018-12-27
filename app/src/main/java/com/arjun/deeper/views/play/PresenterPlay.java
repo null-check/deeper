@@ -90,6 +90,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
 
     private void startGame() {
         setGameState(GameStateSingleton.GameState.RUNNING);
+        view.showRestartButton();
         view.setCellButtonVisibility(View.GONE);
         reset();
         randomizeViews();
@@ -98,6 +99,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
 
     private void endGame() {
         setGameState(GameStateSingleton.GameState.OVER);
+        view.hideRestartButton();
         view.setPlayButtonText(StringUtils.getString(R.string.play));
         view.setCellButtonVisibility(View.VISIBLE);
         view.setCellButtonText(StringUtils.getString(R.string.icon_retry));
@@ -232,6 +234,8 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                     resumeGame();
                 }
                 break;
+            case RESTART:
+                restartGame();
             case CELL:
                 if (getGameState() == GameStateSingleton.GameState.OVER) startGame();
                 break;
@@ -241,6 +245,12 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                 }
                 break;
         }
+    }
+
+    private void restartGame() {
+        view.hideMenu();
+        checkHighScore();
+        startIntro();
     }
 
     private void resumeGame() {
