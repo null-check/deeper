@@ -237,7 +237,8 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
             case RESTART:
                 restartGame();
             case CELL:
-                if (getGameState() == GameStateSingleton.GameState.OVER) startGame();
+                if (getGameState() == GameStateSingleton.GameState.OVER)
+                    startGame();
                 break;
             case MENU_BG:
                 if (getGameState() == GameStateSingleton.GameState.PAUSED) {

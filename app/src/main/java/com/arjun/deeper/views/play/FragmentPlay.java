@@ -23,9 +23,6 @@ import butterknife.ButterKnife;
 
 public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
-    @BindView(R.id.root_view)
-    protected ViewGroup rootView;
-
     @BindView(R.id.game_container)
     protected ViewGroup gameContainer;
 
@@ -37,9 +34,6 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
     @BindView(R.id.high_score_value)
     protected TextView highScoreTextView;
-
-    @BindView(R.id.grid_root)
-    protected ViewGroup gridRoot;
 
     @BindView(R.id.cell_button)
     protected TextView cellButton;
