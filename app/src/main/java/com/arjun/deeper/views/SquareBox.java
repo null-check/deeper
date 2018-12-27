@@ -1,6 +1,7 @@
 package com.arjun.deeper.views;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
@@ -45,11 +46,20 @@ public class SquareBox extends LinearLayout {
         }
     }
 
+    /**
+     * If this layout is supposed to be drawn edge to edge on the display, then we can directly set
+     * height to screenwidth (in case of portrait mode) and avoid waiting for onMeasure to be called.
+     * Otherwise we need to wait and then set the height.
+     */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (!fitsScreen) {
-            getLayoutParams().height = getMeasuredWidth();
+            int orientation = getResources().getConfiguration().orientation;
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE)
+                getLayoutParams().width = getMeasuredHeight();
+            else
+                getLayoutParams().height = getMeasuredWidth();
         }
     }
 
@@ -57,7 +67,11 @@ public class SquareBox extends LinearLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         if (fitsScreen) {
-            getLayoutParams().height = UiUtils.getScreenWidth();
+            int orientation = getResources().getConfiguration().orientation;
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE)
+                getLayoutParams().width = UiUtils.getScreenHeight();
+            else
+                getLayoutParams().height = UiUtils.getScreenWidth();
         }
     }
 }

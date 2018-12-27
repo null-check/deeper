@@ -115,6 +115,18 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        presenterPlay.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenterPlay.onPause();
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         presenterPlay.onStart();
@@ -124,6 +136,12 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     public void onStop() {
         super.onStop();
         presenterPlay.onStop();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenterPlay.onSaveInstanceState(outState);
     }
 
     @Override

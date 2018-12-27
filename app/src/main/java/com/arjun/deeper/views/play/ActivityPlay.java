@@ -62,7 +62,9 @@ public class ActivityPlay extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (GameStateSingleton.getInstance().getGameState() != GameStateSingleton.GameState.MENU) {
+        GameStateSingleton.GameState gameState = GameStateSingleton.getInstance().getGameState();
+        if (gameState != GameStateSingleton.GameState.MENU
+                && gameState != GameStateSingleton.GameState.PAUSED) {
             EventBus.getDefault().post(new BackpressEvent());
         } else {
             super.onBackPressed();

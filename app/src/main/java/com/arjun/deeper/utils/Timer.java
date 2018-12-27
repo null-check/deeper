@@ -74,11 +74,11 @@ public class Timer {
     }
 
     public void addTime(float amount) {
-        start(getTimeLeft() + (long) amount * CommonLib.MS_IN_SEC);
+        start((long) (getTimeLeft() + amount * CommonLib.MS_IN_SEC));
     }
 
     public void deductTime(float amount) {
-        start(getTimeLeft() - (long) amount * CommonLib.MS_IN_SEC);
+        start((long) (getTimeLeft() - amount * CommonLib.MS_IN_SEC));
     }
 
     public long getTimeLeft() {

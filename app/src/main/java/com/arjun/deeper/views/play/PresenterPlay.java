@@ -57,8 +57,21 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     @Override
     public void onCreateView(Bundle bundle, InterfacePlay.IView view, android.view.View fragmentContainer) {
         super.onCreateView(bundle, view, fragmentContainer);
+        unpackBundle(bundle);
         highScore = DbWrapper.getInt(CommonLib.Keys.HIGH_SCORE, 0);
         view.updateHighScore(highScore);
+    }
+
+    @Override
+    public void unpackBundle(Bundle bundle) {
+        super.unpackBundle(bundle);
+        if (bundle != null) {
+            timer.setTimeLeft(bundle.getLong(CommonLib.Keys.TIME_LEFT));
+            score = bundle.getInt(CommonLib.Keys.SCORE);
+            stage = bundle.getInt(CommonLib.Keys.STAGE);
+            difficulty = bundle.getInt(CommonLib.Keys.DIFFICULTY);
+            levelStepsCount = bundle.getInt(CommonLib.Keys.LEVEL_STEPS_COUNT);
+        }
     }
 
     private void setupTimer() {
@@ -165,6 +178,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         }
     }
 
+    //TODO: Clean this logic
     private void increaseDifficulty() {
         if (++levelStepsCount == LEVEL_STEPS) {
             levelStepsCount = 0;
@@ -260,6 +274,23 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (getGameState() == GameStateSingleton.GameState.PAUSED) {
+            pauseGame();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (getGameState() == GameStateSingleton.GameState.RUNNING) {
+            setGameState(GameStateSingleton.GameState.PAUSED);
+            timer.pause();
+        }
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
@@ -271,19 +302,33 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(CommonLib.Keys.SCORE, score);
+        outState.putLong(CommonLib.Keys.TIME_LEFT, timer.getTimeLeft());
+        outState.putInt(CommonLib.Keys.STAGE, stage);
+        outState.putInt(CommonLib.Keys.DIFFICULTY, difficulty);
+        outState.putInt(CommonLib.Keys.LEVEL_STEPS_COUNT, levelStepsCount);
+    }
+
     @Subscribe
     public void onEvent(BackpressEvent backpressEvent) {
         switch (getGameState()) {
             case RUNNING:
-                setGameState(GameStateSingleton.GameState.PAUSED);
-                timer.pause();
-                view.setPlayButtonText(StringUtils.getString(R.string.resume));
-                view.showMenu();
+                pauseGame();
                 break;
             case OVER:
                 setGameState(GameStateSingleton.GameState.MENU);
                 view.showMenu();
                 break;
         }
+    }
+
+    private void pauseGame() {
+        setGameState(GameStateSingleton.GameState.PAUSED);
+        timer.pause();
+        view.setPlayButtonText(StringUtils.getString(R.string.resume));
+        view.showMenu();
     }
 }
