@@ -16,12 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:layout_marginTop="@dimen/carbon_margin"
-            android:layout_marginLeft="@dimen/carbon_margin"
-            android:layout_marginRight="@dimen/carbon_margin"
-            android:background="@color/carbon_white"
-            android:paddingBottom="@dimen/carbon_margin"
-            android:paddingTop="@dimen/carbon_margin"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/white"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
             app:carbon_cornerRadius="3dp">
 
             <LinearLayout
@@ -35,14 +35,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Score"
-                    android:textColor="@color/carbon_black" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/score_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textColor="@color/carbon_black"
+                    android:textColor="@color/black"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -57,14 +57,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Time left"
-                    android:textColor="@color/carbon_black" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/time_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10.0"
-                    android:textColor="@color/carbon_black"
+                    android:textColor="@color/black"
                     android:textSize="32sp" />
             </LinearLayout>
 
@@ -79,14 +79,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="High score"
-                    android:textColor="@color/carbon_black" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/high_score_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textColor="@color/carbon_black"
+                    android:textColor="@color/black"
                     android:textSize="24sp" />
             </LinearLayout>
         </carbon.widget.LinearLayout>
@@ -94,7 +94,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="@dimen/carbon_margin"
+            android:layout_margin="16dp"
             android:layout_weight="1">
 
             <com.arjun.deeper.views.customviews.GameGridView

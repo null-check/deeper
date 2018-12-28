@@ -4,22 +4,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:background="@color/carbon_white"
+    android:layout_gravity="center_horizontal|bottom"
+    android:background="@color/white"
     app:carbon_cornerRadius="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingRight="@dimen/carbon_margin"
-        android:paddingBottom="@dimen/carbon_margin"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="@dimen/carbon_margin"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal"
             android:baselineAligned="false">
 
@@ -27,21 +27,21 @@
                 android:id="@+id/cell_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
+                android:layout_marginLeft="16dp"
                 android:layout_weight="1"/>
 
             <com.arjun.deeper.views.customviews.Cell
                 android:id="@+id/cell_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
+                android:layout_marginLeft="16dp"
                 android:layout_weight="1"/>
 
             <com.arjun.deeper.views.customviews.Cell
                 android:id="@+id/cell_3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
+                android:layout_marginLeft="16dp"
                 android:layout_weight="1"/>
         </LinearLayout>
 
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="@dimen/carbon_margin"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal"
             android:baselineAligned="false">
 
@@ -57,21 +57,21 @@
                 android:id="@+id/cell_4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
+                android:layout_marginLeft="16dp"
                 android:layout_weight="1"/>
 
             <com.arjun.deeper.views.customviews.Cell
                 android:id="@+id/cell_5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
+                android:layout_marginLeft="16dp"
                 android:layout_weight="1"/>
 
             <com.arjun.deeper.views.customviews.Cell
                 android:id="@+id/cell_6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
+                android:layout_marginLeft="16dp"
                 android:layout_weight="1"/>
         </LinearLayout>
 
@@ -79,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="@dimen/carbon_margin"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal"
             android:baselineAligned="false">
 
@@ -87,21 +87,21 @@
                 android:id="@+id/cell_7"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
+                android:layout_marginLeft="16dp"
                 android:layout_weight="1"/>
 
             <com.arjun.deeper.views.customviews.Cell
                 android:id="@+id/cell_8"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
+                android:layout_marginLeft="16dp"
                 android:layout_weight="1"/>
 
             <com.arjun.deeper.views.customviews.Cell
                 android:id="@+id/cell_9"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/carbon_margin"
+                android:layout_marginLeft="16dp"
                 android:layout_weight="1"/>
         </LinearLayout>
     </LinearLayout>
@@ -113,8 +113,8 @@
         android:layout_height="match_parent"
         android:gravity="center"
         tools:text="Click to start"
-        android:background="#55000000"
-        android:textColor="#53d5ff"
+        android:background="@color/black_overlay"
+        android:textColor="@color/sky_blue_light"
         android:textSize="100sp"
         android:textStyle="bold" />
 </com.arjun.deeper.views.customviews.SquareBox>
