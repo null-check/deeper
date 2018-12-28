@@ -12,12 +12,10 @@ import com.arjun.deeper.utils.DbWrapper;
 import com.arjun.deeper.utils.StringUtils;
 import com.arjun.deeper.utils.Timer;
 import com.arjun.deeper.utils.UiUtils;
-import com.arjun.deeper.views.Cell;
+import com.arjun.deeper.views.customviews.Cell;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.List;
 
 import carbon.view.View;
 
@@ -34,15 +32,10 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     private int stage;
     private int levelStepsCount;
     private int difficulty;
-    private boolean enableRotatedCells;
-
-    private int maxCount;
     private int score;
     private int highScore;
 
     private Timer timer;
-
-    private List<Cell> children;
 
     public PresenterPlay(InterfacePlay.IView view) {
         super(view);
@@ -93,7 +86,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         view.showRestartButton();
         view.setCellButtonVisibility(View.GONE);
         reset();
-        randomizeViews();
+        view.randomizeViews(difficulty);
         timer.start(GAME_START_TIME);
     }
 
@@ -105,6 +98,34 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         view.setCellButtonText(StringUtils.getString(R.string.icon_retry));
         updateTimeLeft();
         checkHighScore();
+    }
+
+    private void restartGame() {
+        view.hideMenu();
+        checkHighScore();
+        startIntro();
+    }
+
+    private void resumeGame() {
+        setGameState(GameStateSingleton.GameState.RUNNING);
+        timer.resume();
+        view.hideMenu();
+    }
+
+    private void startIntro() {
+        setGameState(GameStateSingleton.GameState.INTRO);
+        view.setCellButtonVisibility(View.VISIBLE);
+        new CountDownTimer((long) (INTRO_COUNTDOWN * CommonLib.MS_IN_SEC / INTRO_SPEED), (long) (CommonLib.MS_IN_SEC / INTRO_SPEED)) {
+            @Override
+            public void onTick(long timeLeft) {
+                view.setCellButtonText(String.valueOf(1 + (int) (timeLeft * INTRO_SPEED / CommonLib.MS_IN_SEC)));
+            }
+
+            @Override
+            public void onFinish() {
+                startGame();
+            }
+        }.start();
     }
 
     private void checkHighScore() {
@@ -121,20 +142,6 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         }
     }
 
-    private void randomizeViews() {
-        maxCount = 0;
-
-        for (Cell child : children) {
-            int childCount = CommonLib.getRandomIntBetween(Math.min(1 + difficulty/2, 5), Math.max(7, (9 - difficulty / 2)));
-//            int childCount = CommonLib.getRandomIntBetween(1, 10);
-            if (childCount > maxCount) {
-                maxCount = childCount;
-            }
-            child.showChildren(childCount);
-            if (enableRotatedCells) child.setRotation(CommonLib.getRandomBoolean() ? 0 : 90);
-        }
-    }
-
     private void reset() {
         timer.stop();
         timer.setTimeLeft(GAME_START_TIME);
@@ -144,11 +151,8 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         stage = 1;
         difficulty = 1;
         levelStepsCount = 0;
-        enableRotatedCells = false;
-        for (Cell child : children) {
-            child.setRotation(0);
-            child.resetAttributes();
-        }
+        view.setRotatedCells(false);
+        view.resetAttributes();
     }
 
     private void updateTimeLeft() {
@@ -164,17 +168,12 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     }
 
     @Override
-    public void setChildren(List<Cell> children) {
-        this.children = children;
-    }
-
-    @Override
-    public void cellClicked(Cell child) {
-        if (isCorrectCell(child)) {
+    public void cellClicked(int childCount, int maxCount, int position) {
+        if (childCount >= maxCount) {
             addBonusTime();
             increaseDifficulty();
             view.updateScore(++score);
-            randomizeViews();
+            view.randomizeViews(difficulty);
         } else {
             deductPenaltyTime();
         }
@@ -187,17 +186,13 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
             if (++difficulty % DIFFICULTY_STEPS == 0) {
                 switch (++stage) {
                     case 2:
-                        enableRotatedCells = true;
+                        view.setRotatedCells(true);
                         break;
                     case 3:
-                        for (Cell child : children) {
-                            child.setChooseRandomSubcell(true);
-                        }
+                        view.setChooseRandomSubcell(true);
                         break;
                     case 4:
-                        for (Cell child : children) {
-                            child.setSubcellShape(Cell.SubcellShape.RANDOM);
-                        }
+                        view.setSubcellShape(Cell.SubcellShape.RANDOM);
                         break;
                     case 5:
 //                        Disable this difficulty as setting to gone makes visible views abruptly expand after remaining views have finished animating (and are set to gone)
@@ -208,10 +203,6 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                 }
             }
         }
-    }
-
-    private boolean isCorrectCell(Cell child) {
-        return child.getChildCellCount() >= maxCount;
     }
 
     private void addBonusTime() {
@@ -246,34 +237,6 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                 }
                 break;
         }
-    }
-
-    private void restartGame() {
-        view.hideMenu();
-        checkHighScore();
-        startIntro();
-    }
-
-    private void resumeGame() {
-        setGameState(GameStateSingleton.GameState.RUNNING);
-        timer.resume();
-        view.hideMenu();
-    }
-
-    private void startIntro() {
-        setGameState(GameStateSingleton.GameState.INTRO);
-        view.setCellButtonVisibility(View.VISIBLE);
-        new CountDownTimer((long) (INTRO_COUNTDOWN * CommonLib.MS_IN_SEC / INTRO_SPEED), (long) (CommonLib.MS_IN_SEC / INTRO_SPEED)) {
-            @Override
-            public void onTick(long timeLeft) {
-                view.setCellButtonText(String.valueOf(1 + (int) (timeLeft * INTRO_SPEED / CommonLib.MS_IN_SEC)));
-            }
-
-            @Override
-            public void onFinish() {
-                startGame();
-            }
-        }.start();
     }
 
     private GameStateSingleton.GameState getGameState() {

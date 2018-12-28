@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="#0099cc">
 
     <LinearLayout
@@ -98,123 +97,10 @@
             android:layout_margin="@dimen/carbon_margin"
             android:layout_weight="1">
 
-            <com.arjun.deeper.views.SquareBox
+            <com.arjun.deeper.views.customviews.GameGridView
+                android:id="@+id/game_grid"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:background="@color/carbon_white"
-                app:carbon_cornerRadius="3dp" >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingRight="@dimen/carbon_margin"
-                    android:paddingBottom="@dimen/carbon_margin"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:layout_marginTop="@dimen/carbon_margin"
-                        android:orientation="horizontal"
-                        android:baselineAligned="false">
-
-                        <com.arjun.deeper.views.Cell
-                            android:id="@+id/cell_1"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/carbon_margin"
-                            android:layout_weight="1"/>
-
-                        <com.arjun.deeper.views.Cell
-                            android:id="@+id/cell_2"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/carbon_margin"
-                            android:layout_weight="1"/>
-
-                        <com.arjun.deeper.views.Cell
-                            android:id="@+id/cell_3"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/carbon_margin"
-                            android:layout_weight="1"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:layout_marginTop="@dimen/carbon_margin"
-                        android:orientation="horizontal"
-                        android:baselineAligned="false">
-
-                        <com.arjun.deeper.views.Cell
-                            android:id="@+id/cell_4"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/carbon_margin"
-                            android:layout_weight="1"/>
-
-                        <com.arjun.deeper.views.Cell
-                            android:id="@+id/cell_5"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/carbon_margin"
-                            android:layout_weight="1"/>
-
-                        <com.arjun.deeper.views.Cell
-                            android:id="@+id/cell_6"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/carbon_margin"
-                            android:layout_weight="1"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:layout_marginTop="@dimen/carbon_margin"
-                        android:orientation="horizontal"
-                        android:baselineAligned="false">
-
-                        <com.arjun.deeper.views.Cell
-                            android:id="@+id/cell_7"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/carbon_margin"
-                            android:layout_weight="1"/>
-
-                        <com.arjun.deeper.views.Cell
-                            android:id="@+id/cell_8"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/carbon_margin"
-                            android:layout_weight="1"/>
-
-                        <com.arjun.deeper.views.Cell
-                            android:id="@+id/cell_9"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/carbon_margin"
-                            android:layout_weight="1"/>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/cell_button"
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    tools:text="Click to start"
-                    android:background="#55000000"
-                    android:textColor="#53d5ff"
-                    android:textSize="100sp"
-                    android:textStyle="bold" />
-            </com.arjun.deeper.views.SquareBox>
+                android:layout_height="match_parent" />
         </FrameLayout>
     </LinearLayout>
 
@@ -225,7 +111,7 @@
         android:background="@color/black_overlay_dark"
         android:padding="16dp">
 
-        <com.arjun.deeper.views.MenuButtonView
+        <com.arjun.deeper.views.customviews.MenuButtonView
             android:id="@+id/play_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -234,7 +120,7 @@
             app:layout_constraintBottom_toTopOf="@+id/restart_button"
             app:button_text="@string/play" />
 
-        <com.arjun.deeper.views.MenuButtonView
+        <com.arjun.deeper.views.customviews.MenuButtonView
             android:id="@+id/restart_button"
             android:visibility="gone"
             android:layout_width="match_parent"
@@ -244,7 +130,7 @@
             app:layout_constraintBottom_toTopOf="@+id/tutorial_button"
             app:button_text="@string/restart" />
 
-        <com.arjun.deeper.views.MenuButtonView
+        <com.arjun.deeper.views.customviews.MenuButtonView
             android:id="@+id/tutorial_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -253,7 +139,7 @@
             app:layout_constraintBottom_toTopOf="@+id/scoreboard_button"
             app:button_text="@string/how_to_play" />
 
-        <com.arjun.deeper.views.MenuButtonView
+        <com.arjun.deeper.views.customviews.MenuButtonView
             android:id="@+id/scoreboard_button"
             android:visibility="gone"
             android:layout_width="match_parent"

@@ -10,13 +10,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.arjun.deeper.R;
+import com.arjun.deeper.interfaces.GameGridCallback;
 import com.arjun.deeper.singletons.GameStateSingleton;
-import com.arjun.deeper.views.Cell;
-import com.arjun.deeper.views.MenuButtonView;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.arjun.deeper.views.customviews.Cell;
+import com.arjun.deeper.views.customviews.GameGridView;
+import com.arjun.deeper.views.customviews.MenuButtonView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,8 +33,8 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @BindView(R.id.high_score_value)
     protected TextView highScoreTextView;
 
-    @BindView(R.id.cell_button)
-    protected TextView cellButton;
+    @BindView(R.id.game_grid)
+    protected GameGridView gameGridView;
 
     @BindView(R.id.menu_container)
     protected ViewGroup menuContainer;
@@ -92,24 +90,27 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     }
 
     private void setupView() {
-        List<Cell> children = new ArrayList(Arrays.asList(cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9));
-        presenterPlay.setChildren(children);
-        setClickListeners(children);
+        setClickListeners();
     }
 
-    private void setClickListeners(List<Cell> children) {
-        for (Cell child : children) {
-            child.setOnClickListener(view -> {
-                if (GameStateSingleton.getInstance().getGameState() == GameStateSingleton.GameState.RUNNING) presenterPlay.cellClicked(child);
-            });
-        }
-
+    private void setClickListeners() {
         playButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.PLAY));
         restartButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.RESTART));
         tutorialButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.TUTORIAL));
         scoreboardButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.SCOREBOARD));
-        cellButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.CELL));
         menuContainer.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.MENU_BG));
+        gameGridView.setGameGridCallback(new GameGridCallback() {
+            @Override
+            public void cellClicked(int childCount, int maxCount, int position) {
+                if (GameStateSingleton.getInstance().getGameState() == GameStateSingleton.GameState.RUNNING)
+                    presenterPlay.cellClicked(childCount, maxCount, position);
+            }
+
+            @Override
+            public void cellButtonClicked() {
+                presenterPlay.buttonClicked(ButtonId.CELL);
+            }
+        });
     }
 
     @Override
@@ -159,12 +160,12 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
     @Override
     public void setCellButtonVisibility(int visibility) {
-        cellButton.setVisibility(visibility);
+        gameGridView.setCellButtonVisibility(visibility);
     }
 
     @Override
     public void setCellButtonText(String text) {
-        cellButton.setText(text);
+        gameGridView.setCellButtonText(text);
     }
 
     @Override
@@ -195,5 +196,30 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @Override
     public void setPlayButtonText(String text) {
         playButton.setText(text);
+    }
+
+    @Override
+    public void randomizeViews(int difficulty) {
+        gameGridView.randomizeViews(difficulty);
+    }
+
+    @Override
+    public void setRotatedCells(boolean enable) {
+
+    }
+
+    @Override
+    public void setChooseRandomSubcell(boolean flag) {
+        gameGridView.setChooseRandomSubcell(flag);
+    }
+
+    @Override
+    public void setSubcellShape(Cell.SubcellShape shape) {
+        gameGridView.setSubcellShape(shape);
+    }
+
+    @Override
+    public void resetAttributes() {
+        gameGridView.resetAttributes();
     }
 }

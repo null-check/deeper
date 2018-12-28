@@ -2,9 +2,7 @@ package com.arjun.deeper.views.play;
 
 import com.arjun.deeper.baseclasses.IBasePresenter;
 import com.arjun.deeper.baseclasses.IBaseView;
-import com.arjun.deeper.views.Cell;
-
-import java.util.List;
+import com.arjun.deeper.views.customviews.Cell;
 
 public interface InterfacePlay {
 
@@ -31,13 +29,21 @@ public interface InterfacePlay {
         void hideRestartButton();
 
         void setPlayButtonText(String text);
+
+        void randomizeViews(int difficulty);
+
+        void setRotatedCells(boolean enable);
+
+        void setChooseRandomSubcell(boolean flag);
+
+        void setSubcellShape(Cell.SubcellShape shape);
+
+        void resetAttributes();
     }
 
     interface IPresenter extends IBasePresenter<IView> {
 
-        void setChildren(List<Cell>children);
-
-        void cellClicked(Cell child);
+        void cellClicked(int childCount, int maxCount, int position);
 
         void buttonClicked(FragmentPlay.ButtonId buttonId);
     }

@@ -1,4 +1,4 @@
-package com.arjun.deeper.views;
+package com.arjun.deeper.views.customviews;
 
 import android.content.Context;
 import android.util.AttributeSet;
