@@ -16,6 +16,7 @@ public class CommonLib {
         public final static String STAGE = "stage";
         public final static String DIFFICULTY = "difficulty";
         public final static String LEVEL_STEPS_COUNT = "level_steps_count";
+        public final static String TUTORIAL_SHOWN = "tutorial_shown";
     }
 
     public static int getRandomIntBetween(int start, int end) {

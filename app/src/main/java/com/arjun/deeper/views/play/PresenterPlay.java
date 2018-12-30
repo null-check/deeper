@@ -196,10 +196,14 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         switch (buttonId) {
             case PLAY:
                 if (getGameState() == GameStateSingleton.GameState.MENU) {
-                    view.showGame();
-                    startIntro();
-                    view.setHintVisibility(View.GONE);
-                    view.hideMenu();
+                    if (DbWrapper.getBoolean(CommonLib.Keys.TUTORIAL_SHOWN, false)) {
+                        view.showGame();
+                        startIntro();
+                        view.setHintVisibility(View.GONE);
+                        view.hideMenu();
+                    } else {
+                        showTutorial();
+                    }
                 } else if (getGameState() == GameStateSingleton.GameState.PAUSED) {
                     resumeGame();
                 }
@@ -235,6 +239,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         view.setCellButtonVisibility(View.GONE);
         view.hideMenu();
         showTutorial(score);
+        DbWrapper.getInstance().save(CommonLib.Keys.TUTORIAL_SHOWN, true).close();
     }
 
     private void showTutorial(int step) {
