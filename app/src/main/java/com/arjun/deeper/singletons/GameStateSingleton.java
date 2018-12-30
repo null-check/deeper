@@ -6,6 +6,7 @@ public class GameStateSingleton {
 
     public enum GameState {
         MENU,
+        TUTORIAL,
         INTRO,
         RUNNING,
         OVER,

@@ -33,6 +33,15 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @BindView(R.id.high_score_value)
     protected TextView highScoreTextView;
 
+    @BindView(R.id.hint_container)
+    protected ViewGroup hintContainer;
+
+    @BindView(R.id.hint_title)
+    protected TextView hintTitle;
+
+    @BindView(R.id.hint_message)
+    protected TextView hintMessage;
+
     @BindView(R.id.game_grid)
     protected GameGridView gameGridView;
 
@@ -102,7 +111,9 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
         gameGridView.setGameGridCallback(new GameGridCallback() {
             @Override
             public void cellClicked(int childCount, int maxCount, int position) {
-                if (GameStateSingleton.getInstance().getGameState() == GameStateSingleton.GameState.RUNNING)
+                GameStateSingleton.GameState gameState = GameStateSingleton.getInstance().getGameState();
+                if (gameState == GameStateSingleton.GameState.RUNNING
+                        || gameState == GameStateSingleton.GameState.TUTORIAL)
                     presenterPlay.cellClicked(childCount, maxCount, position);
             }
 
@@ -212,5 +223,30 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @Override
     public void resetLevel() {
         gameGridView.getLevelController().reset();
+    }
+
+    @Override
+    public void setChildren(int[] childCounts) {
+        gameGridView.setChildren(childCounts);
+    }
+
+    @Override
+    public void setShowCount(boolean showCount) {
+        gameGridView.setShowCount(showCount);
+    }
+
+    @Override
+    public void setHintVisibility(int visibility) {
+        hintContainer.setVisibility(visibility);
+    }
+
+    @Override
+    public void setHintTitle(String title) {
+        hintTitle.setText(title);
+    }
+
+    @Override
+    public void setHintMessage(String message) {
+        hintMessage.setText(message);
     }
 }

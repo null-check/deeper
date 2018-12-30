@@ -4,8 +4,8 @@ import android.content.Context
 import android.support.annotation.AttrRes
 import android.util.AttributeSet
 import android.view.View
-import carbon.widget.FrameLayout
 import android.widget.TextView
+import carbon.widget.FrameLayout
 import com.arjun.deeper.LevelController
 import com.arjun.deeper.R
 import com.arjun.deeper.interfaces.GameGridCallback
@@ -49,7 +49,7 @@ class GameGridView : FrameLayout, LevelControllerCallback {
         var position = 0
         for (child in children) {
             child.setOnClickListener {
-                gameGridCallback.cellClicked(child.visibleChildCount, maxCount, position)
+                gameGridCallback.cellClicked(child.childCellCount, maxCount, position)
                 position++
             }
         }
@@ -108,5 +108,10 @@ class GameGridView : FrameLayout, LevelControllerCallback {
 
     fun getLevelController(): LevelController {
         return levelController
+    }
+
+    fun setShowCount(showCount: Boolean) {
+        for (child in children)
+            child.setShowCount(showCount)
     }
 }

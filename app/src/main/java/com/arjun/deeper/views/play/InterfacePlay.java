@@ -32,6 +32,16 @@ public interface InterfacePlay {
         void increaseLevel();
 
         void resetLevel();
+
+        void setChildren(int childCounts[]);
+
+        void setShowCount(boolean showCount);
+
+        void setHintVisibility(int visibility);
+
+        void setHintTitle(String title);
+
+        void setHintMessage(String message);
     }
 
     interface IPresenter extends IBasePresenter<IView> {

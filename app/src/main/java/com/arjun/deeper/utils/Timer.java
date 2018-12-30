@@ -8,6 +8,7 @@ public class Timer {
 
     private CountDownTimer countDownTimer;
     private long currentTimeLeft;
+    private boolean running = false;
 
     private TimerCallback timerCallback;
 
@@ -22,7 +23,7 @@ public class Timer {
     }
 
     public void start(float timeSeconds) {
-        start((long) (timeSeconds * CommonLib.MS_IN_SEC));
+        start(CommonLib.convertSecondsToMs(timeSeconds));
     }
 
     public void start(long timeMilliseconds) {
@@ -31,6 +32,7 @@ public class Timer {
         }
 
         if (timeMilliseconds > 0) {
+            running = true;
             currentTimeLeft = timeMilliseconds;
             countDownTimer = new CountDownTimer(timeMilliseconds, COUNT_DOWN_INTERVAL) {
                 @Override
@@ -41,10 +43,12 @@ public class Timer {
 
                 @Override
                 public void onFinish() {
+                    running = false;
                     timerCallback.onFinish();
                 }
             }.start();
         } else {
+            running = false;
             currentTimeLeft = 0;
             timerCallback.onFinish();
         }
@@ -58,6 +62,7 @@ public class Timer {
     public void pause() {
         if (countDownTimer != null) {
             countDownTimer.cancel();
+            running = false;
         }
     }
 
@@ -66,7 +71,7 @@ public class Timer {
     }
 
     public void setTimeLeft(float timeLeftSeconds) {
-        setTimeLeft((long) (timeLeftSeconds * CommonLib.MS_IN_SEC));
+        setTimeLeft(CommonLib.convertSecondsToMs(timeLeftSeconds));
     }
 
     public void setTimeLeft(long timeLeftMilliseconds) {
@@ -74,14 +79,24 @@ public class Timer {
     }
 
     public void addTime(float amount) {
-        start((long) (getTimeLeft() + amount * CommonLib.MS_IN_SEC));
+        if (isRunning())
+            start(getTimeLeft() + CommonLib.convertSecondsToMs(amount));
+        else
+            setTimeLeft(getTimeLeft() + CommonLib.convertSecondsToMs(amount));
     }
 
     public void deductTime(float amount) {
-        start((long) (getTimeLeft() - amount * CommonLib.MS_IN_SEC));
+        if (isRunning())
+            start(getTimeLeft() - CommonLib.convertSecondsToMs(amount));
+        else
+            setTimeLeft(getTimeLeft() - CommonLib.convertSecondsToMs(amount));
     }
 
     public long getTimeLeft() {
         return currentTimeLeft;
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 }

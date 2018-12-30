@@ -18,10 +18,10 @@ import butterknife.ButterKnife;
 import carbon.widget.FrameLayout;
 
 public class Cell extends FrameLayout {
-
-    private final boolean SHOW_COUNT = false;
     private final float SQUARE_CORNER_RADIUS = UiUtils.DEFAULT_CORNER_RADIUS;
     private final float CIRCLE_CORNER_RADIUS = 1000;
+
+    @BindView(R.id.child_count) protected TextView childCountTv;
 
     @BindView(R.id.child_1) protected FrameLayout child1;
     @BindView(R.id.child_2) protected FrameLayout child2;
@@ -33,14 +33,13 @@ public class Cell extends FrameLayout {
     @BindView(R.id.child_8) protected FrameLayout child8;
     @BindView(R.id.child_9) protected FrameLayout child9;
 
-    @BindView(R.id.child_count) protected TextView childCountTv;
-
     private List<FrameLayout> children;
 
+    private int childCount;
     private int subcellHideMode;
     private boolean chooseRandomSubcell;
     private SubcellShape subcellShape;
-    private int childCount;
+    private boolean showCount = false;
 
     public enum SubcellShape {
         SQUARE,
@@ -69,8 +68,8 @@ public class Cell extends FrameLayout {
     }
 
     private void init() {
-        resetAttributes();
         inflateView();
+        resetAttributes();
         setupView();
     }
 
@@ -82,12 +81,12 @@ public class Cell extends FrameLayout {
     private void setupView() {
         children = new ArrayList<>(Arrays.asList(child1, child2, child3, child4, child5, child6, child7, child8, child9));
         hideAllChildren();
-        if (SHOW_COUNT) childCountTv.setVisibility(VISIBLE);
+        if (showCount) childCountTv.setVisibility(VISIBLE);
     }
 
     public void showChildren(int count) {
 
-        if (SHOW_COUNT) childCountTv.setText(String.valueOf(count));
+        if (showCount) childCountTv.setText(String.valueOf(count));
         childCount = count;
         if (count >= 9) {
             showAllChildren();
@@ -146,16 +145,6 @@ public class Cell extends FrameLayout {
         }
     }
 
-    public int getVisibleChildCount() {
-        int count = 0;
-        for (FrameLayout child : children) {
-            if (child.getVisibility() == VISIBLE) {
-                count++;
-            }
-        }
-        return count;
-    }
-
     public void setSubcellHideMode(int subcellHideMode) {
         this.subcellHideMode = subcellHideMode;
     }
@@ -192,6 +181,7 @@ public class Cell extends FrameLayout {
         subcellHideMode = INVISIBLE;
         chooseRandomSubcell = false;
         subcellShape = SubcellShape.SQUARE;
+        setShowCount(false);
         if (children != null) updateSubcells();
     }
 
@@ -205,5 +195,13 @@ public class Cell extends FrameLayout {
 
     public int getChildCellCount() {
         return childCount;
+    }
+
+    public void setShowCount(boolean showCount) {
+        this.showCount = showCount;
+        if (showCount)
+            childCountTv.setVisibility(VISIBLE);
+        else
+            childCountTv.setVisibility(GONE);
     }
 }

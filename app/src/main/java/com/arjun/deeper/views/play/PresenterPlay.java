@@ -26,6 +26,8 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     private final float TIME_BONUS = 1f;
     private final float TIME_PENALTY = 0.5f;
 
+    private int[] TUTORIAL_GRID_STEP_1 = new int[]{3, 4, 9, 5, 7, 1, 4, 2, 6};
+
     private int score;
     private int highScore;
 
@@ -155,12 +157,29 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
 
     @Override
     public void cellClicked(int childCount, int maxCount, int position) {
-        if (childCount >= maxCount) {
-            addBonusTime();
-            view.updateScore(++score);
-            view.increaseLevel();
-        } else {
-            deductPenaltyTime();
+        if (getGameState() == GameStateSingleton.GameState.RUNNING) {
+            if (childCount >= maxCount) {
+                addBonusTime();
+                view.updateScore(++score);
+                view.increaseLevel();
+            } else {
+                deductPenaltyTime();
+            }
+        } else if (getGameState() == GameStateSingleton.GameState.TUTORIAL) {
+            switch (score) {
+                case 0:
+                    if (childCount >= maxCount) {
+                        addBonusTime();
+                        view.updateScore(++score);
+                        showTutorial(score);
+                    }
+                    break;
+                default:
+                    // Impossible case.
+                    reset();
+                    startIntro();
+                    break;
+            }
         }
     }
 
@@ -179,6 +198,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                 if (getGameState() == GameStateSingleton.GameState.MENU) {
                     view.showGame();
                     startIntro();
+                    view.setHintVisibility(View.GONE);
                     view.hideMenu();
                 } else if (getGameState() == GameStateSingleton.GameState.PAUSED) {
                     resumeGame();
@@ -186,14 +206,50 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                 break;
             case RESTART:
                 restartGame();
+                break;
+            case TUTORIAL:
+                showTutorial();
+                break;
             case CELL:
-                if (getGameState() == GameStateSingleton.GameState.OVER)
+                if (getGameState() == GameStateSingleton.GameState.OVER) {
                     startGame();
+                } else if (getGameState() == GameStateSingleton.GameState.TUTORIAL) {
+                    view.setHintVisibility(View.GONE);
+                    reset();
+                    startIntro();
+                }
                 break;
             case MENU_BG:
                 if (getGameState() == GameStateSingleton.GameState.PAUSED) {
                     resumeGame();
                 }
+                break;
+        }
+    }
+
+    private void showTutorial() {
+        reset();
+        setGameState(GameStateSingleton.GameState.TUTORIAL);
+        view.setPlayButtonText(StringUtils.getString(R.string.play));
+        view.hideRestartButton();
+        view.setCellButtonVisibility(View.GONE);
+        view.hideMenu();
+        showTutorial(score);
+    }
+
+    private void showTutorial(int step) {
+        switch (step) {
+            case 0:
+                view.setChildren(TUTORIAL_GRID_STEP_1);
+                view.setHintVisibility(View.VISIBLE);
+                view.setHintTitle(StringUtils.getString(R.string.tutorial));
+                view.setHintMessage(StringUtils.getString(R.string.tutorial_step_1));
+                break;
+            case 1:
+                view.setHintTitle(StringUtils.getString(R.string.wonderful));
+                view.setHintMessage(StringUtils.getString(R.string.tutorial_step_2));
+                view.setCellButtonVisibility(View.VISIBLE);
+                view.setCellButtonText(StringUtils.getString(R.string.icon_play));
                 break;
         }
     }
@@ -254,6 +310,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
             case RUNNING:
                 pauseGame();
                 break;
+            case TUTORIAL:
             case OVER:
                 setGameState(GameStateSingleton.GameState.MENU);
                 view.showMenu();
