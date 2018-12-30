@@ -199,27 +199,12 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     }
 
     @Override
-    public void randomizeViews(int difficulty) {
-        gameGridView.randomizeViews(difficulty);
+    public void increaseLevel() {
+        gameGridView.getLevelController().increaseLevel();
     }
 
     @Override
-    public void setRotatedCells(boolean enable) {
-
-    }
-
-    @Override
-    public void setChooseRandomSubcell(boolean flag) {
-        gameGridView.setChooseRandomSubcell(flag);
-    }
-
-    @Override
-    public void setSubcellShape(Cell.SubcellShape shape) {
-        gameGridView.setSubcellShape(shape);
-    }
-
-    @Override
-    public void resetAttributes() {
-        gameGridView.resetAttributes();
+    public void resetLevel() {
+        gameGridView.getLevelController().reset();
     }
 }

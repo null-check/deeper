@@ -6,19 +6,23 @@ import android.util.AttributeSet
 import android.view.View
 import carbon.widget.FrameLayout
 import android.widget.TextView
+import com.arjun.deeper.LevelController
 import com.arjun.deeper.R
 import com.arjun.deeper.interfaces.GameGridCallback
+import com.arjun.deeper.interfaces.LevelControllerCallback
 import com.arjun.deeper.utils.CommonLib
 import kotlinx.android.synthetic.main.view_game_grid.view.*
 import java.util.*
 
-class GameGridView : FrameLayout {
+class GameGridView : FrameLayout, LevelControllerCallback {
 
     private lateinit var children: List<Cell>
     private lateinit var cellButton: TextView
 
     private var enableRotatedCells: Boolean = false
     private var maxCount: Int = 0
+
+    private lateinit var levelController: LevelController
 
     constructor (context: Context) : this(context, null)
 
@@ -30,12 +34,14 @@ class GameGridView : FrameLayout {
 
     private fun initialise() {
         View.inflate(context, R.layout.view_game_grid, this)
+        levelController = LevelController()
     }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
         children = ArrayList(Arrays.asList<Cell>(cell_1, cell_2, cell_3, cell_4, cell_5, cell_6, cell_7, cell_8, cell_9))
         cellButton = cell_button
+        levelController.attachView(this)
     }
 
     fun setGameGridCallback(gameGridCallback: GameGridCallback) {
@@ -51,33 +57,41 @@ class GameGridView : FrameLayout {
         cellButton.setOnClickListener { gameGridCallback.cellButtonClicked() }
     }
 
-    fun randomizeViews(difficulty: Int) {
-        maxCount = 0
+    override fun setChildren(childCounts: IntArray) {
 
-        for (child in children) {
-            val childCount = CommonLib.getRandomIntBetween(Math.min(1 + difficulty / 2, 5), Math.max(7, 9 - difficulty / 2))
-//            val childCount = CommonLib.getRandomIntBetween(1, 10)
-            if (childCount > maxCount) {
-                maxCount = childCount
+        maxCount = 0
+        for (i in 0 until children.size) {
+            children[i].showChildren(childCounts[i])
+            if (childCounts[i] > maxCount) {
+                maxCount = childCounts[i]
             }
-            child.showChildren(childCount)
-            if (enableRotatedCells) child.rotation = (if (CommonLib.getRandomBoolean()) 0 else 90).toFloat()
+            if (enableRotatedCells) children[i].rotation = (if (CommonLib.getRandomBoolean()) 0 else 90).toFloat()
         }
     }
 
-    fun setChooseRandomSubcell(flag: Boolean) {
+    override fun setRotatedCells(enable: Boolean) {
+        enableRotatedCells = enable
+    }
+
+    override fun setChooseRandomSubcell(flag: Boolean) {
         for (child in children) {
             child.setChooseRandomSubcell(flag)
         }
     }
 
-    fun setSubcellShape(shape: Cell.SubcellShape) {
+    override fun setSubcellShape(shape: Cell.SubcellShape) {
         for (child in children) {
             child.setSubcellShape(shape)
         }
     }
 
-    fun resetAttributes() {
+    override fun setSubcellHideMode(subcellHideMode: Int) {
+        for (child in children) {
+            child.setSubcellHideMode(subcellHideMode)
+        }
+    }
+
+    override fun resetAttributes() {
         for (child in children) {
             child.rotation = 0f
             child.resetAttributes()
@@ -90,5 +104,9 @@ class GameGridView : FrameLayout {
 
     fun setCellButtonText(text: String) {
         cellButton.text = text
+    }
+
+    fun getLevelController(): LevelController {
+        return levelController
     }
 }

@@ -12,7 +12,6 @@ import com.arjun.deeper.utils.DbWrapper;
 import com.arjun.deeper.utils.StringUtils;
 import com.arjun.deeper.utils.Timer;
 import com.arjun.deeper.utils.UiUtils;
-import com.arjun.deeper.views.customviews.Cell;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -22,16 +21,11 @@ import carbon.view.View;
 public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements InterfacePlay.IPresenter {
 
     private final float GAME_START_TIME = 10f;
-    private final int LEVEL_STEPS = 3;
-    private final int DIFFICULTY_STEPS = 3;
     private final long INTRO_COUNTDOWN = 3;
     private final float INTRO_SPEED = 2f;
     private final float TIME_BONUS = 1f;
     private final float TIME_PENALTY = 0.5f;
 
-    private int stage;
-    private int levelStepsCount;
-    private int difficulty;
     private int score;
     private int highScore;
 
@@ -61,9 +55,6 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         if (bundle != null) {
             timer.setTimeLeft(bundle.getLong(CommonLib.Keys.TIME_LEFT));
             score = bundle.getInt(CommonLib.Keys.SCORE);
-            stage = bundle.getInt(CommonLib.Keys.STAGE);
-            difficulty = bundle.getInt(CommonLib.Keys.DIFFICULTY);
-            levelStepsCount = bundle.getInt(CommonLib.Keys.LEVEL_STEPS_COUNT);
         }
     }
 
@@ -86,7 +77,6 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         view.showRestartButton();
         view.setCellButtonVisibility(View.GONE);
         reset();
-        view.randomizeViews(difficulty);
         timer.start(GAME_START_TIME);
     }
 
@@ -148,11 +138,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         updateTimeLeft();
         view.updateScore(score = 0);
         view.updateHighScore(highScore);
-        stage = 1;
-        difficulty = 1;
-        levelStepsCount = 0;
-        view.setRotatedCells(false);
-        view.resetAttributes();
+        view.resetLevel();
     }
 
     private void updateTimeLeft() {
@@ -171,37 +157,10 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     public void cellClicked(int childCount, int maxCount, int position) {
         if (childCount >= maxCount) {
             addBonusTime();
-            increaseDifficulty();
             view.updateScore(++score);
-            view.randomizeViews(difficulty);
+            view.increaseLevel();
         } else {
             deductPenaltyTime();
-        }
-    }
-
-    //TODO: Clean this logic
-    private void increaseDifficulty() {
-        if (++levelStepsCount == LEVEL_STEPS) {
-            levelStepsCount = 0;
-            if (++difficulty % DIFFICULTY_STEPS == 0) {
-                switch (++stage) {
-                    case 2:
-                        view.setRotatedCells(true);
-                        break;
-                    case 3:
-                        view.setChooseRandomSubcell(true);
-                        break;
-                    case 4:
-                        view.setSubcellShape(Cell.SubcellShape.RANDOM);
-                        break;
-                    case 5:
-//                        Disable this difficulty as setting to gone makes visible views abruptly expand after remaining views have finished animating (and are set to gone)
-//                        for (Cell child : children) {
-//                            child.setSubcellHideMode(View.GONE);
-//                        }
-                        break;
-                }
-            }
         }
     }
 
@@ -281,9 +240,6 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         super.onSaveInstanceState(outState);
         outState.putInt(CommonLib.Keys.SCORE, score);
         outState.putLong(CommonLib.Keys.TIME_LEFT, timer.getTimeLeft());
-        outState.putInt(CommonLib.Keys.STAGE, stage);
-        outState.putInt(CommonLib.Keys.DIFFICULTY, difficulty);
-        outState.putInt(CommonLib.Keys.LEVEL_STEPS_COUNT, levelStepsCount);
     }
 
     @Subscribe
