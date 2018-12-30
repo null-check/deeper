@@ -144,6 +144,12 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenterPlay.onDestroy();
+    }
+
+    @Override
     public void setTimeLeft(String timeLeftString) {
         timeLeft.setText(timeLeftString);
     }

@@ -49,7 +49,6 @@ public class ActivityPlay extends AppCompatActivity {
         switch (fragmentId) {
             case PLAY:
                 FragmentPlay fragmentPlay = new FragmentPlay();
-                fragmentPlay.setRetainInstance(true);
                 getSupportFragmentManager().beginTransaction().replace(R.id.root_view, fragmentPlay).commit();
                 break;
         }

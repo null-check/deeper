@@ -242,6 +242,12 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         outState.putLong(CommonLib.Keys.TIME_LEFT, timer.getTimeLeft());
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        setGameState(GameStateSingleton.GameState.MENU);
+    }
+
     @Subscribe
     public void onEvent(BackpressEvent backpressEvent) {
         switch (getGameState()) {
