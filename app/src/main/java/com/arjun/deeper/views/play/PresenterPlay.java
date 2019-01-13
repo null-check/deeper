@@ -254,7 +254,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                 view.setHintTitle(StringUtils.getString(R.string.wonderful));
                 view.setHintMessage(StringUtils.getString(R.string.tutorial_step_2));
                 view.setCellButtonVisibility(View.VISIBLE);
-                view.setCellButtonText(StringUtils.getString(R.string.icon_play));
+                view.setCellButtonText(StringUtils.getString(R.string.play_caps));
                 break;
         }
     }

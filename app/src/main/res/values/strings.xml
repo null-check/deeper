@@ -4,6 +4,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <string name="play">Play</string>
+    <string name="play_caps">PLAY</string>
     <string name="restart">Restart</string>
     <string name="resume">Resume</string>
     <string name="how_to_play">How to play</string>

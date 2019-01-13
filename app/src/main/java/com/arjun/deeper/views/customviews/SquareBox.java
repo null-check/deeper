@@ -54,24 +54,29 @@ public class SquareBox extends FrameLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if (!fitsScreen) {
-            int orientation = getResources().getConfiguration().orientation;
-            if (orientation == Configuration.ORIENTATION_LANDSCAPE)
-                getLayoutParams().width = getMeasuredHeight();
-            else
-                getLayoutParams().height = getMeasuredWidth();
-        }
+        int size = Math.min(getMeasuredWidth(), getMeasuredHeight());
+        setMeasuredDimension(size, size);
+        getLayoutParams().width = size;
+        getLayoutParams().height = size;
+//        if (!fitsScreen) {
+//            int orientation = getResources().getConfiguration().orientation;
+//            if (orientation == Configuration.ORIENTATION_LANDSCAPE)
+//                getLayoutParams().width = getMeasuredHeight();
+//            else
+//                getLayoutParams().height = getMeasuredWidth();
+//        }
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (fitsScreen) {
-            int orientation = getResources().getConfiguration().orientation;
-            if (orientation == Configuration.ORIENTATION_LANDSCAPE)
-                getLayoutParams().width = UiUtils.getScreenHeight();
-            else
-                getLayoutParams().height = UiUtils.getScreenWidth();
-        }
+//        TODO: Cleanup equal dimensions logic
+//        if (fitsScreen) {
+//            int orientation = getResources().getConfiguration().orientation;
+//            if (orientation == Configuration.ORIENTATION_LANDSCAPE)
+//                getLayoutParams().width = UiUtils.getScreenHeight();
+//            else
+//                getLayoutParams().height = UiUtils.getScreenWidth();
+//        }
     }
 }

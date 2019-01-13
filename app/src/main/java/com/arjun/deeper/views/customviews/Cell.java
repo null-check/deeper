@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 import carbon.widget.FrameLayout;
 
 public class Cell extends FrameLayout {
-    private final float SQUARE_CORNER_RADIUS = UiUtils.DEFAULT_CORNER_RADIUS;
+    private final float SQUARE_CORNER_RADIUS = isInEditMode() ? 9 : UiUtils.DEFAULT_CORNER_RADIUS;
     private final float CIRCLE_CORNER_RADIUS = 1000;
 
     @BindView(R.id.child_count) protected TextView childCountTv;
