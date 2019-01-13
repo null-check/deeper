@@ -14,8 +14,9 @@
     <string name="game_over">Game over!</string>
     <string name="tutorial">Tutorial</string>
     <string name="wonderful">Yeah, You got it!</string>
-    <string name="tutorial_step_1">Select the box with the most squares to get a point and +1 second to the timer.</string>
-    <string name="tutorial_step_2">Choosing any other box will reduce your timer by 0.5 seconds. Try to achieve maximum points before the timer runs out!\nThere are no negative points.\n\nClick again to start a normal game.</string>
+    <string name="tutorial_step_1">Select the box with the most squares to get a point and bonus time!</string>
+    <string name="tutorial_step_2">Choosing any other box will give you a time penalty. Try to achieve maximum points before the timer runs out!\nThere are no negative points.</string>
+    <string name="okay">Okay</string>
 
     <!--Icons-->
     <string name="icon_retry">&#x21bb;</string>

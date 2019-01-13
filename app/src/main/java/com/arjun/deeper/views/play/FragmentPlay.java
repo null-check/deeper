@@ -42,6 +42,12 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @BindView(R.id.hint_message)
     protected TextView hintMessage;
 
+    @BindView(R.id.overlay_hint_container)
+    protected ViewGroup overlayHintContainer;
+
+    @BindView(R.id.overlay_hint_text)
+    protected TextView overlayHintText;
+
     @BindView(R.id.game_grid)
     protected GameGridView gameGridView;
 
@@ -76,7 +82,8 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
         TUTORIAL,
         SCOREBOARD,
         CELL,
-        MENU_BG
+        MENU_BG,
+        HINT_OVERLAY
     }
 
     private PresenterPlay presenterPlay;
@@ -108,6 +115,7 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
         tutorialButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.TUTORIAL));
         scoreboardButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.SCOREBOARD));
         menuContainer.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.MENU_BG));
+        overlayHintContainer.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.HINT_OVERLAY));
         gameGridView.setGameGridCallback(new GameGridCallback() {
             @Override
             public void cellClicked(int childCount, int maxCount, int position) {
@@ -237,7 +245,7 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
     @Override
     public void setHintVisibility(int visibility) {
-        hintContainer.setVisibility(visibility);
+        overlayHintContainer.setVisibility(visibility);
     }
 
     @Override
@@ -247,6 +255,6 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
     @Override
     public void setHintMessage(String message) {
-        hintMessage.setText(message);
+        overlayHintText.setText(message);
     }
 }

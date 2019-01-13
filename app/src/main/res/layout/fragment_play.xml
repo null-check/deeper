@@ -150,6 +150,38 @@
         </FrameLayout>
     </android.support.constraint.ConstraintLayout>
 
+    <FrameLayout
+        android:id="@+id/overlay_hint_container"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="16dp"
+        android:background="@drawable/black_overlay_ripple"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/overlay_hint_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            tools:text="@string/tutorial_step_1"
+            android:textSize="18sp"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/overlay_hint_ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="32dp"
+            android:text="@string/okay"
+            android:textSize="20sp"
+            android:textColor="@color/white" />
+    </FrameLayout>
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/menu_container"
         android:layout_width="match_parent"

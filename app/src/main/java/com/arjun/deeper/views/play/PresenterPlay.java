@@ -28,8 +28,16 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
 
     private int[] TUTORIAL_GRID_STEP_1 = new int[]{3, 4, 9, 5, 7, 1, 4, 2, 6};
 
+    private enum TutorialSource {
+        NONE,
+        FIRST_LAUNCH,
+        USER_CLICK
+    }
+
     private int score;
     private int highScore;
+    private TutorialSource tutorialSource = TutorialSource.NONE;
+    private int tutorialStep = 0;
 
     private Timer timer;
 
@@ -57,6 +65,8 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         if (bundle != null) {
             timer.setTimeLeft(bundle.getLong(CommonLib.Keys.TIME_LEFT));
             score = bundle.getInt(CommonLib.Keys.SCORE);
+            tutorialSource = TutorialSource.values()[bundle.getInt(CommonLib.Keys.TUTORIAL_SOURCE)];
+            tutorialStep = bundle.getInt(CommonLib.Keys.TUTORIAL_STEP);
         }
     }
 
@@ -141,6 +151,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         view.updateScore(score = 0);
         view.updateHighScore(highScore);
         view.resetLevel();
+        tutorialStep = 0;
     }
 
     private void updateTimeLeft() {
@@ -166,20 +177,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                 deductPenaltyTime();
             }
         } else if (getGameState() == GameStateSingleton.GameState.TUTORIAL) {
-            switch (score) {
-                case 0:
-                    if (childCount >= maxCount) {
-                        addBonusTime();
-                        view.updateScore(++score);
-                        showTutorial(score);
-                    }
-                    break;
-                default:
-                    // Impossible case.
-                    reset();
-                    startIntro();
-                    break;
-            }
+            progressTutorial(childCount >= maxCount);
         }
     }
 
@@ -202,7 +200,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                         view.setHintVisibility(View.GONE);
                         view.hideMenu();
                     } else {
-                        showTutorial();
+                        showTutorial(TutorialSource.FIRST_LAUNCH);
                     }
                 } else if (getGameState() == GameStateSingleton.GameState.PAUSED) {
                     resumeGame();
@@ -212,7 +210,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                 restartGame();
                 break;
             case TUTORIAL:
-                showTutorial();
+                showTutorial(TutorialSource.USER_CLICK);
                 break;
             case CELL:
                 if (getGameState() == GameStateSingleton.GameState.OVER) {
@@ -228,33 +226,65 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                     resumeGame();
                 }
                 break;
+            case HINT_OVERLAY:
+                progressTutorial(true);
         }
     }
 
-    private void showTutorial() {
+    private void showTutorial(TutorialSource tutorialSource) {
+        this.tutorialSource = tutorialSource;
         reset();
         setGameState(GameStateSingleton.GameState.TUTORIAL);
         view.setPlayButtonText(StringUtils.getString(R.string.play));
         view.hideRestartButton();
-        view.setCellButtonVisibility(View.GONE);
+//        view.setCellButtonVisibility(View.GONE);
         view.hideMenu();
-        showTutorial(score);
+        showTutorial(tutorialStep);
         DbWrapper.getInstance().save(CommonLib.Keys.TUTORIAL_SHOWN, true).close();
     }
 
     private void showTutorial(int step) {
         switch (step) {
             case 0:
-                view.setChildren(TUTORIAL_GRID_STEP_1);
+//                view.setChildren(TUTORIAL_GRID_STEP_1);
                 view.setHintVisibility(View.VISIBLE);
-                view.setHintTitle(StringUtils.getString(R.string.tutorial));
+//                view.setHintTitle(StringUtils.getString(R.string.tutorial));
                 view.setHintMessage(StringUtils.getString(R.string.tutorial_step_1));
                 break;
             case 1:
-                view.setHintTitle(StringUtils.getString(R.string.wonderful));
+//                view.setHintTitle(StringUtils.getString(R.string.wonderful));
                 view.setHintMessage(StringUtils.getString(R.string.tutorial_step_2));
-                view.setCellButtonVisibility(View.VISIBLE);
-                view.setCellButtonText(StringUtils.getString(R.string.play_caps));
+//                view.setCellButtonVisibility(View.VISIBLE);
+//                view.setCellButtonText(StringUtils.getString(R.string.play_caps));
+                break;
+        }
+    }
+
+    private void progressTutorial(boolean correctOptionSelected) {
+        switch (tutorialStep) {
+            case 0:
+                if (correctOptionSelected) {
+                    tutorialStep++;
+//                    addBonusTime();
+//                    view.updateScore(score);
+                    showTutorial(tutorialStep);
+                }
+                break;
+            case 1:
+                view.setHintVisibility(View.GONE);
+                tutorialStep = 0;
+                if (tutorialSource == TutorialSource.FIRST_LAUNCH) {
+                    startIntro();
+                } else if (tutorialSource == TutorialSource.USER_CLICK) {
+                    view.showMenu();
+                    setGameState(GameStateSingleton.GameState.MENU);
+                }
+                tutorialSource = TutorialSource.NONE;
+                break;
+            default:
+                // Impossible case.
+                reset();
+                startIntro();
                 break;
         }
     }
@@ -301,6 +331,8 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         super.onSaveInstanceState(outState);
         outState.putInt(CommonLib.Keys.SCORE, score);
         outState.putLong(CommonLib.Keys.TIME_LEFT, timer.getTimeLeft());
+        outState.putInt(CommonLib.Keys.TUTORIAL_SOURCE, tutorialSource.ordinal());
+        outState.putInt(CommonLib.Keys.TUTORIAL_STEP, tutorialStep);
     }
 
     @Override
