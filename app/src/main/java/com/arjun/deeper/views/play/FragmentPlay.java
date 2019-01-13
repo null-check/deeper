@@ -15,6 +15,7 @@ import com.arjun.deeper.singletons.GameStateSingleton;
 import com.arjun.deeper.views.customviews.Cell;
 import com.arjun.deeper.views.customviews.GameGridView;
 import com.arjun.deeper.views.customviews.MenuButtonView;
+import com.arjun.deeper.views.customviews.ProgressBarView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +33,9 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
     @BindView(R.id.high_score_value)
     protected TextView highScoreTextView;
+
+    @BindView(R.id.progress_bar)
+    protected ProgressBarView progressBarView;
 
     @BindView(R.id.hint_container)
     protected ViewGroup hintContainer;
@@ -181,6 +185,11 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @Override
     public void updateHighScore(int score) {
         highScoreTextView.setText(String.valueOf(score));
+    }
+
+    @Override
+    public void setProgress(float progress) {
+        progressBarView.setProgress(progress, false);
     }
 
     @Override

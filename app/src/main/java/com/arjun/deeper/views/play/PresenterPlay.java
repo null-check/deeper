@@ -155,7 +155,8 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     }
 
     private void updateTimeLeft() {
-        float timeLeftDecimal = (timer.getTimeLeft() / 100) / 10F;
+        long timeLeftMs = timer.getTimeLeft();
+        float timeLeftDecimal = (timeLeftMs / 100) / 10F;
         String timeLeftString = String.valueOf(timeLeftDecimal);
         int length = timeLeftString.length();
         switch (length) {
@@ -164,6 +165,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                 break;
         }
         view.setTimeLeft(timeLeftString);
+        view.setProgress(Math.min(timeLeftMs / 100F, 100F));
     }
 
     @Override

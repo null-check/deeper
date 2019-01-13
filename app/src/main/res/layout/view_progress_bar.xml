@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.arjun.deeper.views.customviews.ProgressBarView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/progress_container"
+        android:layout_width="match_parent"
+        android:layout_height="4dp">
+
+        <carbon.widget.FrameLayout
+            android:id="@+id/progress_bar_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:carbon_cornerRadius="2dp"/>
+
+        <carbon.widget.FrameLayout
+            android:id="@+id/progress_bar_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/nice_red"
+            app:carbon_cornerRadius="2dp"
+            android:visibility="gone"/>
+    </FrameLayout>
+</com.arjun.deeper.views.customviews.ProgressBarView>

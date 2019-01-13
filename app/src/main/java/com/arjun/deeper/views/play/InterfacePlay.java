@@ -13,6 +13,8 @@ public interface InterfacePlay {
 
         void updateHighScore(int score);
 
+        void setProgress(float progress);
+
         void setCellButtonVisibility(int visibility);
 
         void setCellButtonText(String text);
