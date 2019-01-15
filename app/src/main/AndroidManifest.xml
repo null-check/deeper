@@ -7,7 +7,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="${appName}${appNameSuffix}"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:resizeableActivity="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -22,12 +21,13 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
+            <intent-filter>
+                <data android:scheme="deeper" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="www.null-check.com" android:pathPrefix="/deeper" />
-                <data android:scheme="arjun" android:host="deeper" />
             </intent-filter>
         </activity>
     </application>
