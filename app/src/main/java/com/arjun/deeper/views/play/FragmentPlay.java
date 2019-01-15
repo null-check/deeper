@@ -193,6 +193,11 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     }
 
     @Override
+    public void resetProgressBarCurves() {
+        progressBarView.resetCurvedCorners();
+    }
+
+    @Override
     public void setCellButtonVisibility(int visibility) {
         gameGridView.setCellButtonVisibility(visibility);
     }

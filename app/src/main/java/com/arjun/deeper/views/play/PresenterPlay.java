@@ -151,6 +151,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         view.updateScore(score = 0);
         view.updateHighScore(highScore);
         view.resetLevel();
+        view.resetProgressBarCurves();
         tutorialStep = 0;
     }
 

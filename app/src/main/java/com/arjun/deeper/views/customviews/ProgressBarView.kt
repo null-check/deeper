@@ -8,6 +8,8 @@ import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.widget.FrameLayout
 import com.arjun.deeper.utils.AnimationUtils
+import com.arjun.deeper.utils.CommonLib
+import com.arjun.deeper.utils.UiUtils
 
 import kotlinx.android.synthetic.main.view_progress_bar.view.*
 
@@ -72,6 +74,11 @@ class ProgressBarView : FrameLayout {
                 progressBarProgress.requestLayout()
             }
         }
+    }
+
+    fun resetCurvedCorners() {
+        progressBarProgress.cornerRadius = UiUtils.convertDpToPx(2F)
+        progressBarBg.cornerRadius = UiUtils.convertDpToPx(2F)
     }
 
     override fun onDetachedFromWindow() {

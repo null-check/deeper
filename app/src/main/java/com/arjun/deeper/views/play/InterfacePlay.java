@@ -15,6 +15,8 @@ public interface InterfacePlay {
 
         void setProgress(float progress);
 
+        void resetProgressBarCurves();
+
         void setCellButtonVisibility(int visibility);
 
         void setCellButtonText(String text);
