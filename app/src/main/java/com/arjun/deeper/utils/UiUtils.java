@@ -8,7 +8,7 @@ import com.arjun.deeper.DeeperApplication;
 
 public class UiUtils {
 
-    public static final float DEFAULT_CORNER_RADIUS = UiUtils.convertDpToPx(3);
+    public static final float DEFAULT_CORNER_RADIUS = convertDpToPx(3);
 
     private static final DisplayMetrics metrics = DeeperApplication.getContext().getResources().getDisplayMetrics();
 

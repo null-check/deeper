@@ -29,6 +29,8 @@ proguard/
 *.log
 .idea/
 
+# Keys
+keys/
 
 *.iml
 *.iws
@@ -41,7 +43,7 @@ apache
 mapping.txt
 seeds.txt
 unused.txt
-consumer_keystore.jks
+app/release/
 app/gradle/
 app/gradlew
 app/gradlew.bat

@@ -15,11 +15,11 @@ def buildTime = (new SimpleDateFormat("dd-MMM-yyyy hh:mm aa")).format(new Date()
 // VV -> MAJOR APP VERSION
 //  A -> MINOR APP VERSION
 // PP -> PATCH VERSION
-// eg. (271601000) -> BUILD TOOLS: 27 | MIN SDK VER: 16 | MAJOR APP VER: 01 | MINOR APP VERSION: 0 | PATCH VERSION: 00
-def appVersionCode = 271601000
+// eg. (281601000) -> BUILD TOOLS: 28 | MIN SDK VER: 16 | MAJOR APP VER: 01 | MINOR APP VERSION: 0 | PATCH VERSION: 00
+def appVersionCode = 281601000
 def appVersionName = "1.0.0"
 def final defaultApplicationId = "com.arjun.deeper"
-def final defaultAppName = "Deeper"
+def final defaultAppName = "9 Squares"
 
 try {
     if (branchName == '') {
@@ -45,6 +45,14 @@ try {
 }
 
 android {
+    signingConfigs {
+        release {
+            keyAlias 'key0'
+            keyPassword KEY_PASSWORD
+            storeFile file(project.rootDir.path + '/keys/android.jks')
+            storePassword KEYSTORE_PASSWORD
+        }
+    }
     compileSdkVersion project.ANDROID_BUILD_SDK_VERSION.toInteger()
 
     dataBinding {
@@ -57,8 +65,8 @@ android {
     }
 
     defaultConfig {
-        applicationId  = defaultApplicationId
-        manifestPlaceholders = [ appName: "${defaultAppName}"]
+        applicationId = defaultApplicationId
+        manifestPlaceholders = [appName: "${defaultAppName}"]
 
         buildConfigField("String", "APP_VERSION_NAME", "\"${appVersionName}\"")
         buildConfigField("String", "APP_VERSION_CODE", "\"${appVersionCode}\"")
@@ -82,19 +90,29 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            useProguard true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            proguardFile '/Users/arjun/AndroidStudioProjects/deeper/app/proguard-rules.pro'
+            manifestPlaceholders = [appNameSuffix: ""]
         }
 
         debug {
-            manifestPlaceholders = [ appNameSuffix:" v${appVersionName}"]
+            manifestPlaceholders = [appNameSuffix: " v${appVersionName}"]
             applicationIdSuffix ".debug"
         }
+    }
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+    productFlavors {
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:${project.ANDROID_SUPPORT_LIB_VERSION}"
     implementation "com.android.support:support-v4:${project.ANDROID_SUPPORT_LIB_VERSION}"
     implementation "com.android.support:design:${project.ANDROID_SUPPORT_LIB_VERSION}"
@@ -111,11 +129,11 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     // Lombok
-//    compileOnly 'org.projectlombok:lombok:1.18.2'
-//    annotationProcessor 'org.projectlombok:lombok:1.18.2'
+    //    compileOnly 'org.projectlombok:lombok:1.18.2'
+    //    annotationProcessor 'org.projectlombok:lombok:1.18.2'
 
     // Carbon
-    implementation 'tk.zielony:carbon:0.15.0.1'
+    api 'tk.zielony:carbon:0.15.3'
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
