@@ -1,9 +1,11 @@
 package com.arjun.deeper.views.play;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +14,28 @@ import android.widget.TextView;
 import com.arjun.deeper.R;
 import com.arjun.deeper.interfaces.GameGridCallback;
 import com.arjun.deeper.singletons.GameStateSingleton;
+import com.arjun.deeper.utils.StringUtils;
+import com.arjun.deeper.utils.UiUtils;
 import com.arjun.deeper.views.customviews.Cell;
 import com.arjun.deeper.views.customviews.GameGridView;
 import com.arjun.deeper.views.customviews.MenuButtonView;
 import com.arjun.deeper.views.customviews.ProgressBarView;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.tasks.Task;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FragmentPlay extends Fragment implements InterfacePlay.IView {
+
+    private final int REQUEST_CODE_LEADERBOARD = 1;
+    private final int REQUEST_CODE_GOOGLE_SIGN_IN = 2;
 
     @BindView(R.id.game_container)
     protected ViewGroup gameContainer;
@@ -70,6 +85,9 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @BindView(R.id.scoreboard_button)
     protected MenuButtonView scoreboardButton;
 
+    @BindView(R.id.sign_in_button)
+    protected SignInButton signInButton;
+
     @BindView(R.id.cell_1) protected Cell cell1;
     @BindView(R.id.cell_2) protected Cell cell2;
     @BindView(R.id.cell_3) protected Cell cell3;
@@ -85,6 +103,7 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
         RESTART,
         TUTORIAL,
         SCOREBOARD,
+        SIGN_IN,
         CELL,
         MENU_BG,
         HINT_OVERLAY
@@ -92,10 +111,22 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
     private PresenterPlay presenterPlay;
 
+    private GoogleSignInClient mGoogleSignInClient;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenterPlay = new PresenterPlay(this);
+        setupGoogleSignInClient();
+    }
+
+    private void setupGoogleSignInClient() {
+        // Configure sign-in to request the user's ID, email address, and basic profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+                .requestEmail()
+                .build();
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), googleSignInOptions);
     }
 
     @Nullable
@@ -118,6 +149,7 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
         restartButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.RESTART));
         tutorialButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.TUTORIAL));
         scoreboardButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.SCOREBOARD));
+        signInButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.SIGN_IN));
         menuContainer.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.MENU_BG));
         overlayHintContainer.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.HINT_OVERLAY));
         gameGridView.setGameGridCallback(new GameGridCallback() {
@@ -152,6 +184,16 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     public void onStart() {
         super.onStart();
         presenterPlay.onStart();
+        checkForExistingSignIn();
+    }
+
+    private void checkForExistingSignIn() {
+        // Check for existing Google Sign In account, if the user is already signed in the GoogleSignInAccount will be non-null.
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
+        if (account == null)
+            scoreboardButton.setVisibility(View.GONE);
+        else
+            signInButton.setVisibility(View.GONE);
     }
 
     @Override
@@ -270,5 +312,59 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @Override
     public void setHintMessage(String message) {
         overlayHintText.setText(message);
+    }
+
+    @Override
+    public void startSignIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, REQUEST_CODE_GOOGLE_SIGN_IN);
+    }
+
+    @Override
+    public void openLeaderboards() {
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
+        if (account != null) {
+            Games.getLeaderboardsClient(getContext(), account)
+                    .getLeaderboardIntent(StringUtils.getString(R.string.leaderboard_high_scores))
+                    .addOnSuccessListener(intent -> startActivityForResult(intent, REQUEST_CODE_LEADERBOARD));
+        } else {
+            startSignIn();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_CODE_GOOGLE_SIGN_IN:
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                handleSignInResult(task);
+        }
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+
+            // Signed in successfully, show authenticated UI.
+            if (account != null) {
+                signInButton.setVisibility(View.GONE);
+                scoreboardButton.setVisibility(View.VISIBLE);
+            }
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.e("arjun", "signInResult:failed code=" + e.getStatusCode());
+            UiUtils.showToast("signInResult:failed code=" + e.getStatusCode());
+        }
+    }
+
+    @Override
+    public void submitHighScore(int score) {
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
+        if (account != null) {
+            Games.getLeaderboardsClient(getContext(), account)
+                    .submitScore(getString(R.string.leaderboard_high_scores), score);
+        }
     }
 }

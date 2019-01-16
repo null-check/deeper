@@ -15,9 +15,9 @@ def buildTime = (new SimpleDateFormat("dd-MMM-yyyy hh:mm aa")).format(new Date()
 // VV -> MAJOR APP VERSION
 //  A -> MINOR APP VERSION
 // PP -> PATCH VERSION
-// eg. (281601000) -> BUILD TOOLS: 28 | MIN SDK VER: 16 | MAJOR APP VER: 01 | MINOR APP VERSION: 0 | PATCH VERSION: 00
-def appVersionCode = 281601000
-def appVersionName = "1.0.0"
+// eg. (281601000) -> BUILD TOOLS: 28 | MIN SDK VER: 16 | MAJOR APP VER: 01 | MINOR APP VERSION: 1 | PATCH VERSION: 00
+def appVersionCode = 281601100
+def appVersionName = "1.1.0"
 def final defaultApplicationId = "com.arjun.deeper"
 def final defaultAppName = "9 Squares"
 
@@ -104,6 +104,7 @@ android {
         debug {
             manifestPlaceholders = [appNameSuffix: " v${appVersionName}"]
             applicationIdSuffix ".debug"
+            signingConfig signingConfigs.release
         }
     }
     buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
@@ -113,6 +114,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.google.android.gms:play-services-games:16.0.0'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation "com.android.support:appcompat-v7:${project.ANDROID_SUPPORT_LIB_VERSION}"
     implementation "com.android.support:support-v4:${project.ANDROID_SUPPORT_LIB_VERSION}"
     implementation "com.android.support:design:${project.ANDROID_SUPPORT_LIB_VERSION}"
@@ -141,6 +144,7 @@ dependencies {
     //EventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
 }
+
 repositories {
     mavenCentral()
 }

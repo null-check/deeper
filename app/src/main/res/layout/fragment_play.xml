@@ -232,12 +232,18 @@
 
         <com.arjun.deeper.views.customviews.MenuButtonView
             android:id="@+id/scoreboard_button"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/tutorial_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:button_text="@string/highscores" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
     </android.support.constraint.ConstraintLayout>
 </carbon.widget.FrameLayout>

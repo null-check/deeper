@@ -137,6 +137,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         if (score > highScore) {
             highScore = score;
             view.updateHighScore(highScore);
+            view.submitHighScore(highScore);
             DbWrapper.getInstance().save(CommonLib.Keys.HIGH_SCORE, highScore).close();
             UiUtils.showToast(StringUtils.getString(R.string.new_high_score));
         } else {
@@ -215,6 +216,12 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
             case TUTORIAL:
                 showTutorial(TutorialSource.USER_CLICK);
                 break;
+            case SCOREBOARD:
+                openLeaderboards();
+                break;
+            case SIGN_IN:
+                startSignIn();
+                break;
             case CELL:
                 if (getGameState() == GameStateSingleton.GameState.OVER) {
                     startGame();
@@ -232,6 +239,14 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
             case HINT_OVERLAY:
                 progressTutorial(true);
         }
+    }
+
+    private void startSignIn() {
+        view.startSignIn();
+    }
+
+    private void openLeaderboards() {
+        view.openLeaderboards();
     }
 
     private void showTutorial(TutorialSource tutorialSource) {

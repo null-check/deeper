@@ -46,6 +46,12 @@ public interface InterfacePlay {
         void setHintTitle(String title);
 
         void setHintMessage(String message);
+
+        void startSignIn();
+
+        void openLeaderboards();
+
+        void submitHighScore(int score);
     }
 
     interface IPresenter extends IBasePresenter<IView> {
