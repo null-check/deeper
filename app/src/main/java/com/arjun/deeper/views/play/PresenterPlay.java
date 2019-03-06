@@ -6,12 +6,12 @@ import android.os.CountDownTimer;
 import com.arjun.deeper.R;
 import com.arjun.deeper.baseclasses.BasePresenter;
 import com.arjun.deeper.events.BackpressEvent;
+import com.arjun.deeper.interfaces.CallbackDialogGameOver;
 import com.arjun.deeper.singletons.GameStateSingleton;
 import com.arjun.deeper.utils.CommonLib;
 import com.arjun.deeper.utils.DbWrapper;
 import com.arjun.deeper.utils.StringUtils;
 import com.arjun.deeper.utils.Timer;
-import com.arjun.deeper.utils.UiUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,8 +34,11 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         USER_CLICK
     }
 
+    private int round;
     private int score;
     private int highScore;
+    private float reactionTime;
+    private long lastActionTimestamp;
     private TutorialSource tutorialSource = TutorialSource.NONE;
     private int tutorialStep = 0;
 
@@ -64,7 +67,9 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         super.unpackBundle(bundle);
         if (bundle != null) {
             timer.setTimeLeft(bundle.getLong(CommonLib.Keys.TIME_LEFT));
+            round = bundle.getInt(CommonLib.Keys.ROUND);
             score = bundle.getInt(CommonLib.Keys.SCORE);
+            reactionTime = bundle.getFloat(CommonLib.Keys.REACTION_TIME);
             tutorialSource = TutorialSource.values()[bundle.getInt(CommonLib.Keys.TUTORIAL_SOURCE)];
             tutorialStep = bundle.getInt(CommonLib.Keys.TUTORIAL_STEP);
         }
@@ -96,9 +101,38 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         setGameState(GameStateSingleton.GameState.OVER);
         view.hideRestartButton();
         view.setPlayButtonText(StringUtils.getString(R.string.play));
-        view.setCellButtonVisibility(View.VISIBLE);
-        view.setCellButtonText(StringUtils.getString(R.string.icon_retry));
         updateTimeLeft();
+        showGameOverDialog();
+    }
+
+    private void showGameOverDialog() {
+        if (getGameState() == GameStateSingleton.GameState.PAUSED)
+            return;
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(CommonLib.Keys.SCORE, score);
+        bundle.putInt(CommonLib.Keys.HIGH_SCORE, highScore);
+        bundle.putFloat(CommonLib.Keys.REACTION_TIME, round <= 0 ? 0 : reactionTime / (float) round / 1000F);
+        bundle.putFloat(CommonLib.Keys.ACCURACY, round <= 0 ? 0 : score * 100 / (float) round);
+        CallbackDialogGameOver callbackDialogGameOver = new CallbackDialogGameOver() {
+            @Override
+            public void retry() {
+                restartGame();
+            }
+
+            @Override
+            public void mainMenu() {
+                view.showMenu();
+                setGameState(GameStateSingleton.GameState.MENU);
+            }
+
+            @Override
+            public void tutorial() {
+                showTutorial(TutorialSource.FIRST_LAUNCH);
+            }
+        };
+        view.showGameOverDialog(bundle, callbackDialogGameOver);
+
         checkHighScore();
     }
 
@@ -139,9 +173,6 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
             view.updateHighScore(highScore);
             view.submitHighScore(highScore);
             DbWrapper.getInstance().save(CommonLib.Keys.HIGH_SCORE, highScore).close();
-            UiUtils.showToast(StringUtils.getString(R.string.new_high_score));
-        } else {
-            UiUtils.showToast(StringUtils.getString(R.string.game_over));
         }
     }
 
@@ -149,8 +180,11 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         timer.stop();
         timer.setTimeLeft(GAME_START_TIME);
         updateTimeLeft();
+        round = 0;
         view.updateScore(score = 0);
         view.updateHighScore(highScore);
+        reactionTime = 0;
+        lastActionTimestamp = System.currentTimeMillis();
         view.resetLevel();
         view.resetProgressBarCurves();
         tutorialStep = 0;
@@ -172,17 +206,29 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
 
     @Override
     public void cellClicked(int childCount, int maxCount, int position) {
+        round++;
         if (getGameState() == GameStateSingleton.GameState.RUNNING) {
+            long currentTimestamp = System.currentTimeMillis();
+            reactionTime += currentTimestamp - lastActionTimestamp;
+            lastActionTimestamp = currentTimestamp;
             if (childCount >= maxCount) {
-                addBonusTime();
-                view.updateScore(++score);
-                view.increaseLevel();
+                onCorrectChoice();
             } else {
-                deductPenaltyTime();
+                onWrongChoice();
             }
         } else if (getGameState() == GameStateSingleton.GameState.TUTORIAL) {
             progressTutorial(childCount >= maxCount);
         }
+    }
+
+    private void onCorrectChoice() {
+        addBonusTime();
+        view.updateScore(++score);
+        view.increaseLevel();
+    }
+
+    private void onWrongChoice() {
+        deductPenaltyTime();
     }
 
     private void addBonusTime() {
@@ -347,7 +393,9 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt(CommonLib.Keys.ROUND, round);
         outState.putInt(CommonLib.Keys.SCORE, score);
+        outState.putFloat(CommonLib.Keys.REACTION_TIME, reactionTime);
         outState.putLong(CommonLib.Keys.TIME_LEFT, timer.getTimeLeft());
         outState.putInt(CommonLib.Keys.TUTORIAL_SOURCE, tutorialSource.ordinal());
         outState.putInt(CommonLib.Keys.TUTORIAL_STEP, tutorialStep);

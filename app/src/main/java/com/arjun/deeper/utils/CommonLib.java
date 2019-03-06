@@ -10,6 +10,7 @@ public class CommonLib {
 
     public class Keys {
 
+        public final static String ROUND = "round";
         public final static String HIGH_SCORE = "high_score";
         public final static String SCORE = "score";
         public final static String TIME_LEFT = "time_left";
@@ -19,6 +20,8 @@ public class CommonLib {
         public final static String DIFFICULTY = "difficulty";
         public final static String LEVEL_STEPS_COUNT = "level_steps_count";
         public final static String TUTORIAL_SHOWN = "tutorial_shown";
+        public final static String REACTION_TIME = "reaction_time";
+        public final static String ACCURACY = "accuracy";
     }
 
     public static int getRandomIntBetween(int start, int end) {

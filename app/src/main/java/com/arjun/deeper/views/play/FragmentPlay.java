@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.arjun.deeper.R;
+import com.arjun.deeper.interfaces.ActionCallback;
+import com.arjun.deeper.interfaces.CallbackDialogGameOver;
 import com.arjun.deeper.interfaces.GameGridCallback;
 import com.arjun.deeper.singletons.GameStateSingleton;
 import com.arjun.deeper.utils.StringUtils;
@@ -20,6 +22,7 @@ import com.arjun.deeper.views.customviews.Cell;
 import com.arjun.deeper.views.customviews.GameGridView;
 import com.arjun.deeper.views.customviews.MenuButtonView;
 import com.arjun.deeper.views.customviews.ProgressBarView;
+import com.arjun.deeper.views.gameover.DialogGameOver;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -277,6 +280,11 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @Override
     public void setPlayButtonText(String text) {
         playButton.setText(text);
+    }
+
+    @Override
+    public void showGameOverDialog(Bundle bundle, CallbackDialogGameOver callbackDialogGameOver) {
+        new DialogGameOver(getContext(), bundle, callbackDialogGameOver).show();
     }
 
     @Override

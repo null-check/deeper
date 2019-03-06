@@ -45,7 +45,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Score"
+                        android:text="@string/score"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -67,7 +67,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Time left"
+                        android:text="@string/time_left"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -89,14 +89,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="High score"
+                        android:text="@string/highscore"
                         android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/high_score_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        tools:text="0"
                         android:textColor="@color/black"
                         android:textSize="24sp" />
                 </LinearLayout>

@@ -8,7 +8,11 @@
     <string name="restart">Restart</string>
     <string name="resume">Resume</string>
     <string name="how_to_play">How to play</string>
+    <string name="menu">Menu</string>
     <string name="retry">Retry</string>
+    <string name="score">Score</string>
+    <string name="time_left">Time left</string>
+    <string name="highscore">Highscore</string>
     <string name="highscores">Highscores</string>
     <string name="new_high_score">New high score!</string>
     <string name="game_over">Game over!</string>
@@ -17,6 +21,22 @@
     <string name="tutorial_step_1">Select the box with the most squares to get a point and bonus time!</string>
     <string name="tutorial_step_2">Choosing any other box will give you a time penalty. Try to achieve maximum points before the timer runs out!\nThere are no negative points.</string>
     <string name="okay">Okay</string>
+
+    <!-- Game Results -->
+    <string name="success_result_title">Woah!</string>
+    <string name="success_result_subtitle">This is your highest score yet!</string>
+    <string name="almost_success_result_title">Uff, close!</string>
+    <string name="almost_success_result_subtitle">You\'re almost there!</string>
+    <string name="normal_result_title">Nothing is impossible.</string>
+    <string name="normal_result_subtitle">Keep trying. You\'ll get there!</string>
+    <string name="bad_result_title">My condolences.</string>
+    <string name="bad_result_subtitle">Hey, atleast you can\'t get any worse!</string>
+    <string name="noob_result_title">Whoops</string>
+    <string name="noob_result_subtitle">Looks like someone forgot to read the tutorial!</string>
+    <string name="new_highscore">New highscore</string>
+    <string name="old_highscore">Old highscore</string>
+    <string name="avg_reaction_time">Reaction time (avg)</string>
+    <string name="accuracy">Accuracy</string>
 
     <!--Icons-->
     <string name="icon_retry">&#x21bb;</string>

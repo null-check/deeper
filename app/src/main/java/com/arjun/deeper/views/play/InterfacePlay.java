@@ -1,7 +1,10 @@
 package com.arjun.deeper.views.play;
 
+import android.os.Bundle;
+
 import com.arjun.deeper.baseclasses.IBasePresenter;
 import com.arjun.deeper.baseclasses.IBaseView;
+import com.arjun.deeper.interfaces.CallbackDialogGameOver;
 
 public interface InterfacePlay {
 
@@ -32,6 +35,8 @@ public interface InterfacePlay {
         void hideRestartButton();
 
         void setPlayButtonText(String text);
+
+        void showGameOverDialog(Bundle bundle, CallbackDialogGameOver callbackDialogGameOver);
 
         void increaseLevel();
 
