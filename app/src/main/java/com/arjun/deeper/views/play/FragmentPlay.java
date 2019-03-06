@@ -1,6 +1,7 @@
 package com.arjun.deeper.views.play;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.arjun.deeper.R;
-import com.arjun.deeper.interfaces.ActionCallback;
 import com.arjun.deeper.interfaces.CallbackDialogGameOver;
 import com.arjun.deeper.interfaces.GameGridCallback;
 import com.arjun.deeper.singletons.GameStateSingleton;
@@ -34,6 +34,9 @@ import com.google.android.gms.tasks.Task;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
 public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
@@ -64,14 +67,17 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @BindView(R.id.hint_message)
     protected TextView hintMessage;
 
+    @BindView(R.id.game_grid)
+    protected GameGridView gameGridView;
+
+    @BindView(R.id.confetti)
+    protected KonfettiView confetti;
+
     @BindView(R.id.overlay_hint_container)
     protected ViewGroup overlayHintContainer;
 
     @BindView(R.id.overlay_hint_text)
     protected TextView overlayHintText;
-
-    @BindView(R.id.game_grid)
-    protected GameGridView gameGridView;
 
     @BindView(R.id.menu_container)
     protected ViewGroup menuContainer;
@@ -362,7 +368,7 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.e("arjun", "signInResult:failed code=" + e.getStatusCode());
+            Log.e("GPlayServices", "signInResult:failed code=" + e.getStatusCode());
             UiUtils.showToast("signInResult:failed code=" + e.getStatusCode());
         }
     }
@@ -374,5 +380,33 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
             Games.getLeaderboardsClient(getContext(), account)
                     .submitScore(getString(R.string.leaderboard_high_scores), score);
         }
+    }
+
+    @Override
+    public void fireConfetti() {
+        confetti.build()
+                .addColors(UiUtils.getColor(R.color.nice_red), UiUtils.getColor(R.color.green), Color.YELLOW, Color.WHITE)
+                .setDirection(30, 150)
+                .setSpeed(3f, 10f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(1500L)
+                .addShapes(Shape.RECT, Shape.CIRCLE)
+                .addSizes(new Size(12, 5))
+                .setPosition(-50f, confetti.getWidth() + 50f, -50f, -50f)
+                .streamFor(150, 3000L);
+    }
+
+    @Override
+    public void fireConfettiLight() {
+        confetti.build()
+                .addColors(UiUtils.getColor(R.color.nice_red), UiUtils.getColor(R.color.green), Color.YELLOW, Color.WHITE)
+                .setDirection(20, 110)
+                .setSpeed(10f, 20f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(500L)
+                .addShapes(Shape.RECT, Shape.CIRCLE)
+                .addSizes(new Size(12, 3))
+                .setPosition(-50f, confetti.getWidth() + 50f, -50f, -50f)
+                .streamFor(200, 1000L);
     }
 }

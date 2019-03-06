@@ -173,6 +173,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
             view.updateHighScore(highScore);
             view.submitHighScore(highScore);
             DbWrapper.getInstance().save(CommonLib.Keys.HIGH_SCORE, highScore).close();
+            view.fireConfetti();
         }
     }
 
@@ -225,6 +226,8 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         addBonusTime();
         view.updateScore(++score);
         view.increaseLevel();
+        if (score == highScore + 1)
+            view.fireConfettiLight();
     }
 
     private void onWrongChoice() {

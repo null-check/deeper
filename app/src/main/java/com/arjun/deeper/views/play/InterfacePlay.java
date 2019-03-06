@@ -57,6 +57,10 @@ public interface InterfacePlay {
         void openLeaderboards();
 
         void submitHighScore(int score);
+
+        void fireConfetti();
+
+        void fireConfettiLight();
     }
 
     interface IPresenter extends IBasePresenter<IView> {

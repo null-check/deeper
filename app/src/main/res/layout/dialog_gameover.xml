@@ -15,7 +15,7 @@
         android:padding="8dp"
         tools:text="@string/success_result_title"
         android:textColor="@color/black"
-        android:textSize="36sp"/>
+        android:textSize="32sp"/>
 
     <TextView
         android:id="@+id/subtitle"
@@ -25,7 +25,7 @@
         android:padding="8dp"
         tools:text="@string/success_result_subtitle"
         android:textColor="@color/text_dark"
-        android:textSize="24sp" />
+        android:textSize="18sp" />
 
     <LinearLayout
         android:id="@+id/game_details"
