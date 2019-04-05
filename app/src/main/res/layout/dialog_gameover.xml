@@ -164,7 +164,7 @@
         android:background="@color/gray_dark"
         android:padding="12dp"
         app:carbon_rippleColor="@color/white"
-        app:carbon_cornerRadius="50dp">
+        app:carbon_cornerRadius="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -186,7 +186,7 @@
         android:background="@color/sky_blue_dark"
         android:padding="12dp"
         app:carbon_rippleColor="@color/white"
-        app:carbon_cornerRadius="50dp">
+        app:carbon_cornerRadius="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -205,7 +205,7 @@
         android:background="@color/green_medium"
         android:padding="12dp"
         app:carbon_rippleColor="@color/white"
-        app:carbon_cornerRadius="50dp">
+        app:carbon_cornerRadius="10dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
