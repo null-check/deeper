@@ -189,12 +189,16 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
 
         if (score > highScore) {
             highScore = score;
-            view.updateHighScore(highScore);
+            saveHighscore();
             view.submitHighScore(highScore);
-            DbWrapper.getInstance().save(CommonLib.Keys.HIGH_SCORE, highScore).close();
             view.fireConfetti();
             playSound(applause);
         }
+    }
+
+    private void saveHighscore() {
+        view.updateHighScore(highScore);
+        DbWrapper.getInstance().save(CommonLib.Keys.HIGH_SCORE, highScore).close();
     }
 
     private void reset() {
@@ -246,7 +250,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         addBonusTime();
         view.updateScore(++score);
         view.increaseLevel();
-        if (score == highScore + 1) {
+        if (highScore > 0 && score == highScore + 1) {
             playSound(whooo);
             view.fireConfettiLight();
         }
@@ -312,6 +316,16 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                 break;
             case HINT_OVERLAY:
                 progressTutorial(true);
+        }
+    }
+
+    @Override
+    public void onLogin(long score) {
+        if (score > highScore) {
+            highScore = (int) score;
+            saveHighscore();
+        } else if (highScore > score) {
+            view.submitHighScore(highScore);
         }
     }
 

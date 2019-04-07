@@ -68,5 +68,7 @@ public interface InterfacePlay {
         void cellClicked(int childCount, int maxCount, int position);
 
         void buttonClicked(FragmentPlay.ButtonId buttonId);
+
+        void onLogin(long score);
     }
 }

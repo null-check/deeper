@@ -30,6 +30,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.leaderboard.LeaderboardScore;
+import com.google.android.gms.games.leaderboard.LeaderboardVariant;
 import com.google.android.gms.tasks.Task;
 
 import butterknife.BindView;
@@ -362,8 +364,7 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
             // Signed in successfully, show authenticated UI.
             if (account != null) {
-                signInButton.setVisibility(View.GONE);
-                scoreboardButton.setVisibility(View.VISIBLE);
+                onSuccessfulSignIn(account);
             }
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
@@ -371,6 +372,20 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
             Log.e("GPlayServices", "signInResult:failed code=" + e.getStatusCode());
             UiUtils.showToast("signInResult:failed code=" + e.getStatusCode());
         }
+    }
+
+    private void onSuccessfulSignIn(GoogleSignInAccount account) {
+        signInButton.setVisibility(View.GONE);
+        scoreboardButton.setVisibility(View.VISIBLE);
+        Games.getLeaderboardsClient(getContext(), account)
+                .loadCurrentPlayerLeaderboardScore(getString(R.string.leaderboard_high_scores), LeaderboardVariant.TIME_SPAN_ALL_TIME, LeaderboardVariant.COLLECTION_PUBLIC)
+                .addOnSuccessListener(leaderboardScoreAnnotatedData -> {
+                    LeaderboardScore score = leaderboardScoreAnnotatedData.get();
+                    if (score != null) {
+                        long cloudScore = score.getRawScore();
+                        presenterPlay.onLogin(cloudScore);
+                    }
+                });
     }
 
     @Override
