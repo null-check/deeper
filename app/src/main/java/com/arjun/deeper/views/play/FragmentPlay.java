@@ -201,10 +201,12 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     private void checkForExistingSignIn() {
         // Check for existing Google Sign In account, if the user is already signed in the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
-        if (account == null)
+        if (account == null) {
             scoreboardButton.setVisibility(View.GONE);
-        else
+            startSignIn();
+        } else {
             signInButton.setVisibility(View.GONE);
+        }
     }
 
     @Override
