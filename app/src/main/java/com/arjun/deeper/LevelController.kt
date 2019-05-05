@@ -45,12 +45,31 @@ class LevelController {
     }
 
     private fun generateChildren() {
-        val childCounts = IntArray(9)
-        for (i in 0..8) {
+        val distributionArray = IntArray(9)
+        var highestValue = 0
+
+        for (index in 0..8) {
             val childCount = CommonLib.getRandomIntBetween(Math.min(1 + difficulty / 2, 5), Math.max(7, 9 - difficulty / 2))
-            childCounts[i] = childCount
+            distributionArray[index] = childCount
+            if (childCount > highestValue)
+                highestValue = childCount
         }
-        levelControllerCallback?.setChildren(childCounts)
+        levelControllerCallback?.setChildren(removeDuplicateHighestValues(distributionArray, highestValue))
+    }
+
+    // Cheap way to avoid duplicate correct choices for now
+    private fun removeDuplicateHighestValues(array: IntArray, highestValue: Int): IntArray {
+        var valueEncountered = false
+        for (index in 0 until array.size) {
+            val value = array[index]
+            if (value == highestValue) {
+                if (valueEncountered)
+                    array[index] = value - 1
+                else
+                    valueEncountered = true
+            }
+        }
+        return array
     }
 
     fun attachView(levelControllerCallback: LevelControllerCallback) {
