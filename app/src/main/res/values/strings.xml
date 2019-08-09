@@ -27,8 +27,8 @@
     <string name="success_result_subtitle">This is your highest score yet!</string>
     <string name="almost_success_result_title">Uff, close!</string>
     <string name="almost_success_result_subtitle">You\'re almost there!</string>
-    <string name="normal_result_title">Nothing is impossible.</string>
-    <string name="normal_result_subtitle">Don\'t give up. You\'ll get there!</string>
+    <string name="normal_result_title">Game over</string>
+    <string name="normal_result_subtitle">Here\'s your performance analysis</string>
     <string name="bad_result_title">My condolences.</string>
     <string name="bad_result_subtitle">Hey, atleast you can\'t get any worse!</string>
     <string name="noob_result_title">Whoops</string>

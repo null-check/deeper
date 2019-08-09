@@ -24,9 +24,9 @@ class LevelController {
     }
 
     /**
-     * Everytime level reaches LEVEL_STEPS, difficulty is incremented
+     * Everytime level (same as score) reaches LEVEL_STEPS, difficulty is incremented
      * Everytime difficulty reaches DIFFICULTY_STEPS, stage is incremented
-     * For every stage attainted, game behaviour changes (gets more difficult)
+     * For every stage attained, game behaviour changes (gets more difficult)
      *
      * Stage 5 is disabled as setting to gone makes visible views abruptly expand after remaining views have finished animating (and are set to gone)
      */

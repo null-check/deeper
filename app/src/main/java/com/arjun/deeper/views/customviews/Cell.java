@@ -11,7 +11,9 @@ import com.arjun.deeper.utils.UiUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -107,16 +109,22 @@ public class Cell extends FrameLayout {
                 visibility = subcellHideMode;
             }
 
+            Set<Integer> selectedAddresses = new HashSet<>();
             while (count > 0) {
-                FrameLayout child = children.get(CommonLib.getRandomIntBetween(0, 8));
-                if (child.getVisibility() != visibility) {
-                    if (visibility == VISIBLE) {
-                        showSubcell(child);
-                    } else {
-                        hideSubcell(child);
+                int randomInt = CommonLib.getRandomIntBetween(0, 8);
+                if (!selectedAddresses.contains(randomInt)) {
+                    selectedAddresses.add(randomInt);
+                    FrameLayout child = children.get(randomInt);
+                    if (child.getVisibility() != visibility) {
+                        if (visibility == VISIBLE) {
+                            showSubcell(child);
+                        } else {
+                            hideSubcell(child);
+                        }
+                        if (subcellShape == SubcellShape.RANDOM)
+                            child.setCornerRadius(CommonLib.getRandomBoolean() ? SQUARE_CORNER_RADIUS : CIRCLE_CORNER_RADIUS);
+                        count--;
                     }
-                    if (subcellShape == SubcellShape.RANDOM) child.setCornerRadius(CommonLib.getRandomBoolean() ? SQUARE_CORNER_RADIUS : CIRCLE_CORNER_RADIUS);
-                    count--;
                 }
             }
         } else {
@@ -181,7 +189,6 @@ public class Cell extends FrameLayout {
         subcellHideMode = INVISIBLE;
         chooseRandomSubcell = false;
         subcellShape = SubcellShape.SQUARE;
-        setShowCount(false);
         if (children != null) updateSubcells();
     }
 

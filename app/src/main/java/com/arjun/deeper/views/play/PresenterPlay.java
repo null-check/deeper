@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 
+import com.arjun.deeper.BuildConfig;
 import com.arjun.deeper.DeeperApplication;
 import com.arjun.deeper.R;
 import com.arjun.deeper.baseclasses.BasePresenter;
@@ -31,7 +32,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     private final float GAME_START_TIME = 10f;
     private final long INTRO_COUNTDOWN = 3;
     private final float INTRO_SPEED = 2f;
-    private final float TIME_BONUS = 1f;
+    private final float TIME_BONUS_MIN = 0.5f;
     private final float TIME_PENALTY = 0.5f;
 
     private int[] TUTORIAL_GRID_STEP_1 = new int[]{3, 4, 9, 5, 7, 1, 4, 2, 6};
@@ -79,6 +80,8 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         unpackBundle(bundle);
         highScore = DbWrapper.getInt(CommonLib.Keys.HIGH_SCORE, 0);
         view.updateHighScore(highScore);
+        if (BuildConfig.DEBUG)
+            view.setShowCount(true);
     }
 
     @Override
@@ -263,7 +266,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     }
 
     private void addBonusTime() {
-        timer.addTime(TIME_BONUS);
+        timer.addTime(Math.max(TIME_BONUS_MIN, 2f - ((float) score / 100)));
     }
 
     private void deductPenaltyTime() {
