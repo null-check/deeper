@@ -7,7 +7,8 @@
     android:padding="16dp"
     android:background="@color/carbon_white"
     app:carbon_rippleColor="@color/black_overlay"
-    app:carbon_cornerRadius="3dp">
+    app:carbon_cornerRadius="3dp"
+    android:id="@+id/root_view">
 
     <TextView
         android:id="@+id/button_text"

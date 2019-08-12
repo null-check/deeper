@@ -80,8 +80,8 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         unpackBundle(bundle);
         highScore = DbWrapper.getInt(CommonLib.Keys.HIGH_SCORE, 0);
         view.updateHighScore(highScore);
-        if (BuildConfig.DEBUG)
-            view.setShowCount(true);
+//        if (BuildConfig.DEBUG)
+//            view.setShowCount(true);
     }
 
     @Override

@@ -6,6 +6,7 @@
 
     <declare-styleable name="MenuButtonView">
         <attr name="button_text" format="string" />
+        <attr name="invert_colors" format="boolean" />
     </declare-styleable>
 
 </resources>
