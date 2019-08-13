@@ -1,6 +1,7 @@
 package com.arjun.deeper.utils;
 
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
@@ -99,6 +100,33 @@ public class AnimationUtils {
             @Override
             public boolean willChangeBounds() {
                 return true;
+            }
+        };
+
+        animation.setDuration(duration);
+        animation.setInterpolator(interpolator != null ? interpolator : decelerateInterpolator);
+        if (listener != null) animation.setAnimationListener(listener);
+        view.startAnimation(animation);
+        return animation;
+    }
+
+    public static void fadeColors(final View view, int startColor, final int endColor) {
+        fadeColors(view, startColor, endColor, D_300, new AccelerateInterpolator(), null);
+    }
+
+    public static Animation fadeColors(final View view, int startColor, final int endColor, int duration, Interpolator interpolator, Animation.AnimationListener listener) {
+
+        view.setBackgroundColor(startColor);
+        view.setVisibility(View.VISIBLE);
+        Animation animation = new Animation() {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation transformation) {
+                view.setBackgroundColor(UiUtils.blendColors(startColor, endColor, interpolatedTime));
+            }
+
+            @Override
+            public boolean willChangeBounds() {
+                return false;
             }
         };
 

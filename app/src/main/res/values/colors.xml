@@ -26,6 +26,7 @@
 
     <color name="sky_blue_light">#53d5ff</color>
     <color name="sky_blue_dark">#33b5e5</color>
+    <color name="blue_dark">#0099cc</color>
 
     <color name="green">#91ee59</color>
     <color name="green_medium">#61be29</color>

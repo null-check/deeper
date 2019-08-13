@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc">
+    android:background="@color/blue_dark"
+    android:id="@+id/root_view">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/game_container"

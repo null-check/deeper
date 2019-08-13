@@ -16,6 +16,7 @@ import com.arjun.deeper.R;
 import com.arjun.deeper.interfaces.CallbackDialogGameOver;
 import com.arjun.deeper.interfaces.GameGridCallback;
 import com.arjun.deeper.singletons.GameStateSingleton;
+import com.arjun.deeper.utils.AnimationUtils;
 import com.arjun.deeper.utils.StringUtils;
 import com.arjun.deeper.utils.UiUtils;
 import com.arjun.deeper.views.customviews.Cell;
@@ -44,6 +45,9 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
     private final int REQUEST_CODE_LEADERBOARD = 1;
     private final int REQUEST_CODE_GOOGLE_SIGN_IN = 2;
+
+    @BindView(R.id.root_view)
+    protected ViewGroup rootView;
 
     @BindView(R.id.game_container)
     protected ViewGroup gameContainer;
@@ -168,8 +172,9 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
             public void cellClicked(int childCount, int maxCount, int position) {
                 GameStateSingleton.GameState gameState = GameStateSingleton.getInstance().getGameState();
                 if (gameState == GameStateSingleton.GameState.RUNNING
-                        || gameState == GameStateSingleton.GameState.TUTORIAL)
+                        || gameState == GameStateSingleton.GameState.TUTORIAL) {
                     presenterPlay.cellClicked(childCount, maxCount, position);
+                }
             }
 
             @Override
@@ -425,5 +430,15 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
                 .addSizes(new Size(12, 3))
                 .setPosition(-50f, confetti.getWidth() + 50f, -50f, -50f)
                 .streamFor(200, 1000L);
+    }
+
+    @Override
+    public void correctOptionFeedback() {
+        AnimationUtils.fadeColors(rootView, UiUtils.getColor(R.color.blue_dark), UiUtils.getColor(R.color.green));
+    }
+
+    @Override
+    public void wrongOptionFeedback() {
+        AnimationUtils.fadeColors(rootView, UiUtils.getColor(R.color.blue_dark), UiUtils.getColor(R.color.red));
     }
 }

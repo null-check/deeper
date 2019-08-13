@@ -2,6 +2,8 @@ package com.arjun.deeper.views.customviews;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.TextView;
 
 import com.arjun.deeper.R;
@@ -25,6 +27,7 @@ public class Cell extends FrameLayout {
 
     @BindView(R.id.child_count) protected TextView childCountTv;
 
+    @BindView(R.id.root_view) protected ViewGroup rootView;
     @BindView(R.id.child_1) protected FrameLayout child1;
     @BindView(R.id.child_2) protected FrameLayout child2;
     @BindView(R.id.child_3) protected FrameLayout child3;
@@ -210,5 +213,13 @@ public class Cell extends FrameLayout {
             childCountTv.setVisibility(VISIBLE);
         else
             childCountTv.setVisibility(GONE);
+    }
+
+    public void correctOptionFeedback() {
+        AnimationUtils.fadeColors(rootView, UiUtils.getColor(R.color.sky_blue_dark), UiUtils.getColor(R.color.green));
+    }
+
+    public void wrongOptionFeedback() {
+        AnimationUtils.fadeColors(rootView, UiUtils.getColor(R.color.sky_blue_dark), UiUtils.getColor(R.color.red));
     }
 }

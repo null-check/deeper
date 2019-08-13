@@ -61,6 +61,10 @@ public interface InterfacePlay {
         void fireConfetti();
 
         void fireConfettiLight();
+
+        void correctOptionFeedback();
+
+        void wrongOptionFeedback();
     }
 
     interface IPresenter extends IBasePresenter<IView> {

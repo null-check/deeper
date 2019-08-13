@@ -49,6 +49,11 @@ class GameGridView : FrameLayout, LevelControllerCallback {
         var position = 0
         for (child in children) {
             child.setOnClickListener {
+                if (child.childCellCount >= maxCount) {
+                    child.correctOptionFeedback()
+                } else {
+                    child.wrongOptionFeedback()
+                }
                 gameGridCallback.cellClicked(child.childCellCount, maxCount, position)
                 position++
             }
