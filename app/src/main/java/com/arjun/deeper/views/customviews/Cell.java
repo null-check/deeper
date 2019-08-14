@@ -3,7 +3,6 @@ package com.arjun.deeper.views.customviews;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.TextView;
 
 import com.arjun.deeper.R;

@@ -93,12 +93,12 @@ public class DialogGameOver extends Dialog {
             title.setText(R.string.noob_result_title);
             subtitle.setText(R.string.noob_result_subtitle);
             gameDetails.setVisibility(View.GONE);
+            scoreText.setVisibility(View.GONE);
+            scoreValue.setVisibility(View.GONE);
             buttonTutorial.setVisibility(View.VISIBLE);
         } else if (score > highscore) {
             title.setText(R.string.success_result_title);
             subtitle.setText(R.string.success_result_subtitle);
-            scoreText.setText(R.string.new_high_score);
-            highscoreText.setText(R.string.old_highscore);
         } else {
             if (highscore - score < 3) {
                 title.setText(R.string.almost_success_result_title);
@@ -110,14 +110,12 @@ public class DialogGameOver extends Dialog {
                 title.setText(R.string.normal_result_title);
                 subtitle.setText(R.string.normal_result_subtitle);
             }
-            scoreText.setText(R.string.score);
-            highscoreText.setText(R.string.highscore);
         }
 
         scoreValue.setText(String.valueOf(score));
         highscoreValue.setText(String.valueOf(highscore));
-        reactionTimeValue.setText(String.valueOf(Math.round(reactionTime * 100) / 100F) + "s");
-        accuracyValue.setText(String.valueOf(Math.round(accuracy * 100) / 100F) + "%");
+        reactionTimeValue.setText(Math.round(reactionTime * 100) / 100F + "s");
+        accuracyValue.setText(Math.round(accuracy * 100) / 100F + "%");
 
         buttonMenu.setOnClickListener(view -> {
             dismiss();

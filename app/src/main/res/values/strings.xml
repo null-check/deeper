@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">9 Squares</string>
 
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-
     <string name="play">Play</string>
     <string name="play_caps">PLAY</string>
     <string name="restart">Restart</string>
@@ -28,15 +26,15 @@
     <string name="almost_success_result_title">Uff, close!</string>
     <string name="almost_success_result_subtitle">You\'re almost there!</string>
     <string name="normal_result_title">Game over</string>
-    <string name="normal_result_subtitle">Here\'s your performance analysis</string>
+    <string name="normal_result_subtitle">These are your stats</string>
     <string name="bad_result_title">My condolences.</string>
     <string name="bad_result_subtitle">Hey, atleast you can\'t get any worse!</string>
     <string name="noob_result_title">Whoops</string>
     <string name="noob_result_subtitle">Looks like someone forgot to read the tutorial!</string>
-    <string name="new_highscore">New highscore</string>
-    <string name="old_highscore">Old highscore</string>
-    <string name="avg_reaction_time">Reaction time (avg)</string>
-    <string name="accuracy">Accuracy</string>
+    <string name="your_score">YOUR SCORE</string>
+    <string name="your_highscore">YOUR HIGHSCORE</string>
+    <string name="avg_reaction_time">REACTION TIME</string>
+    <string name="accuracy">ACCURACY</string>
 
     <!--Icons-->
     <string name="icon_retry">&#x21bb;</string>

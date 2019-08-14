@@ -7,22 +7,42 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/score_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:layout_marginTop="8dp"
-        android:padding="8dp"
+        tools:text="42"
+        android:textColor="@color/green_medium"
+        android:textSize="64sp" />
+
+    <TextView
+        android:id="@+id/score_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/your_score"
+        android:textColor="@color/black"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="20dp"
         tools:text="@string/success_result_title"
         android:textColor="@color/black"
-        android:textSize="32sp"/>
+        android:textSize="24sp"/>
 
     <TextView
         android:id="@+id/subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:padding="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         tools:text="@string/success_result_subtitle"
         android:textColor="@color/text_dark"
         android:textSize="18sp" />
@@ -31,37 +51,8 @@
         android:id="@+id/game_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/row_score"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="16dp">
-
-            <TextView
-                android:id="@+id/score_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginRight="4dp"
-                android:gravity="right"
-                tools:text="@string/new_highscore"
-                android:textColor="@color/text_medium"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/score_value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="4dp"
-                tools:text="42"
-                android:textColor="@color/green_medium"
-                android:textSize="20sp" />
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/row_highscore"
@@ -76,9 +67,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right"
+                android:gravity="left"
+                android:layout_marginLeft="16dp"
                 android:layout_marginRight="4dp"
-                tools:text="Old highscore"
+                android:text="@string/your_highscore"
                 android:textColor="@color/text_medium"
                 android:textSize="16sp" />
 
@@ -88,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginLeft="4dp"
+                android:layout_marginRight="16dp"
                 tools:text="38"
                 android:textColor="@color/text_dark"
                 android:textSize="20sp" />
@@ -106,7 +99,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right"
+                android:gravity="left"
+                android:layout_marginLeft="16dp"
                 android:layout_marginRight="4dp"
                 android:text="@string/avg_reaction_time"
                 android:textColor="@color/text_medium"
@@ -118,6 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginLeft="4dp"
+                android:layout_marginRight="16dp"
                 tools:text="0.8s"
                 android:textColor="@color/text_dark"
                 android:textSize="20sp" />
@@ -136,7 +131,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right"
+                android:gravity="left"
+                android:layout_marginLeft="16dp"
                 android:layout_marginRight="4dp"
                 android:text="@string/accuracy"
                 android:textColor="@color/text_medium"
@@ -148,6 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginLeft="4dp"
+                android:layout_marginRight="16dp"
                 tools:text="24%"
                 android:textColor="@color/text_dark"
                 android:textSize="20sp" />
@@ -158,7 +155,7 @@
         android:id="@+id/button_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:background="@color/gray_dark"
