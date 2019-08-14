@@ -46,6 +46,8 @@ public interface InterfacePlay {
 
         void setShowCount(boolean showCount);
 
+        void highlightCell(int position);
+
         void setHintVisibility(int visibility);
 
         void setHintTitle(String title);

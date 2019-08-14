@@ -3,9 +3,11 @@ package com.arjun.deeper.views.customviews;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.arjun.deeper.R;
+import com.arjun.deeper.animation.interpolators.PeriodicInterpolator;
 import com.arjun.deeper.utils.AnimationUtils;
 import com.arjun.deeper.utils.CommonLib;
 import com.arjun.deeper.utils.UiUtils;
@@ -50,6 +52,8 @@ public class Cell extends FrameLayout {
         CIRCLE,
         RANDOM
     }
+
+    private Animation animation;
 
     public Cell(Context context) {
         super(context);
@@ -220,5 +224,22 @@ public class Cell extends FrameLayout {
 
     public void wrongOptionFeedback() {
         AnimationUtils.fadeColors(rootView, UiUtils.getColor(R.color.sky_blue_dark), UiUtils.getColor(R.color.red));
+    }
+
+    public void highlightCell() {
+        animation  = AnimationUtils.fadeColors(rootView,
+                UiUtils.getColor(R.color.sky_blue_dark),
+                UiUtils.getColor(R.color.green),
+                600 * 1000,
+                new PeriodicInterpolator(300, true),
+                null);
+    }
+
+    public void clearAnimations() {
+        if (animation != null) {
+            animation.cancel();
+            animation = null;
+            rootView.setBackgroundColor(UiUtils.getColor(R.color.sky_blue_dark));
+        }
     }
 }

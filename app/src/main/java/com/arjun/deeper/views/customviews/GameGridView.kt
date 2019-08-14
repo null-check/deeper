@@ -49,6 +49,7 @@ class GameGridView : FrameLayout, LevelControllerCallback {
         var position = 0
         for (child in children) {
             child.setOnClickListener {
+                child.clearAnimations()
                 if (child.childCellCount >= maxCount) {
                     child.correctOptionFeedback()
                 } else {
@@ -118,5 +119,9 @@ class GameGridView : FrameLayout, LevelControllerCallback {
     fun setShowCount(showCount: Boolean) {
         for (child in children)
             child.setShowCount(showCount)
+    }
+
+    fun highlightCell(position: Int) {
+        children[position].highlightCell()
     }
 }

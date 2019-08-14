@@ -15,9 +15,11 @@
     <string name="new_high_score">New high score!</string>
     <string name="game_over">Game over!</string>
     <string name="tutorial">Tutorial</string>
-    <string name="wonderful">Yeah, You got it!</string>
     <string name="tutorial_step_1">Select the box with the most squares to get a point and bonus time!</string>
+    <string name="tutorial_title_2">Yeah, You got it!</string>
     <string name="tutorial_step_2">Choosing any other box will give you a time penalty. Try to achieve maximum points before the timer runs out!\nThere are no negative points.</string>
+    <string name="tutorial_title_3">And that\'s all!</string>
+    <string name="tutorial_step_3">The game is as simple as that. Now it\'s time to test your skills against the rest of the world. Keep and eye on that timer!</string>
     <string name="okay">Okay</string>
 
     <!-- Game Results -->

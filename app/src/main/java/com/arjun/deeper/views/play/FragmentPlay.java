@@ -323,8 +323,13 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     }
 
     @Override
+    public void highlightCell(int position) {
+        gameGridView.highlightCell(position);
+    }
+
+    @Override
     public void setHintVisibility(int visibility) {
-        overlayHintContainer.setVisibility(visibility);
+        hintContainer.setVisibility(visibility);
     }
 
     @Override
@@ -334,7 +339,7 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
     @Override
     public void setHintMessage(String message) {
-        overlayHintText.setText(message);
+        hintMessage.setText(message);
     }
 
     @Override

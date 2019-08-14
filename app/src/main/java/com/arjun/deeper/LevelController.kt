@@ -1,6 +1,7 @@
 package com.arjun.deeper
 
 import com.arjun.deeper.interfaces.LevelControllerCallback
+import com.arjun.deeper.singletons.GameStateSingleton
 import com.arjun.deeper.utils.CommonLib
 import com.arjun.deeper.views.customviews.Cell
 
@@ -20,7 +21,8 @@ class LevelController {
         difficulty = 0
         stage = 0
         levelControllerCallback?.resetAttributes()
-        generateChildren()
+        if (GameStateSingleton.getInstance().gameState != GameStateSingleton.GameState.TUTORIAL) // Tutorial already sets predefined child counts
+            generateChildren()
     }
 
     /**

@@ -9,7 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 
-import com.arjun.deeper.BuildConfig;
 import com.arjun.deeper.DeeperApplication;
 import com.arjun.deeper.R;
 import com.arjun.deeper.baseclasses.BasePresenter;
@@ -36,6 +35,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     private final float TIME_PENALTY = 0.5f;
 
     private int[] TUTORIAL_GRID_STEP_1 = new int[]{3, 4, 9, 5, 7, 1, 4, 2, 6};
+    private int[] TUTORIAL_GRID_STEP_2 = new int[]{3, 4, 2, 5, 7, 1, 4, 2, 6};
 
     private enum TutorialSource {
         NONE,
@@ -80,8 +80,6 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         unpackBundle(bundle);
         highScore = DbWrapper.getInt(CommonLib.Keys.HIGH_SCORE, 0);
         view.updateHighScore(highScore);
-//        if (BuildConfig.DEBUG)
-//            view.setShowCount(true);
     }
 
     @Override
@@ -308,6 +306,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                     startGame();
                 } else if (getGameState() == GameStateSingleton.GameState.TUTORIAL) {
                     view.setHintVisibility(View.GONE);
+                    tutorialSource = TutorialSource.NONE;
                     reset();
                     startIntro();
                 }
@@ -342,11 +341,11 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
 
     private void showTutorial(TutorialSource tutorialSource) {
         this.tutorialSource = tutorialSource;
-        reset();
         setGameState(GameStateSingleton.GameState.TUTORIAL);
+        reset();
         view.setPlayButtonText(StringUtils.getString(R.string.play));
         view.hideRestartButton();
-//        view.setCellButtonVisibility(View.GONE);
+        view.setCellButtonVisibility(View.GONE);
         view.hideMenu();
         showTutorial(tutorialStep);
         DbWrapper.getInstance().save(CommonLib.Keys.TUTORIAL_SHOWN, true).close();
@@ -355,16 +354,25 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     private void showTutorial(int step) {
         switch (step) {
             case 0:
-//                view.setChildren(TUTORIAL_GRID_STEP_1);
+                view.setChildren(TUTORIAL_GRID_STEP_1);
+                view.highlightCell(2);
                 view.setHintVisibility(View.VISIBLE);
-//                view.setHintTitle(StringUtils.getString(R.string.tutorial));
+                view.setHintTitle(StringUtils.getString(R.string.tutorial));
                 view.setHintMessage(StringUtils.getString(R.string.tutorial_step_1));
                 break;
             case 1:
-//                view.setHintTitle(StringUtils.getString(R.string.wonderful));
+                view.setChildren(TUTORIAL_GRID_STEP_2);
+                view.highlightCell(4);
+                view.setHintTitle(StringUtils.getString(R.string.tutorial_title_2));
                 view.setHintMessage(StringUtils.getString(R.string.tutorial_step_2));
-//                view.setCellButtonVisibility(View.VISIBLE);
-//                view.setCellButtonText(StringUtils.getString(R.string.play_caps));
+                break;
+            case 2:
+                view.setHintTitle(StringUtils.getString(R.string.tutorial_title_3));
+                view.setHintMessage(StringUtils.getString(R.string.tutorial_step_3));
+                view.setCellButtonVisibility(View.VISIBLE);
+                view.setCellButtonText(StringUtils.getString(R.string.play_caps));
+                view.fireConfetti();
+                playSound(applause);
                 break;
         }
     }
@@ -372,14 +380,19 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     private void progressTutorial(boolean correctOptionSelected) {
         switch (tutorialStep) {
             case 0:
+            case 1:
                 if (correctOptionSelected) {
                     tutorialStep++;
-//                    addBonusTime();
-//                    view.updateScore(score);
+                    addBonusTime();
+                    view.updateScore(++score);
+                    playSound(menuClick);
                     showTutorial(tutorialStep);
+                } else {
+                    playSound(wrongClick);
                 }
                 break;
-            case 1:
+            case 2:
+                // Only used for overlay version of the tutorial (Deprecated)
                 view.setHintVisibility(View.GONE);
                 tutorialStep = 0;
                 if (tutorialSource == TutorialSource.FIRST_LAUNCH) {
