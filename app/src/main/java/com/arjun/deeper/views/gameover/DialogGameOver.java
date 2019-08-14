@@ -45,6 +45,9 @@ public class DialogGameOver extends Dialog {
     @BindView(R.id.accuracy_value)
     protected TextView accuracyValue;
 
+//    @BindView(R.id.progress_bar)
+//    protected ProgressBarView progressBarView;
+
     @BindView(R.id.button_menu)
     protected ViewGroup buttonMenu;
 
@@ -116,6 +119,7 @@ public class DialogGameOver extends Dialog {
         highscoreValue.setText(String.valueOf(highscore));
         reactionTimeValue.setText(Math.round(reactionTime * 100) / 100F + "s");
         accuracyValue.setText(Math.round(accuracy * 100) / 100F + "%");
+//        progressBarView.setupView(Math.round(accuracy * 100) / 100F, false, UiUtils.getColor(R.color.gray_dark), UiUtils.getColor(R.color.nice_red));
 
         buttonMenu.setOnClickListener(view -> {
             dismiss();
