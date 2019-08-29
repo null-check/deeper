@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.arjun.deeper.R;
 import com.arjun.deeper.events.BackpressEvent;
 import com.arjun.deeper.singletons.GameStateSingleton;
+import com.arjun.deeper.sounds.SoundManager;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -55,9 +56,21 @@ public class ActivityPlay extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        SoundManager.initialize();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         if (HIDE_NAV_BARS) delayedHide();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SoundManager.release();
     }
 
     @Override

@@ -1,20 +1,15 @@
 package com.arjun.deeper.views.play;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.SoundPool;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.View;
 
-import com.arjun.deeper.DeeperApplication;
 import com.arjun.deeper.R;
 import com.arjun.deeper.baseclasses.BasePresenter;
 import com.arjun.deeper.events.BackpressEvent;
 import com.arjun.deeper.interfaces.CallbackDialogGameOver;
 import com.arjun.deeper.singletons.GameStateSingleton;
+import com.arjun.deeper.sounds.SoundManager;
 import com.arjun.deeper.utils.CommonLib;
 import com.arjun.deeper.utils.DbWrapper;
 import com.arjun.deeper.utils.StringUtils;
@@ -22,9 +17,6 @@ import com.arjun.deeper.utils.Timer;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-
-import carbon.view.View;
 
 public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements InterfacePlay.IPresenter {
 
@@ -52,17 +44,6 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     private int tutorialStep = 0;
 
     private Timer timer;
-    private SoundPool soundPool;
-    private AsyncTask asyncSoundLoader;
-
-    // Sounds
-    private int applause;
-    private int whooo;
-    private int crickets;
-    private int laughing;
-    private int sarcastic;
-    private int menuClick;
-    private int wrongClick;
 
     public PresenterPlay(InterfacePlay.IView view) {
         super(view);
@@ -193,7 +174,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
             saveHighscore();
             view.submitHighScore(highScore);
             view.fireConfetti();
-            playSound(applause);
+            SoundManager.playSound(SoundManager.Sound.APPLAUSE);
         }
     }
 
@@ -252,15 +233,15 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         view.updateScore(++score);
         view.increaseLevel();
         if (highScore > 0 && score == highScore + 1) {
-            playSound(whooo);
+            SoundManager.playSound(SoundManager.Sound.WHOO);
             view.fireConfettiLight();
         }
-        playSound(menuClick);
+        SoundManager.playSound(SoundManager.Sound.RIGHT_CLICK);
     }
 
     private void onWrongChoice() {
         deductPenaltyTime();
-        playSound(wrongClick);
+        SoundManager.playSound(SoundManager.Sound.WRONG_CLICK);
     }
 
     private void addBonusTime() {
@@ -273,7 +254,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
 
     @Override
     public void buttonClicked(FragmentPlay.ButtonId buttonId) {
-        playSound(menuClick); // TODO Avoid in menu bg click
+        SoundManager.playSound(SoundManager.Sound.RIGHT_CLICK); // TODO Avoid in menu bg click
         switch (buttonId) {
             case PLAY:
                 if (getGameState() == GameStateSingleton.GameState.MENU) {
@@ -372,7 +353,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                 view.setCellButtonVisibility(View.VISIBLE);
                 view.setCellButtonText(StringUtils.getString(R.string.play_caps));
                 view.fireConfetti();
-                playSound(applause);
+                SoundManager.playSound(SoundManager.Sound.APPLAUSE);
                 break;
         }
     }
@@ -385,10 +366,10 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                     tutorialStep++;
                     addBonusTime();
                     view.updateScore(++score);
-                    playSound(menuClick);
+                    SoundManager.playSound(SoundManager.Sound.RIGHT_CLICK);
                     showTutorial(tutorialStep);
                 } else {
-                    playSound(wrongClick);
+                    SoundManager.playSound(SoundManager.Sound.WRONG_CLICK);
                 }
                 break;
             case 2:
@@ -440,14 +421,12 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-        loadSounds();
     }
 
     @Override
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
-        releaseSounds();
     }
 
     @Override
@@ -486,58 +465,5 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         timer.pause();
         view.setPlayButtonText(StringUtils.getString(R.string.resume));
         view.showMenu();
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    private void loadSounds() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            AudioAttributes attributes = new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_GAME)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build();
-            soundPool = new SoundPool.Builder()
-                    .setMaxStreams(5)
-                    .setAudioAttributes(attributes)
-                    .build();
-        } else {
-            soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
-        }
-
-        asyncSoundLoader = new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                Context context = DeeperApplication.getContext();
-                applause = soundPool.load(context, R.raw.applause, 1);
-                whooo = soundPool.load(context, R.raw.whooo, 1);
-//                crickets = soundPool.load(context, R.raw.crickets, 1);
-//                laughing = soundPool.load(context, R.raw.laughing, 1);
-//                sarcastic = soundPool.load(context, R.raw.sarcastic_yay, 1);
-                menuClick = soundPool.load(context, R.raw.menu_click, 1);
-                wrongClick = soundPool.load(context, R.raw.wrong_click, 1);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                asyncSoundLoader = null;
-            }
-        }.execute();
-    }
-
-    private void releaseSounds() {
-        if (asyncSoundLoader != null) {
-            asyncSoundLoader.cancel(true);
-            asyncSoundLoader = null;
-        }
-        if (soundPool != null) {
-            soundPool.release();
-            soundPool = null;
-        }
-    }
-
-    private void playSound(int soundId) {
-        soundPool.play(soundId, 1, 1, 1, 0, 1);
     }
 }

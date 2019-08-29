@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.arjun.deeper.R;
 import com.arjun.deeper.interfaces.CallbackDialogGameOver;
+import com.arjun.deeper.sounds.SoundManager;
 import com.arjun.deeper.utils.CommonLib;
 
 import butterknife.BindView;
@@ -99,6 +100,7 @@ public class DialogGameOver extends Dialog {
             scoreText.setVisibility(View.GONE);
             scoreValue.setVisibility(View.GONE);
             buttonTutorial.setVisibility(View.VISIBLE);
+            SoundManager.playSound(SoundManager.Sound.CRICKETS);
         } else if (score > highscore) {
             title.setText(R.string.success_result_title);
             subtitle.setText(R.string.success_result_subtitle);
@@ -109,6 +111,7 @@ public class DialogGameOver extends Dialog {
             } else if (score < 5) {
                 title.setText(R.string.bad_result_title);
                 subtitle.setText(R.string.bad_result_subtitle);
+                SoundManager.playSound(SoundManager.Sound.LAUGHING);
             } else {
                 title.setText(R.string.normal_result_title);
                 subtitle.setText(R.string.normal_result_subtitle);
