@@ -15,9 +15,9 @@ def buildTime = (new SimpleDateFormat("dd-MMM-yyyy hh:mm aa")).format(new Date()
 // VV -> MAJOR APP VERSION
 //  A -> MINOR APP VERSION
 // PP -> PATCH VERSION
-// eg. (281601103) -> BUILD TOOLS: 28 | MIN SDK VER: 16 | MAJOR APP VER: 01 | MINOR APP VERSION: 1 | PATCH VERSION: 03
-def appVersionCode = 281601103
-def appVersionName = "1.1.3"
+// eg. (281601200) -> BUILD TOOLS: 28 | MIN SDK VER: 16 | MAJOR APP VER: 01 | MINOR APP VERSION: 2 | PATCH VERSION: 00
+def appVersionCode = 281601200
+def appVersionName = "1.2.0"
 def final defaultApplicationId = "com.arjun.deeper"
 def final defaultAppName = "9 Squares"
 
