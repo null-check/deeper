@@ -1,8 +1,10 @@
 package com.arjun.deeper.interfaces;
 
+import com.arjun.deeper.views.customviews.Cell;
+
 public interface GameGridCallback {
 
-    void cellClicked(int childCount, int maxCount, int position);
+    void cellClicked(Cell child, int maxCount, int position);
 
     void cellButtonClicked();
 }

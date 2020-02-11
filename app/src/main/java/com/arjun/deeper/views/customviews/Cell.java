@@ -23,10 +23,9 @@ import butterknife.ButterKnife;
 import carbon.widget.FrameLayout;
 
 public class Cell extends FrameLayout {
+
     private final float SQUARE_CORNER_RADIUS = isInEditMode() ? 9 : UiUtils.DEFAULT_CORNER_RADIUS;
     private final float CIRCLE_CORNER_RADIUS = 1000;
-
-    @BindView(R.id.child_count) protected TextView childCountTv;
 
     @BindView(R.id.root_view) protected ViewGroup rootView;
     @BindView(R.id.child_1) protected FrameLayout child1;
@@ -38,6 +37,8 @@ public class Cell extends FrameLayout {
     @BindView(R.id.child_7) protected FrameLayout child7;
     @BindView(R.id.child_8) protected FrameLayout child8;
     @BindView(R.id.child_9) protected FrameLayout child9;
+
+    @BindView(R.id.child_count) protected TextView childCountTv;
 
     private List<FrameLayout> children;
 
@@ -92,6 +93,10 @@ public class Cell extends FrameLayout {
         if (showCount) childCountTv.setVisibility(VISIBLE);
     }
 
+    /**
+     * Main function to handle visibility of child cells based on the difficulty of the game
+     * @param count Number of child views to display
+     */
     public void showChildren(int count) {
 
         if (showCount) childCountTv.setText(String.valueOf(count));
@@ -230,7 +235,7 @@ public class Cell extends FrameLayout {
         animation  = AnimationUtils.fadeColors(rootView,
                 UiUtils.getColor(R.color.sky_blue_dark),
                 UiUtils.getColor(R.color.green),
-                600 * 1000,
+                (int) (600 * CommonLib.MS_IN_SEC),
                 new PeriodicInterpolator(300, true),
                 null);
     }

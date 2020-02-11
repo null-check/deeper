@@ -167,13 +167,13 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
         signInButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.SIGN_IN));
         menuContainer.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.MENU_BG));
         overlayHintContainer.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.HINT_OVERLAY));
-        gameGridView.setGameGridCallback(new GameGridCallback() {
+        gameGridView.setupGameGridCallback(new GameGridCallback() {
             @Override
-            public void cellClicked(int childCount, int maxCount, int position) {
+            public void cellClicked(Cell child, int maxCount, int position) {
                 GameStateSingleton.GameState gameState = GameStateSingleton.getInstance().getGameState();
                 if (gameState == GameStateSingleton.GameState.RUNNING
                         || gameState == GameStateSingleton.GameState.TUTORIAL) {
-                    presenterPlay.cellClicked(childCount, maxCount, position);
+                    presenterPlay.cellClicked(child, maxCount, position);
                 }
             }
 

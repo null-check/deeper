@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.arjun.deeper.baseclasses.IBasePresenter;
 import com.arjun.deeper.baseclasses.IBaseView;
 import com.arjun.deeper.interfaces.CallbackDialogGameOver;
+import com.arjun.deeper.views.customviews.Cell;
 
 public interface InterfacePlay {
 
@@ -42,7 +43,7 @@ public interface InterfacePlay {
 
         void resetLevel();
 
-        void setChildren(int childCounts[]);
+        void setChildren(int[] childCounts);
 
         void setShowCount(boolean showCount);
 
@@ -71,7 +72,7 @@ public interface InterfacePlay {
 
     interface IPresenter extends IBasePresenter<IView> {
 
-        void cellClicked(int childCount, int maxCount, int position);
+        void cellClicked(Cell child, int maxCount, int position);
 
         void buttonClicked(FragmentPlay.ButtonId buttonId);
 

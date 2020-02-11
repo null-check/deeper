@@ -14,6 +14,11 @@ import com.arjun.deeper.utils.CommonLib
 import kotlinx.android.synthetic.main.view_game_grid.view.*
 import java.util.*
 
+enum class Rotation(var angle: Float) {
+    NORMAL(0f),
+    ROTATED(90f);
+}
+
 class GameGridView : FrameLayout, LevelControllerCallback {
 
     private lateinit var children: List<Cell>
@@ -39,23 +44,17 @@ class GameGridView : FrameLayout, LevelControllerCallback {
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        children = ArrayList(Arrays.asList<Cell>(cell_1, cell_2, cell_3, cell_4, cell_5, cell_6, cell_7, cell_8, cell_9))
+        children = ArrayList(listOf<Cell>(cell_1, cell_2, cell_3, cell_4, cell_5, cell_6, cell_7, cell_8, cell_9))
         cellButton = cell_button
         levelController.attachView(this)
     }
 
-    fun setGameGridCallback(gameGridCallback: GameGridCallback) {
+    fun setupGameGridCallback(gameGridCallback: GameGridCallback) {
 
         var position = 0
         for (child in children) {
             child.setOnClickListener {
-                child.clearAnimations()
-                if (child.childCellCount >= maxCount) {
-                    child.correctOptionFeedback()
-                } else {
-                    child.wrongOptionFeedback()
-                }
-                gameGridCallback.cellClicked(child.childCellCount, maxCount, position)
+                gameGridCallback.cellClicked(child, maxCount, position)
                 position++
             }
         }
@@ -66,12 +65,12 @@ class GameGridView : FrameLayout, LevelControllerCallback {
     override fun setChildren(childCounts: IntArray) {
 
         maxCount = 0
-        for (i in 0 until children.size) {
-            children[i].showChildren(childCounts[i])
-            if (childCounts[i] > maxCount) {
-                maxCount = childCounts[i]
+        for (index in children.indices) {
+            children[index].showChildren(childCounts[index])
+            if (childCounts[index] > maxCount) {
+                maxCount = childCounts[index]
             }
-            if (enableRotatedCells) children[i].rotation = (if (CommonLib.getRandomBoolean()) 0 else 90).toFloat()
+            if (enableRotatedCells) children[index].rotation = (if (CommonLib.getRandomBoolean()) Rotation.NORMAL.angle else Rotation.ROTATED.angle)
         }
     }
 
@@ -99,7 +98,7 @@ class GameGridView : FrameLayout, LevelControllerCallback {
 
     override fun resetAttributes() {
         for (child in children) {
-            child.rotation = 0f
+            child.rotation = Rotation.NORMAL.angle
             child.resetAttributes()
         }
     }
