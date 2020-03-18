@@ -11,11 +11,50 @@
         android:id="@+id/game_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
         android:orientation="vertical">
 
         <carbon.widget.LinearLayout
+            android:id="@+id/hint_container"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center_horizontal"
+            android:background="@color/white"
+            android:padding="16dp"
+            app:carbon_cornerRadius="3dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/info_bar"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintVertical_bias="1">
+
+            <TextView
+                android:id="@+id/hint_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/tutorial"
+                android:textColor="@color/black"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:id="@+id/hint_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                tools:text="@string/tutorial_step_1"
+                android:textColor="@color/black"/>
+        </carbon.widget.LinearLayout>
+
+        <carbon.widget.LinearLayout
             android:id="@+id/info_bar"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="16dp"
@@ -25,16 +64,15 @@
             app:carbon_cornerRadius="3dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/hint_container"
-            app:layout_constraintVertical_chainStyle="spread_inside">
+            app:layout_constraintTop_toBottomOf="@+id/hint_container"
+            app:layout_constraintBottom_toTopOf="@+id/game_grid_container">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:baselineAligned="false"
                 android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:baselineAligned="false">
+                android:paddingBottom="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -97,9 +135,9 @@
                         android:id="@+id/high_score_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="0"
                         android:textColor="@color/black"
-                        android:textSize="24sp" />
+                        android:textSize="24sp"
+                        tools:text="0" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -110,50 +148,17 @@
                 android:layout_height="wrap_content" />
         </carbon.widget.LinearLayout>
 
-        <carbon.widget.LinearLayout
-            android:id="@+id/hint_container"
-            android:visibility="gone"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
+        <FrameLayout
+            android:id="@+id/game_grid_container"
+            android:layout_width="match_parent"
+            android:layout_height="380dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:gravity="center_horizontal"
-            android:background="@color/white"
-            android:padding="16dp"
-            app:carbon_cornerRadius="3dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/info_bar"
-            app:layout_constraintBottom_toTopOf="@+id/game_grid_container">
-
-            <TextView
-                android:id="@+id/hint_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="@string/tutorial"
-                android:textColor="@color/black"
-                android:textSize="24sp"/>
-
-            <TextView
-                android:id="@+id/hint_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                tools:text="@string/tutorial_step_1"
-                android:textColor="@color/black"/>
-        </carbon.widget.LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/game_grid_container"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="16dp"
-            android:layout_weight="1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/hint_container"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_weight="1">
 
@@ -167,7 +172,9 @@
     <nl.dionsegijn.konfetti.KonfettiView
         android:id="@+id/confetti"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <FrameLayout
         android:id="@+id/overlay_hint_container"
@@ -266,4 +273,12 @@
             android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent" />
     </android.support.constraint.ConstraintLayout>
+
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/loading_indicator"
+        style="@android:style/Widget.ProgressBar.Small"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
 </FrameLayout>

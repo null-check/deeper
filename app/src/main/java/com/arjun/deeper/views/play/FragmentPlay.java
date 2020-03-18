@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,6 +106,9 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
     @BindView(R.id.sign_in_button)
     protected SignInButton signInButton;
+
+    @BindView(R.id.loading_indicator)
+    protected ContentLoadingProgressBar loadingIndicator;
 
     @BindView(R.id.cell_1) protected Cell cell1;
     @BindView(R.id.cell_2) protected Cell cell2;
@@ -349,6 +353,7 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
     @Override
     public void startSignIn() {
+        loadingIndicator.show();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, REQUEST_CODE_GOOGLE_SIGN_IN);
     }
@@ -370,6 +375,7 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_CODE_GOOGLE_SIGN_IN:
+                loadingIndicator.hide();
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                 handleSignInResult(task);
         }
