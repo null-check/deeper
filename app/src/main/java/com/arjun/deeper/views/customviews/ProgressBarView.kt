@@ -76,8 +76,12 @@ class ProgressBarView : FrameLayout {
     }
 
     fun resetCurvedCorners() {
-        progressBarProgress.cornerRadius = UiUtils.convertDpToPx(2F)
-        progressBarBg.cornerRadius = UiUtils.convertDpToPx(2F)
+        progressBarProgress.cornerRadius = UiUtils.convertDpToPx(3F)
+        progressBarBg.cornerRadius = UiUtils.convertDpToPx(3F)
+    }
+
+    fun setProgressBarColor(progressColor: Int) {
+        progressBarProgress.setBackgroundColor(progressColor)
     }
 
     override fun onDetachedFromWindow() {

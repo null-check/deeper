@@ -262,6 +262,11 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     }
 
     @Override
+    public void setProgressBarColor(int progressBarColor) {
+        progressBarView.setProgressBarColor(progressBarColor);
+    }
+
+    @Override
     public void resetProgressBarCurves() {
         progressBarView.resetCurvedCorners();
     }

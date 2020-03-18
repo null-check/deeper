@@ -19,6 +19,8 @@ public interface InterfacePlay {
 
         void setProgress(float progress);
 
+        void setProgressBarColor(int progressBarColor);
+
         void resetProgressBarCurves();
 
         void setCellButtonVisibility(int visibility);

@@ -17,6 +17,7 @@ import com.arjun.deeper.utils.CommonLib;
 import com.arjun.deeper.utils.DbWrapper;
 import com.arjun.deeper.utils.StringUtils;
 import com.arjun.deeper.utils.Timer;
+import com.arjun.deeper.utils.UiUtils;
 import com.arjun.deeper.views.customviews.Cell;
 
 import org.greenrobot.eventbus.EventBus;
@@ -211,6 +212,11 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         }
         view.setTimeLeft(timeLeftString);
         view.setProgress(Math.min(timeLeftMs / 100F, 100F));
+        if (timeLeftMs > 10000F) {
+            view.setProgressBarColor(UiUtils.getColor(R.color.green_medium));
+        } else {
+            view.setProgressBarColor(UiUtils.getColor(R.color.nice_red));
+        }
     }
 
     @Override
