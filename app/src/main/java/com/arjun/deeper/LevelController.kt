@@ -7,8 +7,8 @@ import com.arjun.deeper.views.customviews.Cell
 
 class LevelController {
 
-    private val LEVEL_STEPS = 3
-    private val STAGE_STEPS = 3
+    private val LEVELS_PER_STAGE = 10
+    private val STAGES_PER_DIFFICULTY = 2
 
     private var level: Int = 0
     private var stage: Int = 0
@@ -33,8 +33,8 @@ class LevelController {
      * Stage 5 is disabled for now as setting to gone makes visible views abruptly expand after remaining views have finished animating (and are set to gone)
      */
     fun increaseLevel() {
-        if (++level % LEVEL_STEPS == 0) {
-            if (++stage % STAGE_STEPS == 0) {
+        if (++level % LEVELS_PER_STAGE == 0) {
+            if (++stage % STAGES_PER_DIFFICULTY == 0) {
                 when (++difficulty) {
                     2 -> levelControllerCallback?.setRotatedCells(true)
                     3 -> levelControllerCallback?.setChooseRandomSubcell(true)

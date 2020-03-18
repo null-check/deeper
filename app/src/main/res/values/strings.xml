@@ -1,28 +1,34 @@
 <resources>
     <string name="app_name">9 Squares</string>
 
-    <string name="play">Play</string>
+    <!-- General -->
     <string name="play_caps">PLAY</string>
-    <string name="restart">Restart</string>
-    <string name="resume">Resume</string>
-    <string name="how_to_play">How to play</string>
-    <string name="menu">Menu</string>
-    <string name="retry">Retry</string>
     <string name="score">Score</string>
     <string name="time_left">Time left</string>
     <string name="highscore">Highscore</string>
-    <string name="highscores">Highscores</string>
     <string name="new_high_score">New high score!</string>
     <string name="game_over">Game over!</string>
+    <string name="okay">Okay</string>
+
+    <!-- Tutorial -->
     <string name="tutorial">Tutorial</string>
     <string name="tutorial_step_1">Select the box with the most squares to get a point and bonus time!</string>
     <string name="tutorial_title_2">Yeah, You got it!</string>
     <string name="tutorial_step_2">Choosing any other box will give you a time penalty. Try to achieve maximum points before the timer runs out!\nThere are no negative points.</string>
     <string name="tutorial_title_3">And that\'s all!</string>
     <string name="tutorial_step_3">The game is as simple as that. Now it\'s time to test your skills against the rest of the world. Keep and eye on that timer!</string>
-    <string name="okay">Okay</string>
 
-    <!-- Game Results -->
+    <!-- Menu -->
+    <string name="play">Play</string>
+    <string name="restart">Restart</string>
+    <string name="resume">Resume</string>
+    <string name="how_to_play">How to play</string>
+    <string name="highscores">Highscores</string>
+    <string name="share_with_friend">Share with your friend!</string>
+
+    <!-- Game Results Dialog -->
+    <string name="menu">Menu</string>
+    <string name="retry">Retry</string>
     <string name="success_result_title">Woah!</string>
     <string name="success_result_subtitle">This is your highest score yet!</string>
     <string name="almost_success_result_title">Uff, close!</string>
@@ -38,7 +44,7 @@
     <string name="avg_reaction_time">REACTION TIME</string>
     <string name="accuracy">ACCURACY</string>
 
-    <!--Icons-->
+    <!-- Icons -->
     <string name="icon_retry">&#x21bb;</string>
     <string name="icon_play">&#x25ba;</string>
 </resources>

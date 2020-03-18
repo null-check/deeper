@@ -1,7 +1,10 @@
 package com.arjun.deeper.views.play;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.arjun.deeper.R;
@@ -285,6 +288,9 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
             case SCOREBOARD:
                 openLeaderboards();
                 break;
+            case SHARE:
+                shareOnSocialMedia();
+                break;
             case SIGN_IN:
                 startSignIn();
                 break;
@@ -324,6 +330,31 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
 
     private void openLeaderboards() {
         view.openLeaderboards();
+    }
+
+    private void shareOnSocialMedia() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, "Hey! Try out this exciting game that I found.\n");
+
+//        val isPackageInstalled = CommonLib.isPackageInstalled(packageName, context)
+//
+//        if (isPackageInstalled) {
+//            intent.setPackage(packageName)
+//        }
+//
+//        if (isPackageInstalled && !TextUtils.isEmpty(socialShareData.image)) {
+//            loadImage(socialShareData.image!!, object: BitmapCallback {
+//                override fun onBitmapLoaded(bitmap:Bitmap) {
+//                    intent.type = "image/jpeg"
+//                    intent.putExtra(Intent.EXTRA_STREAM, getLocaImageUri(context, bitmap))
+//                    context.startActivity(Intent.createChooser(intent, sharerDialogTitle))
+//                }
+//            })
+//        } else {
+//            intent.type = "text/plain"
+//            context.startActivity(Intent.createChooser(intent, sharerDialogTitle))
+//        }
     }
 
     private void showTutorial(TutorialSource tutorialSource) {

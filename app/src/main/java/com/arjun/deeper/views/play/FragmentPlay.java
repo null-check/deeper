@@ -100,6 +100,9 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @BindView(R.id.scoreboard_button)
     protected MenuButtonView scoreboardButton;
 
+    @BindView(R.id.share_button)
+    protected MenuButtonView shareButton;
+
     @BindView(R.id.sign_in_button)
     protected SignInButton signInButton;
 
@@ -118,6 +121,7 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
         RESTART,
         TUTORIAL,
         SCOREBOARD,
+        SHARE,
         SIGN_IN,
         CELL,
         MENU_BG,
@@ -164,6 +168,7 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
         restartButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.RESTART));
         tutorialButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.TUTORIAL));
         scoreboardButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.SCOREBOARD));
+        shareButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.SHARE));
         signInButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.SIGN_IN));
         menuContainer.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.MENU_BG));
         overlayHintContainer.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.HINT_OVERLAY));
