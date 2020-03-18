@@ -7,8 +7,8 @@ import com.arjun.deeper.views.customviews.Cell
 
 class LevelController {
 
-    private val LEVELS_PER_STAGE = 10
-    private val STAGES_PER_DIFFICULTY = 2
+    private val LEVELS_PER_STAGE = 6
+    private val STAGES_PER_DIFFICULTY = 3
 
     private var level: Int = 0
     private var stage: Int = 0
