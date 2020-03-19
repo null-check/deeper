@@ -42,6 +42,7 @@
 
 -keep class android.support.v8.renderscript.** { *; }
 
+-dontwarn carbon.**
 -dontwarn carbon.BR
 -dontwarn carbon.internal**
 -dontwarn java.lang.invoke**
