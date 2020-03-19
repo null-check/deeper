@@ -15,9 +15,69 @@
         android:gravity="bottom"
         android:orientation="vertical">
 
+        <FrameLayout
+            android:id="@+id/buttons_container"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <carbon.widget.FrameLayout
+                android:visibility="gone"
+                android:id="@+id/restart_button_quick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                app:carbon_cornerRadius="3dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Restart"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+            </carbon.widget.FrameLayout>
+
+            <carbon.widget.ImageView
+                android:id="@+id/settings_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/settings_icon"/>
+
+            <carbon.widget.FrameLayout
+                android:visibility="gone"
+                android:id="@+id/pause_button_quick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_gravity="right"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                app:carbon_cornerRadius="3dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pause"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+            </carbon.widget.FrameLayout>
+        </FrameLayout>
+
         <carbon.widget.LinearLayout
             android:id="@+id/hint_container"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -30,7 +90,7 @@
             app:carbon_cornerRadius="3dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttons_container"
             app:layout_constraintBottom_toTopOf="@+id/info_bar"
             app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintVertical_bias="1">
@@ -212,7 +272,7 @@
         android:id="@+id/menu_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black_overlay_dark"
+        android:background="@color/black"
         android:padding="16dp">
 
         <com.arjun.deeper.views.customviews.MenuButtonView

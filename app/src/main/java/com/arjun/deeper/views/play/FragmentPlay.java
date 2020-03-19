@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.arjun.deeper.R;
@@ -52,6 +53,18 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
     @BindView(R.id.game_container)
     protected ViewGroup gameContainer;
+
+    @BindView(R.id.buttons_container)
+    protected ViewGroup buttonsContainer;
+
+    @BindView(R.id.restart_button_quick)
+    protected ViewGroup quickRestartButton;
+
+    @BindView(R.id.settings_icon)
+    protected ImageView settingsIcon;
+
+    @BindView(R.id.pause_button_quick)
+    protected ViewGroup quickPauseButton;
 
     @BindView(R.id.time_left)
     protected TextView timeLeft;
@@ -122,6 +135,7 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
 
     enum ButtonId {
         PLAY,
+        PAUSE,
         RESTART,
         TUTORIAL,
         SCOREBOARD,
@@ -168,6 +182,9 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     }
 
     private void setClickListeners() {
+        quickRestartButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.RESTART));
+        settingsIcon.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.PAUSE));
+        quickPauseButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.PAUSE));
         playButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.PLAY));
         restartButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.RESTART));
         tutorialButton.setOnClickListener(view -> presenterPlay.buttonClicked(ButtonId.TUTORIAL));
@@ -354,6 +371,16 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     @Override
     public void setHintMessage(String message) {
         hintMessage.setText(message);
+    }
+
+    @Override
+    public void showQuickButtons() {
+        buttonsContainer.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideQuickButtons() {
+        buttonsContainer.setVisibility(View.GONE);
     }
 
     @Override

@@ -100,6 +100,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         setGameState(GameStateSingleton.GameState.RUNNING);
         view.showRestartButton();
         view.setCellButtonVisibility(View.GONE);
+        view.showQuickButtons();
         reset();
         timer.start(GAME_START_TIME);
     }
@@ -108,6 +109,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
         setGameState(GameStateSingleton.GameState.OVER);
         view.hideRestartButton();
         view.setPlayButtonText(StringUtils.getString(R.string.play));
+        view.hideQuickButtons();
         updateTimeLeft();
         showGameOverDialog();
     }
@@ -276,7 +278,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                     if (DbWrapper.getBoolean(CommonLib.Keys.TUTORIAL_SHOWN, false)) {
                         view.showGame();
                         startIntro();
-                        view.setHintVisibility(View.GONE);
+                        view.setHintVisibility(View.INVISIBLE);
                         view.hideMenu();
                     } else {
                         showTutorial(TutorialSource.FIRST_LAUNCH);
@@ -285,7 +287,11 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                     resumeGame();
                 }
                 break;
+            case PAUSE:
+                pauseGame();
+                break;
             case RESTART:
+                timer.pause();
                 restartGame();
                 break;
             case TUTORIAL:
@@ -304,7 +310,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                 if (getGameState() == GameStateSingleton.GameState.OVER) {
                     startGame();
                 } else if (getGameState() == GameStateSingleton.GameState.TUTORIAL) {
-                    view.setHintVisibility(View.GONE);
+                    view.setHintVisibility(View.INVISIBLE);
                     tutorialSource = TutorialSource.NONE;
                     reset();
                     startIntro();
@@ -417,7 +423,7 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
                 break;
             case 2:
                 // Only used for overlay version of the tutorial (Deprecated)
-                view.setHintVisibility(View.GONE);
+                view.setHintVisibility(View.INVISIBLE);
                 tutorialStep = 0;
                 if (tutorialSource == TutorialSource.FIRST_LAUNCH || tutorialSource == TutorialSource.GAME_OVER_DIALOG) {
                     startIntro();

@@ -57,6 +57,10 @@ public interface InterfacePlay {
 
         void setHintMessage(String message);
 
+        void showQuickButtons();
+
+        void hideQuickButtons();
+
         void startSignIn();
 
         void openLeaderboards();
