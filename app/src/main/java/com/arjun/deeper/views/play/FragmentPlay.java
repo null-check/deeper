@@ -489,4 +489,12 @@ public class FragmentPlay extends Fragment implements InterfacePlay.IView {
     public void wrongOptionFeedback() {
         AnimationUtils.fadeColors(rootView, UiUtils.getColor(R.color.blue_dark), UiUtils.getColor(R.color.red));
     }
+
+    @Override
+    public void shareIntent(Intent intent) {
+        if (isAdded())
+            getContext().startActivity(Intent.createChooser(intent, "Share with: "));
+    }
+
+
 }

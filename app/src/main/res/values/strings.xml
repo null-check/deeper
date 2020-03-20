@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">9 Squares</string>
 
+    <!-- Package names -->
+    <string name="package_name_whatsapp">com.whatsapp</string>
+
     <!-- General -->
     <string name="play_caps">PLAY</string>
     <string name="score">Score</string>
@@ -25,6 +28,7 @@
     <string name="how_to_play">How to play</string>
     <string name="highscores">Highscores</string>
     <string name="share_with_friend">Share with your friend!</string>
+    <string name="share_message">Hey! Try out this exciting game that I found.\nhttps://play.google.com/store/apps/details?id=com.arjun.deeper</string>
 
     <!-- Game Results Dialog -->
     <string name="menu">Menu</string>

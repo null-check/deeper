@@ -347,26 +347,17 @@ public class PresenterPlay extends BasePresenter<InterfacePlay.IView> implements
     private void shareOnSocialMedia() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, "Hey! Try out this exciting game that I found.\n");
+        intent.putExtra(Intent.EXTRA_TEXT, StringUtils.getString(R.string.share_message));
 
-//        val isPackageInstalled = CommonLib.isPackageInstalled(packageName, context)
-//
-//        if (isPackageInstalled) {
-//            intent.setPackage(packageName)
-//        }
-//
-//        if (isPackageInstalled && !TextUtils.isEmpty(socialShareData.image)) {
-//            loadImage(socialShareData.image!!, object: BitmapCallback {
-//                override fun onBitmapLoaded(bitmap:Bitmap) {
-//                    intent.type = "image/jpeg"
-//                    intent.putExtra(Intent.EXTRA_STREAM, getLocaImageUri(context, bitmap))
-//                    context.startActivity(Intent.createChooser(intent, sharerDialogTitle))
-//                }
-//            })
-//        } else {
-//            intent.type = "text/plain"
-//            context.startActivity(Intent.createChooser(intent, sharerDialogTitle))
-//        }
+        String packageNameWhatsapp = StringUtils.getString(R.string.package_name_whatsapp);
+        boolean isPackageInstalled = CommonLib.isPackageInstalled(packageNameWhatsapp);
+
+        if (isPackageInstalled) {
+            intent.setPackage(packageNameWhatsapp);
+        }
+
+        intent.setType("text/plain");
+        view.shareIntent(intent);
     }
 
     private void showTutorial(TutorialSource tutorialSource) {

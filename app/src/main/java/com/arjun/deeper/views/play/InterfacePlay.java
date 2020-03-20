@@ -1,5 +1,6 @@
 package com.arjun.deeper.views.play;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.arjun.deeper.baseclasses.IBasePresenter;
@@ -74,6 +75,8 @@ public interface InterfacePlay {
         void correctOptionFeedback();
 
         void wrongOptionFeedback();
+
+        void shareIntent(Intent intent);
     }
 
     interface IPresenter extends IBasePresenter<IView> {

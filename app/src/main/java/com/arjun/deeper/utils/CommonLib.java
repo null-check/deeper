@@ -1,5 +1,10 @@
 package com.arjun.deeper.utils;
 
+import android.content.pm.PackageManager;
+import android.text.TextUtils;
+
+import com.arjun.deeper.DeeperApplication;
+
 import java.util.Random;
 
 public class CommonLib {
@@ -34,5 +39,20 @@ public class CommonLib {
 
     public static long convertSecondsToMs(float seconds) {
         return (long) (seconds * MS_IN_SEC);
+    }
+
+    public static boolean isPackageInstalled(String packageName) {
+        if (TextUtils.isEmpty(packageName))
+            return false;
+
+        PackageManager packageManager = DeeperApplication.getContext().getPackageManager();
+        try {
+            packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }
