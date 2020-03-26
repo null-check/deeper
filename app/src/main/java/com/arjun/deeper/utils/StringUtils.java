@@ -1,6 +1,6 @@
 package com.arjun.deeper.utils;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import com.arjun.deeper.DeeperApplication;
 

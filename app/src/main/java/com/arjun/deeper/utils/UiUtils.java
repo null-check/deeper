@@ -1,7 +1,7 @@
 package com.arjun.deeper.utils;
 
 import android.graphics.Color;
-import android.support.annotation.ColorRes;
+import androidx.annotation.ColorRes;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 

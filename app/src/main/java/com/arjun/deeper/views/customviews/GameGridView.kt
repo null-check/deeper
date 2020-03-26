@@ -1,7 +1,7 @@
 package com.arjun.deeper.views.customviews
 
 import android.content.Context
-import android.support.annotation.AttrRes
+import androidx.annotation.AttrRes
 import android.util.AttributeSet
 import android.view.View
 import android.widget.TextView

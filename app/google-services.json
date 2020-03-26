@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "426535272008",
+    "firebase_url": "https://squares-76261821.firebaseio.com",
+    "project_id": "squares-76261821",
+    "storage_bucket": "squares-76261821.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426535272008:android:e1ce59255322a4f1b1627d",
+        "android_client_info": {
+          "package_name": "com.arjun.deeper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "426535272008-r1hd506ovu6sagihr8llhdjnn1jddfdi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5a4G0HNLc9JPzGaz6d7INsMYDIbty-7E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "426535272008-r1hd506ovu6sagihr8llhdjnn1jddfdi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

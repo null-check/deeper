@@ -1,7 +1,7 @@
 package com.arjun.deeper.views.customviews
 
 import android.content.Context
-import android.support.annotation.AttrRes
+import androidx.annotation.AttrRes
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.Animation
@@ -76,8 +76,8 @@ class ProgressBarView : FrameLayout {
     }
 
     fun resetCurvedCorners() {
-        progressBarProgress.cornerRadius = UiUtils.convertDpToPx(3F)
-        progressBarBg.cornerRadius = UiUtils.convertDpToPx(3F)
+        progressBarProgress.setCornerRadius(UiUtils.convertDpToPx(3F))
+        progressBarBg.setCornerRadius(UiUtils.convertDpToPx(3F))
     }
 
     fun setProgressBarColor(progressColor: Int) {

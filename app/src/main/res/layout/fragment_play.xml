@@ -7,7 +7,7 @@
     android:background="@color/blue_dark"
     android:id="@+id/root_view">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/game_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -227,7 +227,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </FrameLayout>
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <nl.dionsegijn.konfetti.KonfettiView
         android:id="@+id/confetti"
@@ -268,7 +268,7 @@
             android:textColor="@color/white" />
     </FrameLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/menu_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -331,9 +331,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <android.support.v4.widget.ContentLoadingProgressBar
+    <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/loading_indicator"
         style="@android:style/Widget.ProgressBar.Small"
         android:layout_width="30dp"
